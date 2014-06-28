@@ -1,0 +1,32 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2582
+
+This script allows you to list, edit, write and publish articles on Wordpress. It uses the XML-RPC API and provides the following commands:
+
+":Blogit ls [blog_name]"
+ Lists all articles in the blog
+":Blogit new [blog_name]"
+ Opens page to write new article
+":Blogit edit <id> [blog_name]"
+ Opens the article <id> for edition
+":Blogit page <id> [blog_name]"
+  Edit a blog page
+":Blogit commit"
+ Saves the article to the blog
+":Blogit push"
+ Publish article
+":Blogit unpush"
+ Unpublish article
+":Blogit rm <id>"
+ Remove an article
+":Blogit tags"
+  Show tags and categories list
+":Blogit this"
+  Create a blog post from current buffer
+":Blogit preview"
+  Preview current post locally
+":Blogit help"
+ Display help
+
+Edited articles are displayed like mails.
+
+Website: http://symlink.me/wiki/blogit

@@ -1,0 +1,55 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4263
+
+This script is a wrapper for ctags and cscope, so tags for all languages
+supported by ctags can be build (cscope is additionally used for C/C++).
+
+Features:
+1. No configuration needed
+2. Build/rebuild index for project with a single key stroke
+3. Tags are loaded then automatically when a file is opened anywhere in project tree
+4. Tags are stored in a separate directory and don't clog you project tree 
+5. Extra directories (like library source or includes) can be added with a single key stroke too
+
+Put autotags.vim in your ~/.vim/plugin directory, open source code and
+press F4 (map AutotagsUpdate to change it).
+
+You can reindex sources by pressing F4 again.
+
+To build and load additional tags for another directory (i.e. external
+project or library code you want to navigate to) press F3 (or map
+AutotagsAdd).
+
+Script builds and loads ctags and cscope databases via a single command.
+All ctags and cscope files are stored in separate directory ~/.autotags by
+default. You can set it via
+    let g:autotagsdir = $HOME."/boo"
+
+Project root directory will be asked when indexing new project. After that
+tags will be loaded automatically when source files somewhere in project
+tree are opened (if path contains project root).
+
+Exact tags location:
+~/.autotags/byhash/<source dir name hash>/<ctags and cscope files>
+
+Also `origin` symlink points back to source dir
+~/.autotags/byhash/<source dir name hash>/origin
+
+`include_*` symlinks point to additional tags for external directories
+~/.autotags/byhash/<source dir name hash>/include_*
+
+Tags for non-existing source directories are removed automatically
+(checked at startup)
+
+Also ctags file ~/.autotags/global_tags is built for /usr/include once
+
+Platforms:
+unix, cygwin
+
+Dependencies:
+ctags and cscope
+md5sum
+
+cscope_maps.vim plugin is recommended
+
+Homepage:
+https://github.com/basilgor/vim-autotags

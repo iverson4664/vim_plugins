@@ -1,0 +1,12 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3315
+
+I think JSON is the preferred way to make Vim communicate with external tools because it can speak it (almost) natively using eval / string.
+
+string serialization encodes strings using &#039 instead of \". This the encoding has been rewritten using VImL
+
+true, false, null can&#039t be represented in VimL. Thus they are encoded by unique function values (See code)
+
+This plugin is used by the ensime plugin (and similar code is used by the scion plugin).
+In both cases Vim sends small commands and receives completion data or the like.
+Because native eval is used for reading JSON data you can&#039t be faster.
+

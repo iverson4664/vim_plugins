@@ -1,0 +1,46 @@
+Purpose
+=======
+completion helpers:
+
+(1) vim_addon_completion#AdvancedCamelCaseMatching(expr):
+ implements camel case matching
+
+(2) vim_addon_completion#CompleteUsing(func_name):
+  allows completion using custom function preserving completion func setting
+  
+  Example usage: 
+    inoremap <buffer><exec> <c-x><c-w> vim_addon_completion#CompleteUsing('vim_addon_completion#CompleteWordsInBuffer')
+
+
+historical notes:
+===================
+All the old code keeping multiple completion functions as alternative was
+removed because it was too hard to remember which completion func was set in a buffer.
+The only sane way is ask users to define their own mappings as shown above at <c-x><c-w>.
+
+How to provide customizable matches to users
+============================================
+
+AdditionalCompletionMatchPatterns returns a regex matching CamelCase patterns.
+See comment above the function.
+A user can override the default behaviour.
+
+Example usage:
+
+fun Compl(first, base)
+  if ..
+  else
+    let patterns = vim_addon_completion#AdditionalCompletionMatchPatterns(a:base
+        \ , "your_completion_func_name", {'match_beginning_of_string': 1})
+    let additional_regex = get(patterns, 'vim_regex', "")
+    
+    list names = ["name","another_name"]
+
+    for n in names
+      if n =~ '^'.a:base || (additional_regex != "" && a:base =~ additional_regex)
+        call complete_add({'word': n, ....})
+      endif
+    endfor
+    return []
+  endif
+endfun

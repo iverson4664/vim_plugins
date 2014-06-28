@@ -1,0 +1,16 @@
+:EasyAlign	easy_align.txt	/*:EasyAlign*
+:EasyAlign!	easy_align.txt	/*:EasyAlign!*
+:LiveEasyAlign	easy_align.txt	/*:LiveEasyAlign*
+:LiveEasyAlign!	easy_align.txt	/*:LiveEasyAlign!*
+easy-align	easy_align.txt	/*easy-align*
+easy_align.txt	easy_align.txt	/*easy_align.txt*
+g:easy_align_bang_interactive_modes	easy_align.txt	/*g:easy_align_bang_interactive_modes*
+g:easy_align_bypass_fold	easy_align.txt	/*g:easy_align_bypass_fold*
+g:easy_align_delimiter_align	easy_align.txt	/*g:easy_align_delimiter_align*
+g:easy_align_delimiters	easy_align.txt	/*g:easy_align_delimiters*
+g:easy_align_ignore_groups	easy_align.txt	/*g:easy_align_ignore_groups*
+g:easy_align_ignore_unmatched	easy_align.txt	/*g:easy_align_ignore_unmatched*
+g:easy_align_indentation	easy_align.txt	/*g:easy_align_indentation*
+g:easy_align_interactive_modes	easy_align.txt	/*g:easy_align_interactive_modes*
+g:easy_align_last_command	easy_align.txt	/*g:easy_align_last_command*
+vim-easy-align	easy_align.txt	/*vim-easy-align*

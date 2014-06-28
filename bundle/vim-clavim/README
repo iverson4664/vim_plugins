@@ -1,0 +1,26 @@
+clavim (latin acc. for "key")
+
+clavim is (going to be) a better C, C++, and Obj-C syntax highlighter for vim
+based on libclang from the Clang project in the LLVM tree
+
+To run the plugin, you need the latest libclang you can get your hands on. To
+do that, follow the instructions at: 
+
+    http://clang.llvm.org/get_started.html
+
+Once you have libclang in your path, copy:
+    clang/ 
+    clavim.py 
+    clavim.vim
+
+to your vim's plugins folder (on mine it's $HOME/.vim/plugin)
+
+Also, your vim needs to be compiled in such a way that you can script it with
+python.  I'm using the vim I found in Debian's apt repository, and it came
+precompiled with python support.
+
+TODO:
+    - find a way to track member variables once they've been highlighted so as 
+      not to have to have to reparse the AST every time I want to update the 
+      highlight's absolute position
+    - perhaps use libclang to highlight lines that have syntax errors?

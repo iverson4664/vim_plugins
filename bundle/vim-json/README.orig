@@ -1,0 +1,6 @@
+reading and writing JSON for Vim using native eval performance for reading.
+See autoload/json_encoding.vim
+
+This plugin will soon be used by:
+- ensime port to Vim
+- scion
