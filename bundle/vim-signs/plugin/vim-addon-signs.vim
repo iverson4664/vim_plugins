@@ -10,7 +10,7 @@ if get(s:c, 'provide_qf_command', 1)
 
   augroup VIM_ADDON_SIGNS
     au!
-    autocmd QuickFixCmdPost * UpdateQuickfixSigns
+    autocmd QuickFixCmdPost * QuickfixSignsUpdate
   augroup end
 
 endif
