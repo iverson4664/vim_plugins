@@ -906,10 +906,10 @@ nnoremap <silent> ,, :ToggleQuickfixWin<CR>
 "autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=darkyellow
 let g:rainbow_active = 1
 
-nnoremap <silent> <Left> :bp<CR>
-nnoremap <silent> <Right> :bn<CR>
-nnoremap <Up> gT
-nnoremap <Down> gt
+" nnoremap <silent> <Left> :bp<CR>
+" nnoremap <silent> <Right> :bn<CR>
+" nnoremap <Up> gT
+" nnoremap <Down> gt
 
 "p what you y, not d
 " xnoremap p pgvy
