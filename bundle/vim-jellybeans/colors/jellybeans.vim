@@ -503,7 +503,8 @@ if !s:low_color
   hi StatusLineNC ctermbg=235
   hi Folded ctermbg=236
   hi FoldColumn ctermbg=234
-  hi SignColumn ctermbg=236
+  hi SignColumn ctermbg=NONE
+  " hi SignColumn ctermbg=236
   hi CursorColumn ctermbg=234
   hi CursorLine ctermbg=234
   hi SpecialKey ctermbg=234
