@@ -9,6 +9,13 @@ endif
 let g:loaded_commentary = 1
 
 function! s:surroundings() abort
+
+  if &filetype == "cs" || &filetype == "cpp" || &filetype == "hpp"
+    set commentstring=//%s
+  elseif &filetype == "c"
+    set commentstring=/*%s*/
+  endif
+
   return split(substitute(substitute(
         \ get(b:, 'commentary_format', &commentstring)
         \ ,'\S\zs%s',' %s','') ,'%s\ze\S', '%s ', ''), '%s', 1)
