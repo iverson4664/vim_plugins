@@ -207,7 +207,7 @@ function! s:Cancell() " {{{
     call EasyMotion#highlight#delete_highlight()
     call EasyMotion#helper#VarReset('&scrolloff')
     keepjumps call setpos('.', s:save_orig_pos)
-    echo 'EasyMotion: Cancelled'
+    echo 'Cancelled'
     return ''
 endfunction " }}}
 function! s:getPromptMessage(num_strokes) "{{{
