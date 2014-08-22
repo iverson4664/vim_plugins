@@ -63,7 +63,7 @@ let s:options = [
     \ ['show_visibility', 1],
     \ ['show_linenumbers', 0],
     \ ['singleclick', 0],
-    \ ['sort', 0],
+    \ ['sort', 1],
     \ ['systemenc', &encoding],
     \ ['width', 40],
     \ ['zoomwidth', 1],
@@ -89,7 +89,7 @@ let s:keymaps = [
     \ ['previewwin',    'P'],
     \ ['nexttag',       '<C-N>'],
     \ ['prevtag',       '<C-P>'],
-    \ ['showproto',     '<Leader><Space>'],
+    \ ['showproto',     '<Space>'],
     \ ['hidenonpublic', 'v'],
     \
     \ ['openfold',      ['+', '<kPlus>', 'zo']],
@@ -98,10 +98,11 @@ let s:keymaps = [
     \ ['openallfolds',  ['*', '<kMultiply>', 'zR']],
     \ ['closeallfolds', ['=', 'zM']],
     \
-    \ ['togglesort', 's'],
-    \ ['zoomwin',    'x'],
-    \ ['close',      'q'],
-    \ ['help',       ['<F1>', '?']],
+    \ ['togglesort',      's'],
+    \ ['toggleautoclose', 'c'],
+    \ ['zoomwin',         'x'],
+    \ ['close',           'q'],
+    \ ['help',            ['<F1>', '?']],
 \ ]
 
 for [map, key] in s:keymaps
