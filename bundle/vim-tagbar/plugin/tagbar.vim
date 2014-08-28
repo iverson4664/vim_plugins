@@ -63,7 +63,7 @@ let s:options = [
     \ ['show_visibility', 1],
     \ ['show_linenumbers', 0],
     \ ['singleclick', 0],
-    \ ['sort', 1],
+    \ ['sort', 0],
     \ ['systemenc', &encoding],
     \ ['width', 40],
     \ ['zoomwidth', 1],
@@ -89,7 +89,7 @@ let s:keymaps = [
     \ ['previewwin',    'P'],
     \ ['nexttag',       '<C-N>'],
     \ ['prevtag',       '<C-P>'],
-    \ ['showproto',     '<Space>'],
+    \ ['showproto',     '<Leader><Space>'],
     \ ['hidenonpublic', 'v'],
     \
     \ ['openfold',      ['+', '<kPlus>', 'zo']],
