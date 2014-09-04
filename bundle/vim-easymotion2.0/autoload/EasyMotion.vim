@@ -363,7 +363,7 @@ function! s:Prompt(message) " {{{
     echohl None
 endfunction " }}}
 function! s:Throw(message) "{{{
-    throw 'EasyMotion: ' . a:message
+    throw '' . a:message
 endfunction "}}}
 
 " -- Save & Restore values ---------------
@@ -1477,7 +1477,7 @@ function! s:EasyMotion(regexp, direction, visualmode, is_inclusive) " {{{
         call s:Message('Jumping to [' . coords[0] . ', ' . coords[1] . ']')
         let s:EasyMotion_is_cancelled = 0 " Success
         "}}}
-    catch /^EasyMotion:.*/
+    catch /^.*/
         redraw
 
         " Show exception message
