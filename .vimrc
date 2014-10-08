@@ -16,6 +16,11 @@ filetype off
     \ 'vim-fuzzyfinder',
     \ 'vim-taglist',
     \ 'vim-easymotion1.0',
+    \ 'vim-orgmode',
+    \ 'vim-forms',
+    \ 'vim-twitvim',
+    \ 'vim-bufkill',
+    \ 'vim-fswitch',
     \ ]
  if v:version < '703584'
      call add(g:pathogen_disabled, 'YouCompleteMe')
@@ -173,7 +178,7 @@ let Tlist_WinWidth = 48
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_close_preview=1
-let g:clang_library_path="/home/y00210927/vim/lib"
+let g:clang_library_path="/home/y00210927/vim/lib/clang-3.2"
 " Incrementally match the search
 set incsearch
 
@@ -528,7 +533,7 @@ function! VCSDiffMore(from)
   let revisions = map(revisions, 'substitute(v:val, "r\\(\\d\\+\\) .*$", "\\1", "")')
   exec ":VCSVimDiff " . revisions[a:from]
 endfunction
-nmap ,dd :call VCSDiffMore(0)<cr>
+"happy removed nmap ,dd :call VCSDiffMore(0)<cr>
 "function! ShowSVNRevisions()
 "  let f = expand('%:p')
 "  let revisions = system("svn log " . f)
@@ -901,6 +906,10 @@ if has("cscope")
 endif
 let g:QuickfixWinHeight = g:MyWinHeight
 nnoremap <silent> ,, :ToggleQuickfixWin<CR>
+
+" help tag-matchlist, g]
+nnoremap <silent> tn :tn<CR>
+nnoremap <silent> tp :tp<CR>
 
 "hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 "autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=darkyellow

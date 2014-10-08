@@ -52,7 +52,7 @@ function! EasyClip#Move#SetDefaultBindings()
     " \ ]
     let bindings = 
     \ [
-    \   ['<leader>mm',  '<Plug>MoveMotionLinePlug',  'n',  1],
+    \   ['<leader>dd',  '<Plug>MoveMotionLinePlug',  'n',  1],
     \   ['m',  '<Plug>MoveMotionXPlug',  'x',  1],
     \ ]
 
