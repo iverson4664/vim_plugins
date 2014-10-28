@@ -990,10 +990,16 @@ function! s:CreateAutocommands() abort
         autocmd BufDelete,BufWipeout * call
                     \ s:known_files.rm(fnamemodify(expand('<afile>'), ':p'))
 
-        autocmd QuickFixCmdPre  * let s:tagbar_qf_active = 1
-        autocmd QuickFixCmdPost * if exists('s:tagbar_qf_active') |
-                                \     unlet s:tagbar_qf_active |
-                                \ endif
+        autocmd QuickFixCmdPre *vimgrep*  let s:tagbar_qf_active = 1
+        autocmd QuickFixCmdPost *vimgrep* if exists('s:tagbar_qf_active') |
+                                        \     unlet s:tagbar_qf_active |
+                                        \ endif
+
+        " happy modified
+        " autocmd QuickFixCmdPre  * let s:tagbar_qf_active = 1
+        " autocmd QuickFixCmdPost * if exists('s:tagbar_qf_active') |
+        "                         \     unlet s:tagbar_qf_active |
+        "                         \ endif
 
         autocmd VimEnter * call s:CorrectFocusOnStartup()
     augroup END
@@ -4094,6 +4100,14 @@ function! tagbar#gettypeconfig(type) abort
     let output .= "\\ }"
 
     silent put =output
+endfunction
+
+"happy fix updating tags bug
+function! tagbar#Repair() abort
+    " let s:tagbar_qf_active = 0
+    if exists('s:tagbar_qf_active')
+        unlet s:tagbar_qf_active
+    endif
 endfunction
 
 " Modeline {{{1

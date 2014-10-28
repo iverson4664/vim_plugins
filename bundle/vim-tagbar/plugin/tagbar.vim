@@ -130,5 +130,7 @@ command! -nargs=? TagbarDebug         call tagbar#StartDebug(<f-args>)
 command! -nargs=0 TagbarDebugEnd      call tagbar#StopDebug()
 command! -nargs=0 TagbarTogglePause   call tagbar#toggle_pause()
 
+command! -nargs=0 TagbarRepair   call tagbar#Repair()
+
 " Modeline {{{1
 " vim: ts=8 sw=4 sts=4 et foldenable foldmethod=marker foldcolumn=1
