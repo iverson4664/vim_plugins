@@ -15,7 +15,6 @@ filetype off
  let g:pathogen_disabled = [
     \ 'vim-fuzzyfinder',
     \ 'vim-taglist',
-    \ 'vim-ctrlp1.0',
     \ 'vim-easymotion1.0',
     \ 'vim-orgmode',
     \ 'vim-forms',

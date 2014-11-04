@@ -171,12 +171,13 @@ let s:kprange = {
 	\ }
 
 " Highlight groups
+"e.g. Match -> 'Identifier',
 let s:hlgrps = {
 	\ 'NoEntries': 'Error',
 	\ 'Mode1': 'Character',
 	\ 'Mode2': 'LineNr',
 	\ 'Stats': 'Function',
-	\ 'Match': 'Identifier',
+	\ 'Match': 'ErrorMsg',
 	\ 'PrtBase': 'Comment',
 	\ 'PrtText': 'Normal',
 	\ 'PrtCursor': 'Constant',
