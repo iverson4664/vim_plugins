@@ -29,6 +29,7 @@ fu! s:ignore()
 		\ 'autom4te\.cache',
 		\ 'cover_db',
 		\ '_build',
+    \ 'HAL',
 		\ ]
 	let igfiles = [
 		\ '\~$',
@@ -50,6 +51,12 @@ fu! s:ignore()
 		\ 'file': '\v'.join(igfiles, '|'),
 		\ }
 endf
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files'],
+    \ },
+  \ }
+
 " Script local vars {{{2
 let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ ['g:ctrlp_', 'b:ctrlp_', {
@@ -57,7 +64,7 @@ let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ 'arg_map':               ['s:argmap', 0],
 	\ 'buffer_func':           ['s:buffunc', {}],
 	\ 'by_filename':           ['s:byfname', 0],
-	\ 'custom_ignore':         ['s:usrign', s:ignore()],
+	\ 'custom_ignore_ext':         ['s:usrign', s:ignore()],
 	\ 'default_input':         ['s:deftxt', 0],
 	\ 'dont_split':            ['s:nosplit', 'netrw'],
 	\ 'dotfiles':              ['s:showhidden', 0],
@@ -343,6 +350,7 @@ fu! ctrlp#files()
 		" Get the list of files
 		if empty(lscmd)
 			if !ctrlp#igncwd(s:dyncwd)
+        echomsg "globpath--"
 				cal s:GlobPath(s:fnesc(s:dyncwd, 'g', ','), 0)
 			en
 		el
@@ -370,17 +378,22 @@ fu! ctrlp#files()
 endf
 
 fu! s:GlobPath(dirs, depth)
+  echo "test1" a:dirs
 	let entries = split(globpath(a:dirs, s:glob), "\n")
+  echomsg "globpath2--"
 	let [dnf, depth] = [ctrlp#dirnfile(entries), a:depth + 1]
 	cal extend(g:ctrlp_allfiles, dnf[1])
 	if !empty(dnf[0]) && !s:maxf(len(g:ctrlp_allfiles)) && depth <= s:maxdepth
-		sil! cal ctrlp#progress(len(g:ctrlp_allfiles), 1)
+    echomsg "globpath4--" 
+		! cal ctrlp#progress(len(g:ctrlp_allfiles), 1)
+    echomsg "globpath3--" 
 		cal s:GlobPath(join(map(dnf[0], 's:fnesc(v:val, "g", ",")'), ','), depth)
 	en
 endf
 
 fu! s:UserCmd(lscmd)
 	let [path, lscmd] = [s:dyncwd, a:lscmd]
+  echomsg "usercmd---"
 	let do_ign =
 		\ type(s:usrcmd) == 4 && has_key(s:usrcmd, 'ignore') && s:usrcmd['ignore']
 	if do_ign && ctrlp#igncwd(s:cwd) | retu | en
@@ -391,6 +404,7 @@ fu! s:UserCmd(lscmd)
 		let lscmd = substitute(lscmd, '\v(^|\&\&\s*)\zscd (/d)@!', 'cd /d ', '')
 	en
 	let path = exists('*shellescape') ? shellescape(path) : path
+  echomsg "path" path "lscmd" lscmd
 	let g:ctrlp_allfiles = split(system(printf(lscmd, path)), "\n")
 	if exists('+ssl') && exists('ssl')
 		let &ssl = ssl
@@ -401,6 +415,7 @@ fu! s:UserCmd(lscmd)
 	en
 	if do_ign
 		if !empty(s:usrign)
+      echomsg "drinfiles---"
 			let g:ctrlp_allfiles = ctrlp#dirnfile(g:ctrlp_allfiles)[1]
 		en
 		if &wig != ''
@@ -1417,6 +1432,7 @@ fu! s:dismrk()
 endf
 
 fu! ctrlp#progress(enum, ...)
+  echomsg "progress"
 	if has('macunix') || has('mac') | sl 1m | en
 	let txt = a:0 ? '(press ctrl-c to abort)' : ''
 	if s:status != {}
@@ -1426,6 +1442,7 @@ fu! ctrlp#progress(enum, ...)
 	el
 		let &l:stl = '%#CtrlPStats# '.a:enum.' %* '.txt.'%=%<%#CtrlPMode2# %{getcwd()} %*'
 	en
+  echomsg "progress end"
 	redraws
 endf
 " *** Paths {{{2
@@ -1502,19 +1519,24 @@ fu! s:ispathitem()
 endf
 
 fu! ctrlp#igncwd(cwd)
+  echomsg "-------stage 1" a:cwd
 	retu ctrlp#utils#glob(a:cwd, 0) == '' ||
 		\ ( s:igntype >= 0 && s:usrign(a:cwd, getftype(a:cwd)) )
 endf
 
 fu! ctrlp#dirnfile(entries)
 	let [items, cwd] = [[[], []], s:dyncwd.s:lash()]
+  echomsg "-----------stage2"
 	for each in a:entries
 		let etype = getftype(each)
+    echomsg "!!!" each
 		if s:igntype >= 0 && s:usrign(each, etype) | con | en
 		if etype == 'dir'
 			if s:showhidden | if each !~ '[\/]\.\{1,2}$'
+        echomsg "add 1"
 				cal add(items[0], each)
 			en | el
+        echomsg "add 2"
 				cal add(items[0], each)
 			en
 		elsei etype == 'link'
@@ -1525,13 +1547,37 @@ fu! ctrlp#dirnfile(entries)
 				en
 			en
 		elsei etype == 'file'
+      echomsg "add 3"
 			cal add(items[1], each)
 		en
 	endfo
 	retu items
 endf
 
+fu! s:usrignret(item, type)
+  if s:igntype == 1
+    retu a:item =~ s:usrign
+  el
+    retu a:item =~ s:usrign[a:type]
+  en
+endf
+
 fu! s:usrign(item, type)
+  echomsg "start" a:item a:type
+  if s:igntype == 1
+    let a:ret = s:usrignret(a:item, a:type)  
+    echomsg a:ret a:item
+    retu a:ret
+  el
+    if s:igntype == 4 && has_key(s:usrign, a:type) && s:usrign[a:type] != ''
+      let a:ret = s:usrignret(a:item, a:type)  
+      echomsg a:ret a:item
+      retu a:ret
+    el
+      echomsg "not ignore"
+      retu 0
+    en
+  en
 	retu s:igntype == 1 ? a:item =~ s:usrign
 		\ : s:igntype == 4 && has_key(s:usrign, a:type) && s:usrign[a:type] != ''
 		\ ? a:item =~ s:usrign[a:type] : 0

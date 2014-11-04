@@ -15,6 +15,7 @@ filetype off
  let g:pathogen_disabled = [
     \ 'vim-fuzzyfinder',
     \ 'vim-taglist',
+    \ 'vim-ctrlp1.0',
     \ 'vim-easymotion1.0',
     \ 'vim-orgmode',
     \ 'vim-forms',
@@ -178,7 +179,8 @@ let Tlist_WinWidth = 48
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_close_preview=1
-let g:clang_library_path="/home/y00210927/vim/lib/clang-3.2"
+let g:clang_library_path="/usr/lib/clang/clang-3.2"
+" let g:clang_library_path="/home/y00210927/vim/lib/clang-3.2"
 " Incrementally match the search
 set incsearch
 
@@ -944,6 +946,11 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+"leaderf
+let g:Lf_WindowHeight = g:MyWinHeight
+nnoremap <silent> <Space>l :Leaderf<CR>
+
+
 "ctrlp for file, tag
 let g:ctrlp_map = '<Space>p'
 nnoremap <silent> <Space><F7> :CtrlPTag<CR>
@@ -1031,8 +1038,11 @@ let igdirs = [
     \ 'kernel/tools',
     \ 'kernel/usr',
     \ 'kernel/virt',
-    \ 'vendor/hisi',
+    \ 'vendor/hisi/ap/hardware/audio',
+    \ 'vendor/hisi/ap/hardware/vcodec',
     \ 'vendor/opensource',
+    \ 'vendor/huawei_platform',
+    \ 'vendor/pdk',
     \ 'vendor/thirdparty',
     \ ]
 let g:ctrlp_custom_ignore = { 
