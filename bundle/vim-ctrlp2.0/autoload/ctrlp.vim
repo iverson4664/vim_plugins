@@ -2322,6 +2322,7 @@ endf
 
 fu! ctrlp#init(type, ...)
 	if exists('s:init') || s:iscmdwin() | retu | en
+	cal s:setCtrlpRootDir() "happy added
 	let [s:ermsg, v:errmsg] = [v:errmsg, '']
 	let [s:matches, s:init] = [1, 1]
 	cal s:Reset(a:0 ? a:1 : {})
@@ -2333,7 +2334,6 @@ fu! ctrlp#init(type, ...)
 	cal ctrlp#setlines(s:settype(a:type))
 	cal s:SetDefTxt()
 	cal s:BuildPrompt(1)
-	cal s:setCtrlpRootDir() "happy added
 	if s:keyloop | cal s:KeyLoop() | en
 endf
 " - Autocmds {{{1
