@@ -13,14 +13,29 @@ filetype off
 
  " To disable a plugin, add it's bundle name to the following list
  let g:pathogen_disabled = [
-    \ 'vim-fuzzyfinder',
-    \ 'vim-taglist',
-    \ 'vim-easymotion1.0',
-    \ 'vim-orgmode',
-    \ 'vim-forms',
-    \ 'vim-twitvim',
+    \ 'vim-blogit',
     \ 'vim-bufkill',
+    \ 'vim-doxgen',
+    \ 'vim-easymotion1.0',
+    \ 'vim-forms',
     \ 'vim-fswitch',
+    \ 'vim-fuzzyfinder',
+    \ 'vim-gnupg',
+    \ 'vim-jade',
+    \ 'vim-json',
+    \ 'vim-l9',
+    \ 'vim-mwutils',
+    \ 'vim-neocomplcache-clang',
+    \ 'vim-neocomplcache',
+    \ 'vim-orgmode',
+    \ 'vim-sbt',
+    \ 'vim-scala',
+    \ 'vim-self',
+    \ 'vim-taglist',
+    \ 'vim-textobjline',
+    \ 'vim-textobjuser',
+    \ 'vim-twitvim',
+    \ 'vim-ultisnips',
     \ ]
  if v:version < '703584'
      call add(g:pathogen_disabled, 'YouCompleteMe')
