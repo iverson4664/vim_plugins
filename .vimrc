@@ -24,6 +24,7 @@ filetype off
     \ 'vim-jade',
     \ 'vim-json',
     \ 'vim-l9',
+    \ 'vim-leaderf',
     \ 'vim-mwutils',
     \ 'vim-neocomplcache-clang',
     \ 'vim-neocomplcache',
@@ -559,6 +560,7 @@ endfunction
 "-----------------------------------------------------------------------------
 " Autotags Settings
 "-----------------------------------------------------------------------------
+let g:autotagsdir = $HOME . "/.autotags/byhash"
 let g:autotags_no_global = 1
 let g:autotags_ctags_opts = "--exclude=target --exclude=vendor"
 let g:autotags_ctags_languages = "+Scala,+Java,+Vim"
@@ -907,7 +909,7 @@ if exists("+showtabline")
     imap   <C-S-Tab>  <C-O>:tabprev<CR>
 endif
 
-set makeprg=cd\ ~/proj/aosp/src;\ source\ build/envsetup.sh;\ setpaths;\ m\ showcommands\ libCamObjMdl\ testCamObjMdl
+" set makeprg=cd\ ~/proj/aosp/src;\ source\ build/envsetup.sh;\ setpaths;\ m\ showcommands\ libCamObjMdl\ testCamObjMdl
 
 "happy added start
 let g:MyWinHeight=20
@@ -960,12 +962,15 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-"leaderf
-let g:Lf_WindowHeight = g:MyWinHeight
-nnoremap <silent> <Space>l :Leaderf<CR>
+" leaderf
+" let g:Lf_WindowHeight = g:MyWinHeight
+" nnoremap <silent> <Space>l :Leaderf<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ctrlp mode:         0 - IGNORE,    1 - INCLUDE
+" ctrlp INCLUDE type: 0 - SPECIFIED, 1 - AUTOTAGS
+" command: CtrlPToggleMode, CtrlPToggle2Autotags, CtrlPQueryToggleInfo
 
-"ctrlp for file, tag
 let g:ctrlp_map = '<Space>p'
 nnoremap <silent> <Space><F7> :CtrlPTag<CR>
 let g:ctrlp_clear_cache_on_exit = 0
@@ -974,6 +979,7 @@ let g:ctrlp_by_filename = 1
 let g:ctrlp_working_path_mode = 0 " 'ra'
 let g:ctrlp_max_height = g:MyWinHeight
 
+" one way: only add the folders except ignored dir
 let igdirs = [
     \ 'abi',
     \ 'art',
@@ -1061,12 +1067,29 @@ let igdirs = [
     \ ]
 let g:ctrlp_custom_ignore = { 
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
-    \ 'file': '\v(\.cpp|\.c|\.cxx)@<!$',
+    \ 'file': '\v(\.cpp|\.c|\.cxx|\.h)@<!$',
     \ }
 " \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@<!$',
 " set wildignore+=*/frameworks/rs*,*/external/*,*/bionic/*,*/art/*        " Linux/MacOSX
 
+" another way: only add specified folders
+let g:ctrlp_inlcude_dirs = [
+    \ 'vendor/huawei/camera3',
+    \ 'vendor/hisi/ap/hardware/camera3',
+    \ 'kernel/drivers/media/huawei',
+    \ 'kernel/include/media/huawei',
+    \ 'kernel/include/uapi/linux',
+    \ 'kernel/drivers/media/v4l2-core',
+    \ 'frameworks/av/camera',
+    \ 'frameworks/av/services/camera',
+    \ 'frameworks/av/include/camera',
+    \ 'system/core/include',
+    \ 'hardware/libhardware/include',
+    \ 'system/media/camera',
+    \ 'system/core/libutils',
+    \ ]
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 "happy added end

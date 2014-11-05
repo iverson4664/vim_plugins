@@ -65,4 +65,8 @@ com! -bar CtrlPBookmarkDir cal ctrlp#init(ctrlp#bookmarkdir#id())
 com! -n=? -com=dir -bang CtrlPBookmarkDirAdd
 	\ cal ctrlp#call('ctrlp#bookmarkdir#add', '<bang>', <q-args>)
 
+com! -bar CtrlPToggleMode  cal ctrlp#ToggleMode() " happy added
+com! -bar CtrlPToggle2Autotags  cal ctrlp#Toggle2Autotags() " happy added
+com! -bar CtrlPQueryToggleInfo  cal ctrlp#QueryToggleInfo() " happy added
+
 " vim:ts=2:sw=2:sts=2

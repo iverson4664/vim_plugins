@@ -50,6 +50,7 @@ fu! s:ignore()
 		\ 'file': '\v'.join(igfiles, '|'),
 		\ }
 endf
+
 " Script local vars {{{2
 let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ ['g:ctrlp_', 'b:ctrlp_', {
@@ -58,6 +59,7 @@ let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ 'buffer_func':           ['s:buffunc', {}],
 	\ 'by_filename':           ['s:byfname', 0],
 	\ 'custom_ignore':         ['s:usrign', s:ignore()],
+	\ 'inlcude_dirs':          ['s:includedirs', []],
 	\ 'default_input':         ['s:deftxt', 0],
 	\ 'dont_split':            ['s:nosplit', 'netrw'],
 	\ 'dotfiles':              ['s:showhidden', 0],
@@ -184,7 +186,7 @@ let s:hlgrps = {
 	\ }
 " Get the options {{{2
 fu! s:opts(...)
-	unl! s:usrign s:usrcmd s:urprtmaps
+	unl! s:usrign s:usrcmd s:urprtmaps s:includedirs
 	for each in ['byfname', 'regexp', 'extensions'] | if exists('s:'.each)
 		let {each} = s:{each}
 	en | endfo
@@ -343,9 +345,19 @@ fu! ctrlp#files()
 		let [lscmd, s:initcwd, g:ctrlp_allfiles] = [s:lsCmd(), s:dyncwd, []]
 		" Get the list of files
 		if empty(lscmd)
-			if !ctrlp#igncwd(s:dyncwd)
-				cal s:GlobPath(s:fnesc(s:dyncwd, 'g', ','), 0)
-			en
+      if exists('s:ctrlpIncludeDirs') && !empty(s:ctrlpIncludeDirs)
+        echomsg "INCLUDE MODE"
+        for dir in s:ctrlpIncludeDirs
+          if !ctrlp#igncwd(dir)
+            cal s:GlobPath(s:fnesc(dir, 'g', ','), 0)
+          en
+        endfo
+      el
+        echomsg "IGNORE MODE"
+        if !ctrlp#igncwd(s:dyncwd)
+          cal s:GlobPath(s:fnesc(s:dyncwd, 'g', ','), 0)
+        en
+      en
 		el
 			sil! cal ctrlp#progress('Indexing...')
 			try | cal s:UserCmd(lscmd)
@@ -2321,6 +2333,7 @@ fu! ctrlp#init(type, ...)
 	cal ctrlp#setlines(s:settype(a:type))
 	cal s:SetDefTxt()
 	cal s:BuildPrompt(1)
+	cal s:setCtrlpRootDir() "happy added
 	if s:keyloop | cal s:KeyLoop() | en
 endf
 " - Autocmds {{{1
@@ -2345,6 +2358,112 @@ fu! s:autocmds()
 		aug END
 	en
 endf
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" happy added:
+" use autotags' root directory as ctrlp's root
+fu! s:PathHash(val)
+    retu substitute(system("sha1sum", a:val), " .*", "", "")
+endf
+
+fu! s:setCtrlpRootDir()
+  if exists('s:ctrlpmode') && s:ctrlpmode == 0
+    " use IGNORE mode
+    retu
+  en
+
+  let s:ctrlpIncludeDirs = []
+
+  " find autotags subdir
+  if !exists("g:autotagsdir")
+      let g:autotagsdir = $HOME . "/.autotags/byhash"
+  endif
+
+  let l:dir = getcwd()
+  wh l:dir != "/"
+    if getftype(g:autotagsdir . '/' . s:PathHash(l:dir)) == "dir"
+      let a:autotagsroot = g:autotagsdir . '/' . s:PathHash(l:dir)
+      " echomsg "autotags root exist: " . a:autotagsroot
+      break
+    endif
+    " get parent directory
+    let l:dir = fnamemodify(l:dir, ":p:h:h")
+  endw
+
+  if !exists("a:autotagsroot") ||
+     \ !isdirectory(a:autotagsroot) ||
+     \ !isdirectory(a:autotagsroot . '/origin')
+      echomsg "Invalid Autotags' root directory!"
+      retu
+  el
+      let s:ctrlproot = resolve(a:autotagsroot . "/origin")
+  en
+
+  if empty(s:ctrlproot)
+    echomsg "Cann't get Autotags' root directory!"
+    retu
+  en
+
+  if exists('s:ctrlp2autotags') && s:ctrlp2autotags == 0
+    " echomsg "use SPECIFIED type"
+    for dir in s:includedirs
+      let a:subdir = s:ctrlproot . '/' . dir
+      call add(s:ctrlpIncludeDirs, a:subdir)
+    endfo
+  el
+    " echomsg "use AUTOTAGS type"
+    for l:entry in split(system("ls " . a:autotagsroot), "\n")
+      if stridx(l:entry, "include_") == 0
+        let l:path = a:autotagsroot . "/" . l:entry
+        if getftype(l:path) == 'link' && isdirectory(l:path)
+          let l:subdir = resolve(l:path)
+          let l:subsrcdir = resolve(l:path . "/origin")
+          " echomsg "adding include dirs: " . l:subsrcdir
+          " sleep 1
+          call add(s:ctrlpIncludeDirs, l:subsrcdir)
+        endif
+      endif
+    endfor
+  en
+endf
+
+fu! ctrlp#Toggle2Autotags()
+  if !exists('s:ctrlp2autotags') || s:ctrlp2autotags == 0
+    let s:ctrlp2autotags = 1
+  el
+    let s:ctrlp2autotags = 0
+  en
+  echomsg "ctrlp INCLUDE folders type: ->"
+        \ s:ctrlp2autotags "-" s:ctrlp2autotags ? "AUTOTAGS" : "SPECIFIED"
+endf
+
+fu! ctrlp#ToggleMode()
+  if !exists('s:ctrlpmode') || s:ctrlpmode == 0
+    let s:ctrlpmode = 1
+  el
+    let s:ctrlpmode = 0
+  en
+  echomsg "ctrlp scanning rule: ->"
+        \ s:ctrlpmode "-" s:ctrlpmode ? "INCLUDE" : "IGNORE"
+endf
+
+fu! ctrlp#QueryToggleInfo()
+  if !exists('s:ctrlpmode')
+    call ctrlp#ToggleMode()
+  el
+    echomsg "ctrlp scanning rule: ->"
+          \ s:ctrlpmode "-" s:ctrlpmode ? "INCLUDE" : "IGNORE"
+  en
+
+  if !exists('s:ctrlp2autotags')
+    call ctrlp#Toggle2Autotags()
+  el
+    echomsg "ctrlp INCLUDE folders type: ->"
+          \ s:ctrlp2autotags "-" s:ctrlp2autotags ? "AUTOTAGS" : "SPECIFIED"
+  en
+endf
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "}}}
 
 " vim:fen:fdm=marker:fmr={{{,}}}:fdl=0:fdc=1:ts=2:sw=2:sts=2
