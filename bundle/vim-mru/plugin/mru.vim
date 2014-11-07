@@ -1015,7 +1015,39 @@ function! s:MRU_Refresh_Menu()
     let &cpoptions = old_cpoptions
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" happy add feature : each vim project (has Root dir) makes its own mru file
+
+fu! s:MruCacheMkdir(dir)
+    if exists('*mkdir') && !isdirectory(a:dir)
+        sil! cal mkdir(a:dir, 'p')
+    en
+    retu a:dir
+endf
+
+fu! s:MruSetCacheFilename()
+    let a:root = g:getProjectRoot()
+    if !isdirectory(a:root)
+        retu
+    en
+
+    let a:cacheDir = $HOME . '/.cache/mru'
+    if !isdirectory(s:MruCacheMkdir(a:cacheDir))
+        echomsg "Mru make cache dir failed !"
+        retu
+    en
+    let [tail, dir] = ['', a:root]
+    let a:name = substitute(dir, '\([\/]\|^\a\zs:\)', '%', 'g').tail.'.txt'
+
+    let g:MRU_File = a:cacheDir . '/' . a:name
+    " echomsg "mru cache path :" g:MRU_File
+endf
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Load the MRU list on plugin startup
+call s:MruSetCacheFilename() " happy added
+
 call s:MRU_LoadList()
 
 " MRU autocommands {{{1

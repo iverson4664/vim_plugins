@@ -809,6 +809,9 @@ fu! s:PrtFocusMap(char)
 endf
 
 fu! s:PrtClearCache()
+	let s:ctrlpRootGot = 0 "happy added
+	cal s:setCtrlpRootDir() "happy added
+
 	if s:itemtype == 0
 		cal ctrlp#clr()
 	elsei s:itemtype > 2
@@ -2361,12 +2364,13 @@ endf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " happy added:
-" use autotags' root directory as ctrlp's root
-fu! s:PathHash(val)
-    retu substitute(system("sha1sum", a:val), " .*", "", "")
-endf
 
 fu! s:setCtrlpRootDir()
+  if exists('s:ctrlpRootGot') && s:ctrlpRootGot == 1
+    retu
+  en
+  let s:ctrlpRootGot = 1
+
   if exists('s:ctrlpmode') && s:ctrlpmode == 0
     " use IGNORE mode
     retu
@@ -2374,47 +2378,23 @@ fu! s:setCtrlpRootDir()
 
   let s:ctrlpIncludeDirs = []
 
-  " find autotags subdir
-  if !exists("g:autotagsdir")
-      let g:autotagsdir = $HOME . "/.autotags/byhash"
-  endif
-
-  let l:dir = getcwd()
-  wh l:dir != "/"
-    if getftype(g:autotagsdir . '/' . s:PathHash(l:dir)) == "dir"
-      let a:autotagsroot = g:autotagsdir . '/' . s:PathHash(l:dir)
-      " echomsg "autotags root exist: " . a:autotagsroot
-      break
-    endif
-    " get parent directory
-    let l:dir = fnamemodify(l:dir, ":p:h:h")
-  endw
-
-  if !exists("a:autotagsroot") ||
-     \ !isdirectory(a:autotagsroot) ||
-     \ !isdirectory(a:autotagsroot . '/origin')
-      echomsg "Invalid Autotags' root directory!"
-      retu
-  el
-      let s:ctrlproot = resolve(a:autotagsroot . "/origin")
-  en
-
-  if empty(s:ctrlproot)
-    echomsg "Cann't get Autotags' root directory!"
+  let a:hashRoot = g:getProjectRootHash()
+  let a:root = g:getProjectRoot(a:hashRoot)
+  if !isdirectory(a:root)
     retu
   en
 
   if exists('s:ctrlp2autotags') && s:ctrlp2autotags == 0
     " echomsg "use SPECIFIED type"
     for dir in s:includedirs
-      let a:subdir = s:ctrlproot . '/' . dir
+      let a:subdir = a:root . '/' . dir
       call add(s:ctrlpIncludeDirs, a:subdir)
     endfo
   el
     " echomsg "use AUTOTAGS type"
-    for l:entry in split(system("ls " . a:autotagsroot), "\n")
+    for l:entry in split(system("ls " . a:hashRoot), "\n")
       if stridx(l:entry, "include_") == 0
-        let l:path = a:autotagsroot . "/" . l:entry
+        let l:path = a:hashRoot . "/" . l:entry
         if getftype(l:path) == 'link' && isdirectory(l:path)
           let l:subdir = resolve(l:path)
           let l:subsrcdir = resolve(l:path . "/origin")
