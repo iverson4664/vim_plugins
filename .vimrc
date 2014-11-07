@@ -863,7 +863,7 @@ if has('gui')
     set guioptions-=e
 endif
 if exists("+showtabline")
-    function MyTabLine()
+    function! MyTabLine()
         let s = ''
         let t = tabpagenr()
         let i = 1
