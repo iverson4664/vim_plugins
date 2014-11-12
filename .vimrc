@@ -62,6 +62,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
+if has("autocmd")
+    au! FileType c setl noexpandtab
+endif
 
 " Printing options
 set printoptions=header:0,duplex:long,paper:letter

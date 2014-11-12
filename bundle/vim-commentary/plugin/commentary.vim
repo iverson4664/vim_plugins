@@ -14,6 +14,8 @@ function! s:surroundings() abort
     set commentstring=//%s
   elseif &filetype == "c"
     set commentstring=/*%s*/
+  elseif &filetype == "rc"
+    set commentstring=#%s
   endif
 
   return split(substitute(substitute(

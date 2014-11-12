@@ -159,6 +159,21 @@ function! EasyClip#Paste#WasLastChangePaste()
     return b:changedtick == s:lastPasteChangedtick || b:changedtick == g:lastSubChangedtick
 endfunction
 
+" happy added:
+fu! EasyClip#Paste#GetVisualModeOp()
+    let line = getline('.')
+    let pos = col('.') - 1
+    " let before = strpart(line, 0, pos)
+    let after = strpart(line, pos)
+    let next_chars = split(after, '\zs')
+    let next_char = get(next_chars, 1, '\n')
+    if next_char == '\n'
+        retu 'p'
+    el
+        retu 'P'
+    en
+endf
+
 function! EasyClip#Paste#PasteTextVisualMode(reg, count)
 
     normal! gv
@@ -168,7 +183,9 @@ function! EasyClip#Paste#PasteTextVisualMode(reg, count)
         exec "normal! \"_c\<c-r>" . EasyClip#GetDefaultReg()
     else
         normal! "_d
-        call EasyClip#Paste#PasteText(a:reg, a:count, "P", 1, "EasyClipPasteBefore")
+
+        let a:op = EasyClip#Paste#GetVisualModeOp() " happy added
+        call EasyClip#Paste#PasteText(a:reg, a:count, a:op, 1, "EasyClipPasteBefore")
     endif
 endfunction
 
