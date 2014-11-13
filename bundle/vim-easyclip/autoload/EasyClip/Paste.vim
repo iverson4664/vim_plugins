@@ -160,21 +160,31 @@ function! EasyClip#Paste#WasLastChangePaste()
 endfunction
 
 " happy added:
-fu! EasyClip#Paste#GetVisualModeOp()
-    let line = getline('.')
-    let pos = col('.') - 1
-    " let before = strpart(line, 0, pos)
-    let after = strpart(line, pos)
-    let next_chars = split(after, '\zs')
-    let next_char = get(next_chars, 1, '\n')
-    if next_char == '\n'
-        retu 'p'
-    el
-        retu 'P'
-    en
+fu! EasyClip#Paste#GetCursorPos()
+    retu col('.')
 endf
 
+" fu! EasyClip#Paste#GetVisualModeOp()
+"     let line = getline('.')
+"     let pos = col('.') - 1
+"     let before = strpart(line, 0, pos)
+"     let after = strpart(line, pos)
+"     let next_chars = split(after, '\zs')
+"     let next_char = get(next_chars, 1, '\n')
+"     let curr_char = get(next_chars, 0, 'a')
+"     let prev_chars = split(before, '\zs')
+"     let prev_char = get(prev_chars, -1, '\n')
+
+"     let eol = 0
+"     if col('$') -  col('.') <= 1
+"       let eol = 1
+"     end
+" endf
+
 function! EasyClip#Paste#PasteTextVisualMode(reg, count)
+
+    " happy added: record normal mode cursor position
+    let a:prevPos = EasyClip#Paste#GetCursorPos()
 
     normal! gv
 
@@ -184,7 +194,16 @@ function! EasyClip#Paste#PasteTextVisualMode(reg, count)
     else
         normal! "_d
 
-        let a:op = EasyClip#Paste#GetVisualModeOp() " happy added
+        " happy added start
+        let a:currPos = EasyClip#Paste#GetCursorPos()
+        if a:currPos < a:prevPos
+            let a:op = 'p'
+        el
+            let a:op = 'P'
+        en
+        " let a:op = EasyClip#Paste#GetVisualModeOp()
+        " happy added end
+
         call EasyClip#Paste#PasteText(a:reg, a:count, a:op, 1, "EasyClipPasteBefore")
     endif
 endfunction
