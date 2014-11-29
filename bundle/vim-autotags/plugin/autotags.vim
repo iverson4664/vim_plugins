@@ -160,6 +160,10 @@ fun! s:AutotagsInit()
     if !exists("g:autotags_gen_full")
         let g:autotags_gen_full = 0
     endif
+
+    if !exists("g:autotags_specified_dirs")
+        let g:autotags_specified_dirs = []
+    endif
     "happy modified end
 
     let s:cscope_file_pattern = '.*\' . join(split(g:autotags_cscope_file_extensions, " "), '\|.*\')
@@ -460,6 +464,24 @@ fun! AutotagsRemove()
 endfun
 
 "happy added start
+fun! AutotagsGenSpecified()
+    if s:AutotagsIsLoaded() == 1
+        if !exists('g:autotags_specified_dirs')
+            echomsg "no specified dirs !"
+            retu
+        en
+
+        for dir in g:autotags_specified_dirs
+            let a:rootdir = resolve(s:autotags_subdir . "/origin")
+            let a:subdir = a:rootdir . '/' . dir
+            echomsg "subdir:" a:subdir
+            call AutotagsAddPath(a:subdir)
+        endfo
+    else
+        echomsg "Autotags were not loaded!"
+    endif
+endfun
+
 fun! AutotagsGenFull()
     if g:autotags_gen_full == 0
         let g:autotags_gen_full = 1
@@ -557,6 +579,7 @@ fun! AutotagsRemoveAll()
     endif
 endfun
 
+command! AutotagsGenSpecified call AutotagsGenSpecified()
 command! AutotagsGenFull call AutotagsGenFull()
 command! AutotagsRemoveAll call AutotagsRemoveAll()
 command! AutotagsRemoveSubdir call AutotagsRemoveSubdir()

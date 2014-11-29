@@ -558,16 +558,6 @@ let g:xptemplate_brace_complete = ''
 "endfunction
 
 "-----------------------------------------------------------------------------
-" Autotags Settings
-"-----------------------------------------------------------------------------
-let g:autotagsdir = $HOME . "/.autotags/byhash"
-let g:autotags_no_global = 1
-let g:autotags_ctags_opts = "--exclude=target --exclude=vendor"
-let g:autotags_ctags_languages = "+Scala,+Java,+Vim"
-let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
-let g:autotags_ctags_global_include = ""
-
-"-----------------------------------------------------------------------------
 " Gundo Settings
 "-----------------------------------------------------------------------------
 nmap <c-F5> :GundoToggle<cr>
@@ -914,6 +904,22 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "happy added start
 
+let g:custom_specified_dirs = [
+    \ 'vendor/huawei/camera3',
+    \ 'vendor/hisi/ap/hardware/camera3',
+    \ 'kernel/drivers/media/huawei',
+    \ 'kernel/include/media/huawei',
+    \ 'kernel/include/uapi/linux',
+    \ 'kernel/drivers/media/v4l2-core',
+    \ 'frameworks/av/camera',
+    \ 'frameworks/av/services/camera',
+    \ 'frameworks/av/include/camera',
+    \ 'system/core/include',
+    \ 'hardware/libhardware/include',
+    \ 'system/media/camera',
+    \ 'system/core/libutils',
+    \ ]
+
 " find project root, use autotags F4 feature
 fu! s:PathHash(val)
     retu substitute(system("sha1sum", a:val), " .*", "", "")
@@ -957,10 +963,25 @@ fu! g:getProjectRoot(...)
     retu resolve(a:hashRoot . "/origin")
 endf
 
+"-----------------------------------------------------------------------------
+" Autotags Settings
+"-----------------------------------------------------------------------------
+let g:autotagsdir = $HOME . "/.autotags/byhash"
+let g:autotags_no_global = 1
+let g:autotags_ctags_opts = "--exclude=target --exclude=vendor"
+let g:autotags_ctags_languages = "+Scala,+Java,+Vim"
+let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
+let g:autotags_ctags_global_include = ""
+let g:autotags_specified_dirs = g:custom_specified_dirs
+
+" define custom win height
 let g:MyWinHeight=20
 let &cmdwinheight=g:MyWinHeight
 " execute "set cmdwinheight=".g:MyWinHeight
+
 set ic
+
+" qf win
 if has("cscope")
     "for myself vim
     set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
@@ -1117,21 +1138,7 @@ let g:ctrlp_custom_ignore = {
 " set wildignore+=*/frameworks/rs*,*/external/*,*/bionic/*,*/art/*        " Linux/MacOSX
 
 " another way: only add specified folders
-let g:ctrlp_inlcude_dirs = [
-    \ 'vendor/huawei/camera3',
-    \ 'vendor/hisi/ap/hardware/camera3',
-    \ 'kernel/drivers/media/huawei',
-    \ 'kernel/include/media/huawei',
-    \ 'kernel/include/uapi/linux',
-    \ 'kernel/drivers/media/v4l2-core',
-    \ 'frameworks/av/camera',
-    \ 'frameworks/av/services/camera',
-    \ 'frameworks/av/include/camera',
-    \ 'system/core/include',
-    \ 'hardware/libhardware/include',
-    \ 'system/media/camera',
-    \ 'system/core/libutils',
-    \ ]
+let g:ctrlp_inlcude_dirs = g:custom_specified_dirs
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
