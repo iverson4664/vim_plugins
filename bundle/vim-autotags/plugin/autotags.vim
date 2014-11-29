@@ -279,7 +279,7 @@ endfun
 
 fun! s:AutotagsGenerate(sourcedir, tagsdir)
     let l:ctagsfile = a:tagsdir . "/tags"
-    echomsg "updating ctags&cscopedb " . a:tagsdir ." for " . a:sourcedir
+    echomsg "updating " . a:tagsdir ." for " . a:sourcedir
     " echomsg "updating ctags " . l:ctagsfile ." for " . a:sourcedir
     call system("nice -15 " . g:autotags_ctags_exe . " -R " .
         \ g:autotags_ctags_opts .
@@ -421,6 +421,10 @@ fun! AutotagsAdd()
         return
     endif
 
+    if AutotagsSubdirExist(l:sourcedir) == 1 " happy added
+        retu
+    en
+
     call AutotagsAddPath(l:sourcedir)
 endfun
 
@@ -464,23 +468,49 @@ fun! AutotagsRemove()
 endfun
 
 "happy added start
-fun! AutotagsGenSpecified()
+fu! AutotagsSubdirExist(subdir)
+    let a:exist = 0
+
+    let a:tagsdir = s:autotags_subdir
+    for l:entry in split(system("ls " . a:tagsdir), "\n")
+        if stridx(l:entry, "include_") == 0
+            let l:path = a:tagsdir . "/" . l:entry
+            if getftype(l:path) == 'link' && isdirectory(l:path)
+                let l:subtagdir = resolve(l:path)
+                let l:srcdir = resolve(l:path . "/origin")
+                if a:subdir == l:srcdir
+                    echomsg "subdir tags exist !"
+                    let a:exist = 1
+                    brea
+                en
+            en
+        en
+    endfo
+
+    retu a:exist
+endf
+
+fu! AutotagsGenSpecified()
     if s:AutotagsIsLoaded() == 1
         if !exists('g:autotags_specified_dirs')
             echomsg "no specified dirs !"
             retu
         en
 
+        let a:tagsdir = s:autotags_subdir
         for dir in g:autotags_specified_dirs
-            let a:rootdir = resolve(s:autotags_subdir . "/origin")
+            let a:rootdir = resolve(a:tagsdir . "/origin")
             let a:subdir = a:rootdir . '/' . dir
             echomsg "subdir:" a:subdir
-            call AutotagsAddPath(a:subdir)
+
+            if AutotagsSubdirExist(a:subdir) == 0
+                call AutotagsAddPath(a:subdir)
+            en
         endfo
     else
         echomsg "Autotags were not loaded!"
     endif
-endfun
+endf
 
 fun! AutotagsGenFull()
     if g:autotags_gen_full == 0
