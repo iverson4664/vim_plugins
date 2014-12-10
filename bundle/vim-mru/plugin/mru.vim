@@ -567,7 +567,7 @@ function! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type)
         " Edit the file in a new vertically split window above the previous
         " window
         wincmd p
-        exe 'belowright vnew ' . esc_fname
+        exe 'aboveleft vnew ' . esc_fname
     elseif a:open_type ==# 'newtab' || g:MRU_Open_File_Use_Tabs
 	call s:MRU_Open_File_In_Tab(a:fname, esc_fname)
     elseif a:open_type ==# 'preview'
