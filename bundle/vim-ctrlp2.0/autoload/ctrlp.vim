@@ -135,7 +135,7 @@ let [s:lcmap, s:prtmaps] = ['nn <buffer> <silent>', {
 	\ 'PrtInsert()':          ['<c-\>'],
 	\ 'PrtCurStart()':        ['<c-a>'],
 	\ 'PrtCurEnd()':          ['<c-e>'],
-	\ 'PrtCurLeft()':         ['<left>', '<c-^>'],
+	\ 'PrtCurLeft()':         ['<c-H>', '<left>', '<c-^>'],
 	\ 'PrtCurRight()':        ['<c-l>', '<right>'],
 	\ 'PrtClearCache()':      ['<F5>'],
 	\ 'PrtDeleteEnt()':       ['<F7>'],
