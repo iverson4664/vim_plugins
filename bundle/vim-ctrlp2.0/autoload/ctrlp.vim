@@ -1037,7 +1037,7 @@ fu! ctrlp#acceptfile(...)
 		let useb = bufnr > 0 && buflisted(bufnr) && ( empty(tail) || useb )
 		let cmd =
 			\ md == 't' || s:splitwin == 1 ? ( useb ? 'tab sb' : 'tabe' ) :
-			\ md == 'h' || s:splitwin == 2 ? ( useb ? 'sb' : 'bo new' ) :
+			\ md == 'h' || s:splitwin == 2 ? ( useb ? 'sb' : 'belowright new' ) :
 			\ md == 'v' || s:splitwin == 3 ? ( useb ? 'vert sb' : 'vne' ) :
 			\ call('ctrlp#normcmd', useb ? ['b', 'bo vert sb'] : ['e'])
 		" Reset &switchbuf option
