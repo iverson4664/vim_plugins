@@ -315,7 +315,7 @@ if version >= 700
   call s:X("CursorColumn","","1c1c1c","","",s:termBlack)
   call s:X("MatchParen","ffffff","80a090","bold","","DarkCyan")
 
-  call s:X("TabLine","000000","b0b8c0","italic","",s:termBlack)
+  call s:X("TabLine","000000","969696","italic","",s:termBlack)
   call s:X("TabLineFill","9098a0","","","",s:termBlack)
   call s:X("TabLineSel","000000","f0f0f0","italic,bold",s:termBlack,"White")
 
