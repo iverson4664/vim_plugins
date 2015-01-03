@@ -21,6 +21,7 @@ filetype off
     \ 'vim-fswitch',
     \ 'vim-fuzzyfinder',
     \ 'vim-gnupg',
+    \ 'vim-indentLine',
     \ 'vim-jade',
     \ 'vim-json',
     \ 'vim-l9',
@@ -183,7 +184,9 @@ set number
 "set autowrite		" Automatically save before commands like :next and :make
 "set hidden             " Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
-colorscheme jellybeans
+"
+" colorscheme jellybeans
+colorscheme Tomorrow-Night-Eighties
 
 "nnoremap <silent> <F8> :TlistToggle<CR>
 nnoremap <silent> <F8> :TagbarToggle<CR>
@@ -1141,6 +1144,13 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_inlcude_dirs = g:custom_specified_dirs
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" cSyntaxAfter setting
+au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
+
+" powerline color setting
+let g:Powerline_colorscheme = "solarized256"
+let g:Powerline_theme = "solarized256"
 
 
 "happy added end
