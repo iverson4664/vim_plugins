@@ -34,9 +34,13 @@ function! CSyntaxAfter()
 	syntax keyword Boolean true false NULL TRUE FALSE
 	syntax keyword Statement namespace stderr stdin stdout new this delete
 
-	syntax match _Block "[{}]"
-	syntax match _Bracket "[\[\]]"
-	syntax match _Operator display "[-+&|<>=!\/~.,;:*%&^?()]"
+    if (exists('g:rainbow_active') && g:rainbow_active)
+        syntax match _Operator display "[-+&|<>=!\/~.,;:*%&^?]"
+    elsei
+        syntax match _Block "[{}]"
+        syntax match _Bracket "[\[\]]"
+        syntax match _Operator display "[-+&|<>=!\/~.,;:*%&^?()]"
+    en
 	syntax region _Comment start="\/\*" end="\*\/"
 	syntax match _Comment "\/\/.*$"
 
