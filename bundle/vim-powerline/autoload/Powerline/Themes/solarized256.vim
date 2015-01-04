@@ -10,15 +10,22 @@
 "\ , 'lineinfo'
 let g:Powerline#Themes#solarized256#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
+		\ , 'paste_indicator'
 		\ , 'fugitive:branch'
+		\ , 'hgrev:branch'
 		\ , 'fileinfo'
 		\ , 'flags.mod'
 		\ , 'syntastic:errors'
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
-		\ , 'sass:status'
 		\ , 'rvm:string'
-		\ , 'paste_indicator'
+		\ , 'virtualenv:statusline'
+		\ , 'sass:status'
+		\ , 'fileformat'
+		\ , 'fileencoding'
+		\ , 'filetype'
+		\ , 'scrollpercent'
+		\ , 'lineinfo'
 	\ ),
 	\
 	\ Pl#Theme#Buffer('command_t'

@@ -3,6 +3,19 @@
 "
 " This colorscheme is based on Solarized-dark colors, combined
 " with Powerline native colors
+" " happy modified:
+"  \ Pl#Hi#Segments(['lineinfo'], {
+" 	 \ 'n': ['gray2', 'gray10', ['bold']],
+" 	 \ 'N': ['gray7', 'gray1', ['bold']],
+" 	 \ 'i': ['darkestcyan', 'mediumcyan', ['bold']],
+" 	\ }),
+"
+" \ Pl#Hi#Segments(['lineinfo.line.tot'], {
+" 	\ 'n': ['gray6'],
+" 	\ 'N': ['gray5'],
+" 	\ 'i': ['darkestcyan'],
+" 	\ }),
+
 call Pl#Hi#Allocate({
 	\ 'black'          : 16,
 	\ 'white'          : 231,
@@ -81,7 +94,7 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['scrollpercent'], {
-		\ 'n': ['gray7', 'gray2'],
+		\ 'n': ['gray7', 'base02'],
 		\ 'N': ['base2', 'base02'],
 		\ }),
 	\
@@ -109,14 +122,14 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
-		\ 'n': ['gray5', 'gray2'],
+		\ 'n': ['gray5', 'base02'],
 		\ 'i': ['mediumcyan', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lineinfo'], {
-		\ 'n': ['gray2', 'gray10', ['bold']],
-		\ 'N': ['gray7', 'gray1', ['bold']],
-		\ 'i': ['darkestcyan', 'mediumcyan', ['bold']],
+		\ 'n': ['gray7', 'base02', ['bold']],
+		\ 'N': ['gray7', 'base02', ['bold']],
+		\ 'i': ['gray7', 'base02', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['errors'], {
@@ -127,7 +140,6 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['lineinfo.line.tot'], {
 		\ 'n': ['gray6'],
 		\ 'N': ['gray5'],
-		\ 'i': ['darkestcyan'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['paste_indicator', 'ws_marker'], {

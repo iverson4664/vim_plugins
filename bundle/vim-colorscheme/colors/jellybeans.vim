@@ -332,7 +332,7 @@ call s:X("CursorLineNr","ccc5c4","","none","White","")
 call s:X("Comment","888888","","italic","Grey","")
 call s:X("Todo","c7c7c7","","bold","White",s:termBlack)
 
-call s:X("StatusLine","000000","dddddd","italic","","White")
+call s:X("StatusLine","000000","303030","italic","","White")
 call s:X("StatusLineNC","ffffff","403c41","italic","White","Black")
 call s:X("VertSplit",g:jellybeans_background_color,"","",s:termBlack,s:termBlack)
 " call s:X("VertSplit","777777","403c41","",s:termBlack,s:termBlack)
