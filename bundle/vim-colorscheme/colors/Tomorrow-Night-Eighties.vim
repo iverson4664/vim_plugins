@@ -12,12 +12,15 @@ let s:line = "23282D"
 let s:comment = "808F80"
 let s:light_green = "82ECA5"
 let s:orange = "F99157"
+let s:light_orange = "FCC4A5"
 let s:yellow = "FFCC66"
 let s:chartreuse = "B9CA4A"
 let s:red = "F2777A"
 let s:blue = "99CCCC"
+let s:light_blue = "99CCF0"
 let s:cyan = "2DE3FE"
 let s:window = "4D5057"
+let s:light_purple = "8197bf"
 
 " Console 256 Colours
 if !has("gui_running")
@@ -284,14 +287,17 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Todo", s:comment, s:background, "")
 	call <SID>X("Title", s:comment, "", "")
 	call <SID>X("Identifier", s:light_green, "", "none")
-	call <SID>X("Statement", s:foreground, "", "")
-	call <SID>X("Conditional", s:foreground, "", "")
+	call <SID>X("Statement", s:light_purple, "", "")
+	" call <SID>X("Statement", s:foreground, "", "")
+	call <SID>X("Conditional", s:light_orange, "", "")
+	" call <SID>X("Conditional", s:foreground, "", "")
 	call <SID>X("Repeat", s:foreground, "", "")
 	call <SID>X("Structure", s:cyan, "", "")
 	call <SID>X("Function", s:blue, "", "")
 	call <SID>X("Constant", s:orange, "", "")
 	call <SID>X("String", s:chartreuse, "", "")
-	call <SID>X("Special", s:foreground, "", "")
+	call <SID>X("Special", s:light_blue, "", "")
+	" call <SID>X("Special", s:foreground, "", "")
 	call <SID>X("PreProc", s:cyan, "", "")
 	call <SID>X("Operator", s:red, "", "none")
 	call <SID>X("Type", s:blue, "", "none")
