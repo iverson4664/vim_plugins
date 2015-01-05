@@ -160,7 +160,8 @@ endfunction
 " same as :exec cmd  but eventignore=all is set for the duration
 function! nerdtree#exec(cmd)
     let old_ei = &ei
-    set ei=all
+    " happy modified: don't set it in "wincmd w/p" cmd
+    " set ei=all
     exec a:cmd
     let &ei = old_ei
 endfunction
