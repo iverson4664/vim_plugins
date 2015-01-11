@@ -538,6 +538,19 @@ function! s:MRU_Open_File_In_Tab(fname, esc_fname)
     endif
 endfunction
 
+fu! s:MRU_buftab(bufnr, md)
+    for tabnr in range(1, tabpagenr('$'))
+        if tabpagenr() == tabnr && a:md == 't' | con | en
+        let buflist = tabpagebuflist(tabnr)
+        if index(buflist, a:bufnr) >= 0
+            for winnr in range(1, tabpagewinnr(tabnr, '$'))
+                if buflist[winnr - 1] == a:bufnr | retu [tabnr, winnr] | en
+            endfo
+        en
+    endfo
+    retu [0, 0]
+endf
+
 " MRU_Window_Edit_File                  {{{1
 "   fname     : Name of the file to edit. May specify single or multiple
 "               files.
@@ -576,6 +589,23 @@ function! s:MRU_Window_Edit_File(fname, multi, edit_type, open_type)
     else
         " If the selected file is already open in one of the windows,
         " jump to it
+        if a:open_type ==# 'useopen' && a:edit_type ==# 'edit'
+            let bufnr = bufnr('^' . a:fname . '$')
+            if bufnr > 0
+                let [jmpb, bufwinnr] = [1, bufwinnr(bufnr)]
+                let buftab = s:MRU_buftab(bufnr, 't')
+            en
+
+            if exists('jmpb') && bufwinnr > 0 && !buftab[0]
+                exe bufwinnr.'winc w'
+                retu
+            elsei exists('jmpb') && buftab[0]
+                exe 'tabn' buftab[0]
+                exe buftab[1].'winc w'
+                retu
+            en
+        en
+
         let winnum = bufwinnr('^' . a:fname . '$')
         if winnum != -1
             exe winnum . 'wincmd w'
