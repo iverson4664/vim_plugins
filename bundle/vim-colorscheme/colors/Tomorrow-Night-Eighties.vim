@@ -21,6 +21,7 @@ let s:light_blue = "99CCF0"
 let s:cyan = "2DE3FE"
 let s:window = "4D5057"
 let s:light_purple = "8197bf"
+let s:light_cyan = "71c0a7"
 
 " Console 256 Colours
 if !has("gui_running")
@@ -287,7 +288,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Todo", s:comment, s:background, "")
 	call <SID>X("Title", s:comment, "", "")
 	call <SID>X("Identifier", s:light_green, "", "none")
-	call <SID>X("Statement", s:light_purple, "", "")
+	call <SID>X("Statement", s:light_cyan, "", "")
 	" call <SID>X("Statement", s:foreground, "", "")
 	call <SID>X("Conditional", s:light_orange, "", "")
 	" call <SID>X("Conditional", s:foreground, "", "")
