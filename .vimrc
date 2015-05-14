@@ -907,6 +907,25 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "happy added start
 
+" map alt key start
+for i in range(65,90) + range(97,122)
+    let c = nr2char(i)
+    exec "map \e".c." <M-".c.">"
+    exec "map! \e".c." <M-".c.">"
+    " or set it like this
+    " exec "set <M-".c.">=\<Esc>".c
+endfor"
+
+nnoremap <M-h> 5h
+nnoremap <M-j> 5j
+nnoremap <M-k> 5k
+nnoremap <M-l> 5l
+vnoremap <M-h> 5h
+vnoremap <M-j> 5j
+vnoremap <M-k> 5k
+vnoremap <M-l> 5l
+" map alt key end
+
 let g:custom_specified_dirs = [
     \ 'vendor/huawei/camera3',
     \ 'vendor/hisi/ap/hardware/camera3',
