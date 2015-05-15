@@ -325,8 +325,8 @@ nmap <silent> ,sw :execute ":resize " . line('$')<cr>
 nnoremap <C-E> ,
 
 " Alright... let's try this out
-imap jj <esc>
-cmap jj <esc>
+inoremap jj <esc>
+cnoremap jj <esc>
 
 " I like jj - Let's try something else fun
 imap ,fn <c-r>=expand('%:t:r')<cr>
@@ -850,7 +850,7 @@ set cursorline
 set cursorcolumn
 " hi  CursorColumn  guibg=Grey40 guifg=red term=BOLD 
 
-set encoding=utf-8
+" set encoding=utf-8
 set t_Co=256   
 let g:Powerline_symbols= "fancy"
 set fillchars+=stl:\ ,stlnc:\
@@ -907,14 +907,31 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "happy added start
 
-" map alt key start
+" map meta key start
 for i in range(65,90) + range(97,122)
     let c = nr2char(i)
-    exec "map \e".c." <M-".c.">"
-    exec "map! \e".c." <M-".c.">"
-    " or set it like this
-    " exec "set <M-".c.">=\<Esc>".c
-endfor"
+"     " exec "map \e".c." <M-".c.">"
+"     " exec "map! \e".c." <M-".c.">"
+"     " or set it like this
+    exec "set <M-".c.">=\<Esc>".c
+endfor
+set ttimeoutlen=50
+set encoding=utf-8
+
+" let s:keys = map(range(97, 122), "nr2char(v:val)") " a-z
+" let s:keys += map(range(48, 57), "nr2char(v:val)")  " 0-9
+" let s:key_codes = map(range(1,37), '"<S-F".v:val.">"')
+" set timeout timeoutlen=1000 ttimeoutlen=32
+" for idx in range(len(s:keys))
+"     let pc = s:keys[idx]
+"     let kc  = s:key_codes[idx]
+"     exec "set ".kc."=\e".pc
+"     exec "map ".kc." <M-".pc.">"
+"     exec "map! ".kc." <M-".pc.">"
+" endfor
+
+" make esc do nothing
+" inoremap <Esc> <Nop>
 
 nnoremap <M-h> 5h
 nnoremap <M-j> 5j
@@ -924,7 +941,7 @@ vnoremap <M-h> 5h
 vnoremap <M-j> 5j
 vnoremap <M-k> 5k
 vnoremap <M-l> 5l
-" map alt key end
+" map meta key end
 
 let g:custom_specified_dirs = [
     \ 'vendor/huawei/camera3',
