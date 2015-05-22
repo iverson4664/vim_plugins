@@ -806,10 +806,10 @@ function! s:MRU_Open_Window(...)
                 \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
     vnoremap <buffer> <silent> <CR>
                 \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
-    " nnoremap <buffer> <silent> o
-    "             \ :call <SID>MRU_Select_File_Cmd('edit,newwin_horiz')<CR>
-    " vnoremap <buffer> <silent> o
-    "             \ :call <SID>MRU_Select_File_Cmd('edit,newwin_horiz')<CR>
+    nnoremap <buffer> <silent> o
+                \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
+    vnoremap <buffer> <silent> o
+                \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
 
     nnoremap <buffer> <silent> h
                 \ :call <SID>MRU_Select_File_Cmd('edit,newwin_horiz')<CR>

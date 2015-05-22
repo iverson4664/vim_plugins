@@ -4,8 +4,9 @@ if !exists('g:QuickfixWinHeight')
     let g:QuickfixWinHeight = 10
 end
 
-nmap <silent> <C-n> :cn<CR>
-nmap <silent> <C-p> :cp<CR>
+nnoremap <silent> <C-n> :cn<CR>
+nnoremap <silent> <C-p> :cp<CR>
+" nnoremap <silent> <Esc> :CloseQuickfixWin<CR>
 "nmap <C-t> :colder<CR>:cc<CR>
 
 function! GetBufferList()
@@ -36,4 +37,11 @@ function! ToggleQuickfixWin()
     endif
 endfunction
 
+function! CloseQuickfixWin()
+    if BufferIsOpen("Quickfix List")
+        exec ":ccl"
+    endif
+endfunction
+
 command! ToggleQuickfixWin call ToggleQuickfixWin()
+command! CloseQuickfixWin call CloseQuickfixWin()

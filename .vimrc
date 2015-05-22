@@ -326,6 +326,7 @@ nnoremap <C-E> ,
 
 " Alright... let's try this out
 inoremap jj <esc>
+inoremap JJ <esc>
 cnoremap jj <esc>
 
 " I like jj - Let's try something else fun
@@ -910,10 +911,10 @@ endif
 " map meta key start
 for i in range(65,90) + range(97,122)
     let c = nr2char(i)
-"     " exec "map \e".c." <M-".c.">"
-"     " exec "map! \e".c." <M-".c.">"
-"     " or set it like this
-    exec "set <M-".c.">=\<Esc>".c
+    " exec "map \e".c." <S-M-".c.">"
+    " exec "map! \e".c." <S-M-".c.">"
+    " or set it like this
+    exec "set <M-".c.">=\<C-[>".c
 endfor
 set ttimeoutlen=50
 set encoding=utf-8
