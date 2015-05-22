@@ -6,7 +6,7 @@ end
 
 nnoremap <silent> <C-n> :cn<CR>
 nnoremap <silent> <C-p> :cp<CR>
-" nnoremap <silent> <Esc> :CloseQuickfixWin<CR>
+nnoremap <silent> <Esc> :CloseQuickfixWin<CR>
 "nmap <C-t> :colder<CR>:cc<CR>
 
 function! GetBufferList()
