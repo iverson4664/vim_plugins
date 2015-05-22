@@ -914,7 +914,7 @@ for i in range(65,90) + range(97,122)
     " exec "map \e".c." <S-M-".c.">"
     " exec "map! \e".c." <S-M-".c.">"
     " or set it like this
-    exec "set <M-".c.">=\<C-[>".c
+    exec "set <M-".c.">=\<Esc>".c
 endfor
 set ttimeoutlen=50
 set encoding=utf-8
