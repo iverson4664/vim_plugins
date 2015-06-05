@@ -43,12 +43,12 @@ fu! s:ToggleQuickfixWin()
 endf
 
 " Global options
-let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
-	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
-	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
+" let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
+" 	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
+" 	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
-    \ 'CloseQuickfixWin()':            ['<esc>', '<c-c>'],
+    \ 'CloseQuickfixWin()':            ['<c-c>', 'q'],
     \ }]
 
 fu! s:MapKeys()
@@ -79,9 +79,9 @@ fu! s:Enter()
     let s:qfix_win = bufnr("$")
 
     " speed up esc key response
-    for [ke, va] in items(s:glbs) | if exists('+'.ke)
-        sil! exe 'let s:glb_'.ke.' = &'.ke.' | let &'.ke.' = '.string(va)
-    en | endfo
+    " for [ke, va] in items(s:glbs) | if exists('+'.ke)
+    "     sil! exe 'let s:glb_'.ke.' = &'.ke.' | let &'.ke.' = '.string(va)
+    " en | endfo
 
     call s:MapKeys()
 
@@ -90,9 +90,9 @@ endf
 fu! s:Exit()
     if exists('s:qfix_win')
 
-        for key in keys(s:glbs) | if exists('+'.key)
-            sil! exe 'let &'.key.' = s:glb_'.key
-        en | endfo
+        " for key in keys(s:glbs) | if exists('+'.key)
+        "     sil! exe 'let &'.key.' = s:glb_'.key
+        " en | endfo
 
         unlet! s:qfix_win
     en

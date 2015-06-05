@@ -1022,14 +1022,14 @@ endf
 " fix esc conflict with meta key combination
 
 " Global options
-let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
-	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
-	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
+" let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
+" 	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
+" 	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
 
 fu! s:Close()
-    for key in keys(s:glbs) | if exists('+'.key)
-        sil! exe 'let &'.key.' = s:glb_'.key
-    en | endfo
+    " for key in keys(s:glbs) | if exists('+'.key)
+    "     sil! exe 'let &'.key.' = s:glb_'.key
+    " en | endfo
 
     unlet s:smapped
 
@@ -1045,7 +1045,7 @@ fu! s:MruClose()
 endf
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
-    \ 'MruClose()':            ['<esc>', '<c-c>'],
+    \ 'MruClose()':            ['<c-c>', 'q'],
     \ }]
 
 fu! s:MapKeys()
@@ -1069,9 +1069,9 @@ endf
 fu! s:MruOpen()
     let s:Mrubufnr = bufnr('%')
 
-    for [ke, va] in items(s:glbs) | if exists('+'.ke)
-        sil! exe 'let s:glb_'.ke.' = &'.ke.' | let &'.ke.' = '.string(va)
-    en | endfo
+    " for [ke, va] in items(s:glbs) | if exists('+'.ke)
+    "     sil! exe 'let s:glb_'.ke.' = &'.ke.' | let &'.ke.' = '.string(va)
+    " en | endfo
 
     call s:MapKeys()
 endf
