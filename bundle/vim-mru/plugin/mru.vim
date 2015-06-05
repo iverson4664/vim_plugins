@@ -847,8 +847,8 @@ function! s:MRU_Open_Window(...)
     nnoremap <buffer> <silent> u :MRU<CR>
     nnoremap <buffer> <silent> <2-LeftMouse>
                 \ :call <SID>MRU_Select_File_Cmd('edit,useopen')<CR>
-    nnoremap <buffer> <silent> q :close<CR>
-    " nnoremap <buffer> <silent> <Esc> :close<CR>
+    " nnoremap <buffer> <silent> q :close<CR>
+    " nnoremap <buffer> <silent> <esc> :close<CR>
 
     " Restore the previous cpoptions settings
     let &cpoptions = old_cpoptions
@@ -895,74 +895,6 @@ function! s:MRU_Complete(ArgLead, CmdLine, CursorPos)
         " Return only the files matching the specified pattern
         return filter(copy(s:MRU_files), 'v:val =~? a:ArgLead')
     endif
-endfunction
-
-" MRU_Cmd                               {{{1
-" Function to handle the MRU command
-"   pat - File name pattern passed to the MRU command
-function! s:MRU_Cmd(pat)
-    if a:pat == ''
-        " No arguments specified. Open the MRU window
-        call s:MRU_Open_Window()
-        return
-    endif
-
-    " Load the latest MRU file
-    call s:MRU_LoadList()
-
-    " Empty MRU list
-    if empty(s:MRU_files)
-        call s:MRU_Warn_Msg('MRU file list is empty')
-        return
-    endif
-
-    " First use the specified string as a literal string and search for
-    " filenames containing the string. If only one filename is found,
-    " then edit it (unless the user wants to open the MRU window always)
-    let m = filter(copy(s:MRU_files), 'stridx(v:val, a:pat) != -1')
-    if len(m) > 0
-	if len(m) == 1 && !g:MRU_Window_Open_Always
-	    call s:MRU_Edit_File(m[0], 0)
-	    return
-	endif
-
-	" More than one file matches. Try find an accurate match
-	let new_m = filter(m, 'v:val ==# a:pat')
-	if len(new_m) == 1 && !g:MRU_Window_Open_Always
-	    call s:MRU_Edit_File(new_m[0], 0)
-	    return
-	endif
-
-	" Couldn't find an exact match, open the MRU window with all the
-        " files matching the pattern.
-	call s:MRU_Open_Window(a:pat)
-	return
-    endif
-
-    " Use the specified string as a regular expression pattern and search
-    " for filenames matching the pattern
-    let m = filter(copy(s:MRU_files), 'v:val =~? a:pat')
-
-    if len(m) == 0
-        " If an existing file (not present in the MRU list) is specified,
-        " then open the file.
-        if filereadable(a:pat)
-            call s:MRU_Edit_File(a:pat, 0)
-            return
-        endif
-
-        " No filenames matching the specified pattern are found
-        call s:MRU_Warn_Msg("MRU file list doesn't contain " .
-                    \ "files matching " . a:pat)
-        return
-    endif
-
-    if len(m) == 1 && !g:MRU_Window_Open_Always
-        call s:MRU_Edit_File(m[0], 0)
-        return
-    endif
-
-    call s:MRU_Open_Window(a:pat)
 endfunction
 
 " MRU_add_files_to_menu                 {{{1
@@ -1058,7 +990,9 @@ function! s:MRU_Refresh_Menu()
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" happy add feature : each vim project (has Root dir) makes its own mru file
+" happy add:
+" feature1 : each vim project (has Root dir) makes its own mru file
+" feature2 : add esc conflict with meta key: m-j,m-k,etc...
 
 fu! s:MruCacheMkdir(dir)
     if exists('*mkdir') && !isdirectory(a:dir)
@@ -1085,10 +1019,162 @@ fu! s:MruSetCacheFilename()
     " echomsg "mru cache path :" g:MRU_File
 endf
 
+" fix esc conflict with meta key combination
+
+" Global options
+let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
+	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
+	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
+
+fu! s:Close()
+    for key in keys(s:glbs) | if exists('+'.key)
+        sil! exe 'let &'.key.' = s:glb_'.key
+    en | endfo
+
+    unlet s:smapped
+
+    silent! close
+    " sli! exe ':close'
+endf
+
+fu! s:MruClose()
+    if bufnr('%') == s:Mrubufnr && bufname('%') == '__MRU_Files__'
+        noa cal s:Close()
+        noa winc p
+    en
+endf
+
+let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
+    \ 'MruClose()':            ['<esc>', '<c-c>'],
+    \ }]
+
+fu! s:MapKeys()
+    if !( exists('s:smapped') && s:smapped == s:Mrubufnr)
+        " Correct arrow keys in terminal
+        if ( has('termresponse') && v:termresponse =~ "\<ESC>" )
+                    \ || &term =~? '\vxterm|<k?vt|gnome|screen|linux|ansi'
+            for each in ['\A <up>','\B <down>','\C <right>','\D <left>']
+                exe s:lcmap.' <esc>['.each
+            endfo
+        en
+    en
+
+    for [ke, va] in items(s:prtmaps) | for kp in va
+        exe s:lcmap kp ':cal <SID>'.ke.'<cr>'
+    endfo | endfo
+
+    let s:smapped = s:Mrubufnr
+endf
+
+fu! s:MruOpen()
+    let s:Mrubufnr = bufnr('%')
+
+    for [ke, va] in items(s:glbs) | if exists('+'.ke)
+        sil! exe 'let s:glb_'.ke.' = &'.ke.' | let &'.ke.' = '.string(va)
+    en | endfo
+
+    call s:MapKeys()
+endf
+
+fu! s:WinOpen()
+    " echomsg "bufEnter"
+    " sleep
+endf
+
+fu! s:WinClose()
+    call s:Close()
+endf
+
+call s:MruSetCacheFilename()
+
+if has('autocmd')
+    aug MruAug
+        au!
+        " au WinEnter __MRU_Files__ call s:WinEnter()
+        " au WinLeave __MRU_Files__ noa call s:WinLeave()
+        " au BufEnter __MRU_Files__ cal s:WinOpen()
+        au BufLeave __MRU_Files__ noa cal s:WinClose()
+    aug END
+en
+
+" happy end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" MRU_Cmd                               {{{1
+" Function to handle the MRU command
+"   pat - File name pattern passed to the MRU command
+
+function! s:MRU_Cmd(pat)
+	" noa cal s:Open()
+    if a:pat == ''
+        " No arguments specified. Open the MRU window
+
+        call s:MRU_Open_Window()
+
+        call s:MruOpen() " happy added
+
+        return
+    endif
+
+    " Load the latest MRU file
+    call s:MRU_LoadList()
+
+    " Empty MRU list
+    if empty(s:MRU_files)
+        call s:MRU_Warn_Msg('MRU file list is empty')
+        return
+    endif
+
+    " First use the specified string as a literal string and search for
+    " filenames containing the string. If only one filename is found,
+    " then edit it (unless the user wants to open the MRU window always)
+    let m = filter(copy(s:MRU_files), 'stridx(v:val, a:pat) != -1')
+    if len(m) > 0
+	if len(m) == 1 && !g:MRU_Window_Open_Always
+	    call s:MRU_Edit_File(m[0], 0)
+	    return
+	endif
+
+	" More than one file matches. Try find an accurate match
+	let new_m = filter(m, 'v:val ==# a:pat')
+	if len(new_m) == 1 && !g:MRU_Window_Open_Always
+	    call s:MRU_Edit_File(new_m[0], 0)
+	    return
+	endif
+
+	" Couldn't find an exact match, open the MRU window with all the
+        " files matching the pattern.
+	call s:MRU_Open_Window(a:pat)
+	return
+    endif
+
+    " Use the specified string as a regular expression pattern and search
+    " for filenames matching the pattern
+    let m = filter(copy(s:MRU_files), 'v:val =~? a:pat')
+
+    if len(m) == 0
+        " If an existing file (not present in the MRU list) is specified,
+        " then open the file.
+        if filereadable(a:pat)
+            call s:MRU_Edit_File(a:pat, 0)
+            return
+        endif
+
+        " No filenames matching the specified pattern are found
+        call s:MRU_Warn_Msg("MRU file list doesn't contain " .
+                    \ "files matching " . a:pat)
+        return
+    endif
+
+    if len(m) == 1 && !g:MRU_Window_Open_Always
+        call s:MRU_Edit_File(m[0], 0)
+        return
+    endif
+
+    call s:MRU_Open_Window(a:pat)
+endfunction
+
 " Load the MRU list on plugin startup
-call s:MruSetCacheFilename() " happy added
 
 call s:MRU_LoadList()
 
