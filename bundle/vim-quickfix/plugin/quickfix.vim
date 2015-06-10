@@ -15,7 +15,7 @@ fu! s:GetBufferList()
     return buflist
 endf
 
-fu! s:BufferIsOpen(bufname)
+fu! s:BufferExist(bufname)
     let buflist = s:GetBufferList()
     for bufnum in map(
                 \filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 
@@ -28,15 +28,26 @@ fu! s:BufferIsOpen(bufname)
     return 0
 endf
 
-fu! s:CloseQuickfixWin()
+fu! s:BufferIsOpen()
+    " &filetye == 'qf'
+    if &buftype == 'quickfix'
+        return 1
+    en
+    return 0
+endf
 
+fu! s:CloseQuickfixWin()
     noa winc p
     exec ":ccl"
 endf
 
 fu! s:ToggleQuickfixWin()
-    if s:BufferIsOpen("Quickfix List")
-        exec ":ccl"
+    if s:BufferExist("Quickfix List")
+        if s:BufferIsOpen()
+            call s:CloseQuickfixWin()
+        el
+            exec ":ccl"
+        en
     else
         exec ":botright cw" . g:QuickfixWinHeight
     endif
