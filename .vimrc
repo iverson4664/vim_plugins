@@ -1189,6 +1189,15 @@ au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
 let g:Powerline_colorscheme = "solarized256"
 let g:Powerline_theme = "solarized256"
 
+" mark setting
+nmap <unique> <silent> mm <Plug>MarkSet
+vmap <unique> <silent> mm <Plug>MarkSet
+nmap <unique> <silent> mr <Plug>MarkRegex
+vmap <unique> <silent> mr <Plug>MarkRegex
+nmap <unique> <silent> mn <Plug>MarkAllClear
+nmap <unique> <silent> <Leader>* <Plug>MarkSearchAnyNext
+nmap <unique> <silent> <Leader># <Plug>MarkSearchAnyPrev
+
 
 "happy added end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

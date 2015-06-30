@@ -227,11 +227,12 @@ if ! exists('g:mwPalettes')
 	let g:mwPalettes = {
 	\	'original': [
 		\   { 'ctermbg':'Cyan',       'ctermfg':'Black', 'guibg':'#8CCBEA', 'guifg':'Black' },
-		\   { 'ctermbg':'Green',      'ctermfg':'Black', 'guibg':'#A4E57E', 'guifg':'Black' },
-		\   { 'ctermbg':'Yellow',     'ctermfg':'Black', 'guibg':'#FFDB72', 'guifg':'Black' },
+		\   { 'ctermbg':'LightRed',        'ctermfg':'Black', 'guibg':'#FF7272', 'guifg':'Black' },
+		\   { 'ctermbg':'LightYellow',     'ctermfg':'Black', 'guibg':'#FFDB72', 'guifg':'Black' },
 		\   { 'ctermbg':'Red',        'ctermfg':'Black', 'guibg':'#FF7272', 'guifg':'Black' },
 		\   { 'ctermbg':'Magenta',    'ctermfg':'Black', 'guibg':'#FFB3FF', 'guifg':'Black' },
 		\   { 'ctermbg':'Blue',       'ctermfg':'Black', 'guibg':'#9999FF', 'guifg':'Black' },
+		\   { 'ctermbg':'LightGreen',      'ctermfg':'Black', 'guibg':'#A4E57E', 'guifg':'Black' },
 		\],
 	\	'extended': function('mark#palettes#Extended'),
 	\	'maximum': function('mark#palettes#Maximum')
@@ -312,7 +313,6 @@ nnoremap <silent> <Plug>MarkSearchOrCurPrev   :<C-u>if !mark#SearchNext(1,'mark#
 nnoremap <silent> <Plug>MarkSearchOrAnyNext   :<C-u>if !mark#SearchNext(0,'mark#SearchAnyMark')<Bar>execute 'normal! *zv'<Bar>endif<CR>
 nnoremap <silent> <Plug>MarkSearchOrAnyPrev   :<C-u>if !mark#SearchNext(1,'mark#SearchAnyMark')<Bar>execute 'normal! #zv'<Bar>endif<CR>
 
-
 if !hasmapto('<Plug>MarkSet', 'n')
 	nmap <unique> <Leader>m <Plug>MarkSet
 endif
@@ -325,16 +325,16 @@ endif
 if !hasmapto('<Plug>MarkRegex', 'v')
 	xmap <unique> <Leader>r <Plug>MarkRegex
 endif
-if !hasmapto('<Plug>MarkClear', 'n')
+if !hasmapto('<Plug>MarkAllClear', 'n')
 	nmap <unique> <Leader>n <Plug>MarkAllClear
 endif
 
-if !hasmapto('<Plug>MarkSearchCurrentNext', 'n')
-	nmap <unique> <C-N> <Plug>MarkSearchCurrentNext
-endif
-if !hasmapto('<Plug>MarkSearchCurrentPrev', 'n')
-	nmap <unique> <C-P> <Plug>MarkSearchCurrentPrev
-endif
+" if !hasmapto('<Plug>MarkSearchCurrentNext', 'n')
+" 	nmap <unique> <C-N> <Plug>MarkSearchCurrentNext
+" endif
+" if !hasmapto('<Plug>MarkSearchCurrentPrev', 'n')
+" 	nmap <unique> <C-P> <Plug>MarkSearchCurrentPrev
+" endif
 if !hasmapto('<Plug>MarkSearchAnyNext', 'n')
 	nmap <unique> <Leader>/ <Plug>MarkSearchAnyNext
 endif
