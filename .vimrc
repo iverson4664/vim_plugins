@@ -187,6 +187,9 @@ set number
 "
 " colorscheme jellybeans
 colorscheme Tomorrow-Night-Eighties
+" colorscheme molokai
+" colorscheme obsidian
+" colorscheme solarized
 
 "nnoremap <silent> <F8> :TlistToggle<CR>
 nnoremap <silent> <F8> :TagbarToggle<CR>
