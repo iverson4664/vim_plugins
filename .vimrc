@@ -17,6 +17,7 @@ filetype off
     \ 'vim-bufkill',
     \ 'vim-doxgen',
     \ 'vim-easymotion1.0',
+    \ 'vim-easyclip',
     \ 'vim-forms',
     \ 'vim-fswitch',
     \ 'vim-fuzzyfinder',
@@ -1046,8 +1047,15 @@ let g:rainbow_active = 1
 " nnoremap <Up> gT
 " nnoremap <Down> gt
 
-"p what you y, not d
+"p what you d/y, not v
+" xnoremap <expr> p v:register=='"'?'pbvey':'gp"'
 " xnoremap p pgvy
+xnoremap p pgvy`]
+
+" like D
+nnoremap Y y$
+
+"p what you y, not d
 " nnoremap d "_d
 " vnoremap d "_d
 
