@@ -360,6 +360,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("diffRemoved", s:light_green, "", "")
 
     call <SID>X("ErrorMsg", "dd64d0", s:background, "")
+
+    call <SID>X("cfunctions", s:light_purple, s:background, "")
+
+    " happy added
     hi! link Error ErrorMsg
     hi SignColumn ctermbg=NONE
 

@@ -1209,6 +1209,9 @@ nmap <unique> <silent> mn <Plug>MarkAllClear
 nmap <unique> <silent> <Leader>* <Plug>MarkSearchAnyNext
 nmap <unique> <silent> <Leader># <Plug>MarkSearchAnyPrev
 
+" highlight function name
+autocmd BufNewFile,BufRead * :syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
+autocmd BufNewFile,BufRead * :syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1"))"
 
 "happy added end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
