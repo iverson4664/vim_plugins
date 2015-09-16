@@ -367,8 +367,9 @@ else
 endif
 
 " highlight function name
-syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
-syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1"))"
+" syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
+" syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1"))"
+syntax match cfunctions /\w\+\s*(/me=e-1,he=e-1
 
 " Define the default highlighting.
 " Only used when an item doesn't have highlighting yet

@@ -293,13 +293,13 @@ hi ErrorMsg guifg=#dd64d0 guibg=#252525 ctermfg=170 ctermbg=234 term=standout
 hi Directory guifg=#99cccc guibg=none ctermfg=110 ctermbg=none cterm=bold
 hi WarningMsg guifg=#ffffff guibg=none ctermfg=DarkRed ctermbg=none gui=bold
 hi Identifier ctermfg=Yellow
-" blue
 hi cfunctions ctermfg=81
 hi Typedef ctermfg=120
 hi Type ctermfg=120 cterm=none
 hi Macro ctermfg=199
 hi Statement ctermfg=197
 hi Title ctermfg=grey
+hi Structure ctermfg=79
 
 hi! link Error ErrorMsg
 hi SignColumn ctermbg=NONE
