@@ -942,10 +942,15 @@ nnoremap <M-h> 5h
 nnoremap <M-j> 5j
 nnoremap <M-k> 5k
 nnoremap <M-l> 5l
+nnoremap <M-w> 5w
+nnoremap <M-b> 5b
+
 vnoremap <M-h> 5h
 vnoremap <M-j> 5j
 vnoremap <M-k> 5k
 vnoremap <M-l> 5l
+vnoremap <M-w> 5w
+vnoremap <M-b> 5b
 " map meta key end
 
 let g:custom_specified_dirs = [
