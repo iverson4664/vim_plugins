@@ -279,7 +279,8 @@ set background=dark
 " happy modified
 hi CursorLine guibg=#2c2c2c ctermbg=235 cterm=none
 hi CursorColumn guibg=#2c2c2c ctermbg=235 cterm=none
-hi Search guifg=#f0a0c0 guibg=#2c2c2c ctermfg=217 ctermbg=235 cterm=underline gui=underline
+" hi Search ctermfg=217
+hi Search guifg=#f0a0c0 guibg=#2c2c2c ctermfg=Red ctermbg=235 cterm=underline gui=underline
 hi TabLine guifg=#8a8a8a guibg=#000000 ctermfg=244 ctermbg=16 cterm=italic gui=italic term=underline
 hi TabLineFill guifg=#252525 ctermfg=234
 hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=253 ctermbg=16 cterm=bold,italic gui=bold,italic term=bold
