@@ -279,8 +279,8 @@ set background=dark
 " happy modified
 hi CursorLine guibg=#2c2c2c ctermbg=235 cterm=none
 hi CursorColumn guibg=#2c2c2c ctermbg=235 cterm=none
-" hi Search ctermfg=217
-hi Search guifg=#f0a0c0 guibg=#2c2c2c ctermfg=Red ctermbg=235 cterm=underline gui=underline
+" hi Search ctermfg=217 red
+hi Search guifg=#f0a0c0 guibg=#2c2c2c ctermfg=Magenta ctermbg=235 cterm=underline gui=underline
 hi TabLine guifg=#8a8a8a guibg=#000000 ctermfg=244 ctermbg=16 cterm=italic gui=italic term=underline
 hi TabLineFill guifg=#252525 ctermfg=234
 hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=253 ctermbg=16 cterm=bold,italic gui=bold,italic term=bold
@@ -290,7 +290,7 @@ hi NonText guifg=#585858 guibg=none ctermfg=239 ctermbg=none gui=bold term=bold
 hi SpecialKey guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=bold
 hi StatusLine guifg=#2c2c2c guibg=#ffcc66 ctermfg=235 ctermbg=221 gui=reverse term=bold,reverse
 hi StatusLineNC guifg=#2c2c2c guibg=#c5c8c6 ctermfg=235 ctermbg=250
-hi ErrorMsg guifg=#dd64d0 guibg=#252525 ctermfg=170 ctermbg=234 term=standout
+hi ErrorMsg guifg=#dd64d0 guibg=#252525 ctermfg=Red ctermbg=234 term=standout
 hi Directory guifg=#99cccc guibg=none ctermfg=110 ctermbg=none cterm=bold
 hi WarningMsg guifg=#ffffff guibg=none ctermfg=DarkRed ctermbg=none gui=bold
 hi Identifier ctermfg=Yellow
