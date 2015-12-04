@@ -954,10 +954,6 @@ vnoremap <M-b> 5b
 " map meta key end
 
 let g:custom_specified_dirs = [
-    \ 'vendor/huawei/camera3',
-    \ 'vendor/hisi/ap/hardware/camera3',
-    \ 'kernel/drivers/media/huawei',
-    \ 'kernel/include/media/huawei',
     \ 'kernel/include/uapi/linux',
     \ 'kernel/drivers/media/v4l2-core',
     \ 'frameworks/av/camera',
@@ -1101,95 +1097,12 @@ let g:ctrlp_working_path_mode = 0 " 'ra'
 let g:ctrlp_max_height = g:MyWinHeight
 
 " one way: only add the folders except ignored dir
-let igdirs = [
-    \ 'abi',
-    \ 'art',
-    \ 'bionic',
-    \ 'bootable',
-    \ 'build',
-    \ 'cts',
-    \ 'dalvik',
-    \ 'developers',
-    \ 'development',
-    \ 'docs',
-    \ 'Document',
-    \ 'external',
-    \ 'k3-ci',
-    \ 'k3-LLT',
-    \ 'libcore',
-    \ 'libnativehelper',
-    \ 'ndk',
-    \ 'out',
-    \ 'packages',
-    \ 'pdk',
-    \ 'prebuilts',
-    \ 'sdk',
-    \ 'tools',
-    \ 'frameworks/compile',
-    \ 'frameworks/ex',
-    \ 'frameworks/mff',
-    \ 'frameworks/ml',
-    \ 'frameworks/opt',
-    \ 'frameworks/rs',
-    \ 'frameworks/support',
-    \ 'frameworks/testing',
-    \ 'frameworks/uiautomator',
-    \ 'frameworks/volley',
-    \ 'frameworks/webview',
-    \ 'frameworks/wilhelm',
-    \ 'device/asus',
-    \ 'device/generic',
-    \ 'device/google',
-    \ 'device/lge',
-    \ 'device/sample',
-    \ 'device/samsung',
-    \ 'hardware/akm',
-    \ 'hardware/broadcom',
-    \ 'hardware/fm',
-    \ 'hardware/invensense',
-    \ 'hardware/libhardware_legacy',
-    \ 'hardware/qcom',
-    \ 'hardware/ril',
-    \ 'hardware/ril_original',
-    \ 'hardware/samsung_slsi',
-    \ 'hardware/ti',
-    \ 'system/bluetooth',
-    \ 'system/extras',
-    \ 'system/hw_modem_service',
-    \ 'system/netd',
-    \ 'system/security',
-    \ 'system/vold',
-    \ 'kernel/android',
-    \ 'kernel/arch',
-    \ 'kernel/block',
-    \ 'kernel/crypto',
-    \ 'kernel/Documentation',
-    \ 'kernel/firmware',
-    \ 'kernel/fs',
-    \ 'kernel/ipc',
-    \ 'kernel/kernel',
-    \ 'kernel/lib',
-    \ 'kernel/linaro',
-    \ 'kernel/mm',
-    \ 'kernel/net',
-    \ 'kernel/samples',
-    \ 'kernel/scripts',
-    \ 'kernel/security',
-    \ 'kernel/sound',
-    \ 'kernel/tools',
-    \ 'kernel/usr',
-    \ 'kernel/virt',
-    \ 'vendor/hisi/ap/hardware/audio',
-    \ 'vendor/hisi/ap/hardware/vcodec',
-    \ 'vendor/opensource',
-    \ 'vendor/huawei_platform',
-    \ 'vendor/pdk',
-    \ 'vendor/thirdparty',
-    \ ]
+let igdirs = [ ]
 let g:ctrlp_custom_ignore = { 
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
-    \ 'file': '\v(\.cpp|\.c|\.cxx|\.h)@<!$',
+    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.java|\.js)@<!$',
     \ }
+
 " \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@<!$',
 " set wildignore+=*/frameworks/rs*,*/external/*,*/bionic/*,*/art/*        " Linux/MacOSX
 
@@ -1213,6 +1126,9 @@ vmap <unique> <silent> mr <Plug>MarkRegex
 nmap <unique> <silent> mn <Plug>MarkAllClear
 nmap <unique> <silent> <Leader>* <Plug>MarkSearchAnyNext
 nmap <unique> <silent> <Leader># <Plug>MarkSearchAnyPrev
+
+" add log keymap
+nnoremap <silent> lg iALOGD("%s: ", __func__);<C-[>==2f"i
 
 
 

@@ -153,7 +153,7 @@ fun! s:AutotagsInit()
     endif
 
     if !exists("g:autotags_cscope_file_extensions")
-        let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .idl .java .javascript"
+        let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .idl .java .js"
     endif
 
     "happy modified start
