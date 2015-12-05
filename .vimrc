@@ -1127,8 +1127,14 @@ nmap <unique> <silent> mn <Plug>MarkAllClear
 nmap <unique> <silent> <Leader>* <Plug>MarkSearchAnyNext
 nmap <unique> <silent> <Leader># <Plug>MarkSearchAnyPrev
 
-" add log keymap
-nnoremap <silent> lg iALOGD("%s: ", __func__);<C-[>==2f"i
+" add quick log
+
+" func! QuickLog(...)
+"   :normal OALOGD("%s: ", __func__);
+"   :normal ==2f"i
+" endf
+" com! Lg call QuickLog()
+nnoremap <silent> <Leader>lg OALOGD("%s: ", __func__);<C-[>==2f"i
 
 
 
