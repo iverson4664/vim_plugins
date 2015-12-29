@@ -1018,6 +1018,7 @@ let g:autotags_ctags_languages = "+Scala,+Java,+Vim"
 let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
 let g:autotags_ctags_global_include = ""
 let g:autotags_specified_dirs = g:custom_specified_dirs
+let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .idl .java .js .py"
 
 " define custom win height
 let g:MyWinHeight=20
@@ -1100,7 +1101,7 @@ let g:ctrlp_max_height = g:MyWinHeight
 let igdirs = [ ]
 let g:ctrlp_custom_ignore = { 
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
-    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.java|\.js)@<!$',
+    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.java|\.js|\.py)@<!$',
     \ }
 
 " \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@<!$',
@@ -1112,7 +1113,7 @@ let g:ctrlp_inlcude_dirs = g:custom_specified_dirs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " cSyntaxAfter setting
-au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
+au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript,py} call CSyntaxAfter()
 
 " powerline color setting
 let g:Powerline_colorscheme = "solarized256"
