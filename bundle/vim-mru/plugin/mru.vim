@@ -527,7 +527,7 @@ function! s:MRU_Open_File_In_Tab(fname, esc_fname)
 	    exe 'tabnext ' . i
 	else
 	    " Open a new tab as the last tab page
-	    exe '999tabnew ' . a:esc_fname
+	    exe 'tabnew ' . a:esc_fname
 	endif
     endif
 
