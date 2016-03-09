@@ -307,14 +307,20 @@ fun! s:AutotagsReload(tagsdir)
 
     "happy modified start
     if g:autotags_gen_full == 0 
+        let l:subExist = 0
         for l:entry in split(system("ls " . a:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
                 let l:path = a:tagsdir . "/" . l:entry
                 if getftype(l:path) == 'link' && isdirectory(l:path)
+                    let l:subExist = 1
                     call s:AutotagsLoad(l:path)
                 endif
             endif
         endfor
+
+        if l:subExist == 0
+            call s:AutotagsLoad(a:tagsdir)
+        en
     else
         call s:AutotagsLoad(a:tagsdir)
     endif
