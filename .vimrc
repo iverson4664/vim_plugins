@@ -442,8 +442,8 @@ let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
                    \ '\.embed\.manifest$', '\.embed\.manifest.res$',
                    \ '\.intermediate\.manifest$', '^mt.dep$',
                    \ 'cscope\.files', 'cscope\.in\.out', 'cscope\.po\.out', 'cscope\.out', 
-                   \ 'tags', '\.tag.*$', '.*\.o$' ]
-" happy don't ignore '.vim.*$',
+                   \ '.*\.o$' ]
+" happy don't ignore '.vim.*$', 'tags', '\.tag.*$',
 
 "-----------------------------------------------------------------------------
 " GPG Stuff
