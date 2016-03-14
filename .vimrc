@@ -1030,8 +1030,11 @@ set ic
 " qf win
 if has("cscope")
     "for myself vim
-    set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
-    " set cscopequickfix=c-,d-,e-,g-,s-
+    if v:version >= 704
+        set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
+    el
+        set cscopequickfix=c-,d-,e-,g-,s-
+    en
 endif
 let g:QuickfixWinHeight = g:MyWinHeight
 nnoremap <silent> ,, :ToggleQuickfixWin<CR>
