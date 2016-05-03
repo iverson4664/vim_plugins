@@ -912,8 +912,13 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "happy added start
 
+" disable F1&L/R window built-in help key
+map <F1> <Nop>
+
 " map meta key start
-for i in range(65,90) + range(97,122)
+" for i in range(65,90) + range(97,122)
+" ignore key(65,90)-A,Z, e.g.77-'M'...
+for i in range(97,122)
     let c = nr2char(i)
     " exec "map \e".c." <S-M-".c.">"
     " exec "map! \e".c." <S-M-".c.">"
