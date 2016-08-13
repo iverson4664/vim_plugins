@@ -1,4 +1,4 @@
-"quickfix
+" happy's quickfix
 
 if !exists('g:QuickfixWinHeight')
     let g:QuickfixWinHeight = 10
@@ -41,6 +41,12 @@ fu! s:CloseQuickfixWin()
     exec ":ccl"
 endf
 
+fu! s:CloseAllQuickfixWin()
+    noa winc p
+    exec ":ccl"
+    exec ":lcl"
+endf
+
 fu! s:ToggleQuickfixWin()
     if s:BufferExist("Quickfix List")
         if s:BufferIsOpen()
@@ -59,7 +65,7 @@ endf
 " 	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
-    \ 'CloseQuickfixWin()':            ['<c-c>', 'q'],
+    \ 'CloseAllQuickfixWin()':            ['<c-c>', 'q'],
     \ }]
 
 fu! s:MapKeys()

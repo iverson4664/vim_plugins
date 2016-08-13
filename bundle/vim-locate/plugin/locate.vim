@@ -22,6 +22,9 @@ endif
 if !exists('g:locate_jump_to')
   let g:locate_jump_to = 'first'
 endif
+if !exists('g:locate_colon_jump')
+  let g:locate_colon_jump = 0
+endif
 if !exists('g:locate_very_magic')
   let g:locate_very_magic = 0
 endif

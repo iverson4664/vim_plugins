@@ -1048,6 +1048,12 @@ nnoremap <silent> ,, :ToggleQuickfixWin<CR>
 nnoremap <silent> tn :tn<CR>
 nnoremap <silent> tp :tp<CR>
 
+" location list win
+let g:locate_max_height = g:QuickfixWinHeight
+let g:locate_focus = 1
+let g:locate_colon_jump = 0
+" let g:locate_jump_to = 'closest'
+
 "hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 "autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=darkyellow
 let g:rainbow_active = 1

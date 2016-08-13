@@ -284,7 +284,12 @@ function! s:open_location_list(height, patterns, position)
   setlocal nomodifiable
   silent execute 'normal! gg'
   autocmd! BufWinLeave <buffer> call <SID>remove_highlight(remove(s:locate_ids, expand('<abuf>')))
-  call s:jump(cursor, a:position)
+  if g:locate_colon_jump == 0
+      " happy modified non-colon jump
+      execute 'normal! ' . s:get_closest(cursor) . 'G'
+  el
+      call s:jump(cursor, a:position)
+  en
   if g:locate_focus
     execute list_bufnr . 'wincmd w'
   else
@@ -386,7 +391,8 @@ function! locate#input(input, add)
     let total_matches = len(getloclist(0))
     echo total_matches . ' match(es) found.'
     if total_matches
-      let height = min([total_matches, g:locate_max_height])
+      " let height = min([total_matches, g:locate_max_height])
+      let height = g:locate_max_height
       call s:open_location_list(height, s:patterns[locate_id], inputs.position)
     endif
   else
@@ -443,7 +449,8 @@ function! locate#refresh(flags, silent)
     call s:locate_multiple(patterns, global ==# 'g', 0)
     let total_matches = len(getloclist(0))
     if total_matches
-      let height = min([total_matches, g:locate_max_height])
+      " let height = min([total_matches, g:locate_max_height])
+      let height = g:locate_max_height
       let position = s:get_option(a:flags, 'fncs', g:locate_jump_to[0])
       call s:open_location_list(height, patterns, position)
     endif
