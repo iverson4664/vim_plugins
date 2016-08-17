@@ -1,7 +1,7 @@
 " exec vam#DefineAndBind('s:c','g:vim_addon_signs','{}')
 if !exists('g:vim_addon_signs') | let g:vim_addon_signs = {} | endif | let s:c = g:vim_addon_signs
 
-if get(s:c, 'provide_qf_command', 1)
+if get(s:c, 'provide_qf_command', 0)
   if has('signs')
     " sign define qf_error text=! linehl=ErrorMsg
     sign define qf_error text=! texthl=Normal linehl=Normal
@@ -16,7 +16,7 @@ if get(s:c, 'provide_qf_command', 1)
 
 endif
 
-if get(s:c, 'provide_el_command', 1)
+if get(s:c, 'provide_el_command', 0)
   if has('signs')
     sign define qf_error text=! texthl=Normal linehl=Normal
   endif

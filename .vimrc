@@ -194,6 +194,7 @@ colorscheme Tomorrow-Night-Eighties
 
 "nnoremap <silent> <F8> :TlistToggle<CR>
 nnoremap <silent> <F8> :TagbarToggle<CR>
+
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 48
 "set foldmethod=syntax
@@ -1150,6 +1151,16 @@ fu! TrimTrailingSpace()
     %s/\s\+$//e
 endf
 com! TrimTrailingSpace call TrimTrailingSpace()
+
+" qf or ll signs config. Caution of cs performance
+let g:vim_addon_signs = { 'provide_qf_command' : 1, 'provide_el_command' : 1 }
+
+" tagbar configuration
+" e.g. non-sort, leader-space key, none syntax match of
+" kind&scope
+let g:tagbar_sort = 0
+let g:tagbar_map_showproto = '<Leader><Space>'
+
 
 " add quick log
 
