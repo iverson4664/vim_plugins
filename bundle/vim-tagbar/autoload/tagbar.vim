@@ -990,16 +990,10 @@ function! s:CreateAutocommands() abort
         autocmd BufDelete,BufWipeout * call
                     \ s:known_files.rm(fnamemodify(expand('<afile>'), ':p'))
 
-        autocmd QuickFixCmdPre *vimgrep*  let s:tagbar_qf_active = 1
-        autocmd QuickFixCmdPost *vimgrep* if exists('s:tagbar_qf_active') |
-                                        \     unlet s:tagbar_qf_active |
-                                        \ endif
-
-        " happy modified
-        " autocmd QuickFixCmdPre  * let s:tagbar_qf_active = 1
-        " autocmd QuickFixCmdPost * if exists('s:tagbar_qf_active') |
-        "                         \     unlet s:tagbar_qf_active |
-        "                         \ endif
+        autocmd QuickFixCmdPre  * let s:tagbar_qf_active = 1
+        autocmd QuickFixCmdPost * if exists('s:tagbar_qf_active') |
+                                \     unlet s:tagbar_qf_active |
+                                \ endif
 
         autocmd VimEnter * call s:CorrectFocusOnStartup()
     augroup END
@@ -1902,6 +1896,11 @@ function! s:CloseWindow() abort
     if s:autocommands_done && !s:statusline_in_use
         autocmd! TagbarAutoCmds
         let s:autocommands_done = 0
+    endif
+
+    " happy modified for updating tags bug
+    if exists('s:tagbar_qf_active')
+        unlet s:tagbar_qf_active
     endif
 
     call s:debug('CloseWindow finished')

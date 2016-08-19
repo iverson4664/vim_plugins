@@ -1153,7 +1153,9 @@ endf
 com! TrimTrailingSpace call TrimTrailingSpace()
 
 " qf or ll signs config. Caution of cs performance
-let g:vim_addon_signs = { 'provide_qf_command' : 1, 'provide_el_command' : 1 }
+let g:vim_addon_signs = { 'provide_qf_command' : 0,
+                        \ 'provide_el_command' : 0,
+                        \ 'process_max' : 1000}
 
 " tagbar configuration
 " e.g. non-sort, leader-space key, none syntax match of
