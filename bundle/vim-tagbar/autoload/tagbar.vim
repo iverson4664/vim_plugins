@@ -985,8 +985,14 @@ function! s:CreateAutocommands() abort
                     \ s:AutoUpdate(fnamemodify(expand('<afile>'), ':p'), 1)
         " BufReadPost is needed for reloading the current buffer if the file
         " was changed by an external command; see commit 17d199f
-        autocmd BufReadPost,BufEnter,CursorHold,FileType * call
+
+        " happy modified
+        " autocmd BufReadPost,BufEnter,CursorHold,FileType * call
+        "             \ s:AutoUpdate(fnamemodify(expand('<afile>'), ':p'), 0)
+        autocmd BufReadPost,BufEnter,FileType * call
                     \ s:AutoUpdate(fnamemodify(expand('<afile>'), ':p'), 0)
+        autocmd CursorHold,FileType * call
+                    \ s:TimeoutAutoUpdate(fnamemodify(expand('<afile>'), ':p'), 0)
         autocmd BufDelete,BufWipeout * call
                     \ s:known_files.rm(fnamemodify(expand('<afile>'), ':p'))
 
@@ -1896,11 +1902,6 @@ function! s:CloseWindow() abort
     if s:autocommands_done && !s:statusline_in_use
         autocmd! TagbarAutoCmds
         let s:autocommands_done = 0
-    endif
-
-    " happy modified for updating tags bug
-    if exists('s:tagbar_qf_active')
-        unlet s:tagbar_qf_active
     endif
 
     call s:debug('CloseWindow finished')
@@ -4102,12 +4103,17 @@ function! tagbar#gettypeconfig(type) abort
 endfunction
 
 "happy fix updating tags bug
-function! tagbar#Repair() abort
+fu! tagbar#Repair() abort
     " let s:tagbar_qf_active = 0
     if exists('s:tagbar_qf_active')
         unlet s:tagbar_qf_active
-    endif
-endfunction
+    en
+endf
+
+fu! s:TimeoutAutoUpdate(fname, force) abort
+    call tagbar#Repair()
+    call s:AutoUpdate(a:fname, a:force)
+endf
 
 " Modeline {{{1
 " vim: ts=8 sw=4 sts=4 et foldenable foldmethod=marker foldcolumn=1
