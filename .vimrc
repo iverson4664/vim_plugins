@@ -187,8 +187,8 @@ set number
 "set mouse=a		" Enable mouse usage (all modes)
 "
 " colorscheme jellybeans
-colorscheme Tomorrow-Night-Eighties
-" colorscheme molokai
+" colorscheme Tomorrow-Night-Eighties
+colorscheme molokai
 " colorscheme obsidian
 " colorscheme solarized
 
