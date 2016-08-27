@@ -83,6 +83,9 @@ let s:last_highlight_tline = 0
 let s:debug = 0
 let s:debug_file = ''
 
+" happy added
+let s:tagbar_win_count = 0
+
 " s:Init() {{{2
 function! s:Init(silent) abort
     if s:checked_ctags == 2 && a:silent
@@ -1770,6 +1773,9 @@ function! s:OpenWindow(flags) abort
         call s:goto_win('p')
     endif
 
+    " happy added
+    let s:tagbar_win_count += 1
+
     call s:debug('OpenWindow finished')
 endfunction
 
@@ -1899,7 +1905,12 @@ function! s:CloseWindow() abort
         wincmd =
     endif
 
-    if s:autocommands_done && !s:statusline_in_use
+    " happy added
+    if s:tagbar_win_count > 0
+        let s:tagbar_win_count -= 1
+    en
+
+    if s:autocommands_done && !s:statusline_in_use && s:tagbar_win_count == 0
         autocmd! TagbarAutoCmds
         let s:autocommands_done = 0
     endif
@@ -3277,6 +3288,12 @@ function! s:AutoUpdate(fname, force) abort
         return
     endif
 
+    " happy added
+    let tagbarwinnr = bufwinnr('__Tagbar__')
+    if tagbarwinnr == -1
+        return
+    endif
+
     " Get the filetype of the file we're about to process
     let bufnr = bufnr(a:fname)
     let ftype = getbufvar(bufnr, '&filetype')
@@ -4102,7 +4119,7 @@ function! tagbar#gettypeconfig(type) abort
     silent put =output
 endfunction
 
-"happy fix updating tags bug
+"happy fix updating tags bug start
 fu! tagbar#Repair() abort
     " let s:tagbar_qf_active = 0
     if exists('s:tagbar_qf_active')
@@ -4114,6 +4131,8 @@ fu! s:TimeoutAutoUpdate(fname, force) abort
     call tagbar#Repair()
     call s:AutoUpdate(a:fname, a:force)
 endf
+
+"happy fix updating tags bug end
 
 " Modeline {{{1
 " vim: ts=8 sw=4 sts=4 et foldenable foldmethod=marker foldcolumn=1
