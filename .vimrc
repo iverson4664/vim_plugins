@@ -1146,6 +1146,7 @@ nmap <unique> <silent> <Leader># <Plug>MarkSearchAnyPrev
 " highlight and remove the trailing whitespace
 highlight TrailingSpace ctermbg=red guibg=red
 match TrailingSpace /\s\+$/
+au TabEnter * match TrailingSpace /\s\+$/
 
 fu! TrimTrailingSpace()
     %s/\s\+$//e
