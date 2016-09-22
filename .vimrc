@@ -1116,7 +1116,7 @@ let g:ctrlp_max_height = g:MyWinHeight
 let igdirs = [ ]
 let g:ctrlp_custom_ignore = { 
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
-    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.java|\.js|\.py)@<!$',
+    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
     \ }
 
 " \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@<!$',
