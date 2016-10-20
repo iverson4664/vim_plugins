@@ -59,6 +59,10 @@ fu! s:ToggleQuickfixWin()
     endif
 endf
 
+fu! s:OpenCurrentFile()
+    call feedkeys("\<CR>")
+endf
+
 " Global options
 " let s:glbs = { 'magic': 1, 'to': 1, 'tm': 0, 'sb': 1, 'hls': 0, 'im': 0,
 " 	\ 'report': 9999, 'sc': 0, 'ss': 0, 'siso': 0, 'mfd': 200, 'ttimeout': 0,
@@ -66,6 +70,7 @@ endf
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
     \ 'CloseAllQuickfixWin()':            ['<c-c>', 'q'],
+    \ 'OpenCurrentFile()':                ['o'],
     \ }]
 
 fu! s:MapKeys()

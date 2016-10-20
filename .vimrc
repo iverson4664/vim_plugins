@@ -1114,7 +1114,7 @@ let g:ctrlp_max_height = g:MyWinHeight
 
 " one way: only add the folders except ignored dir
 let igdirs = [ ]
-let g:ctrlp_custom_ignore = { 
+let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
     \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
     \ }
@@ -1124,6 +1124,12 @@ let g:ctrlp_custom_ignore = {
 
 " another way: only add specified folders
 let g:ctrlp_inlcude_dirs = g:custom_specified_dirs
+
+" key mapping
+let g:ctrlp_prompt_mappings = {
+            \ 'AcceptSelection("e")': ['<c-o>'],
+            \ 'OpenMulti()':          ['<cr>'],
+            \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
