@@ -1162,7 +1162,11 @@ let g:vim_addon_signs = { 'provide_qf_command' : 0,
 " e.g. non-sort, leader-space key, none syntax match of
 " kind&scope
 let g:tagbar_sort = 0
+let g:tagbar_map_jump = 'o'
+let g:tagbar_map_preview = 'go'
 let g:tagbar_map_showproto = '<Leader><Space>'
+let g:tagbar_map_togglefold = 'za'
+let g:tagbar_map_zoomwin = 'A'
 
 
 " add quick log
