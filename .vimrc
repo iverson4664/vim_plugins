@@ -86,7 +86,7 @@ else
   set shell=ksh.exe
 endif
 
-" Make command line two lines high
+" Make command line a line high
 set ch=1 " cmdheight
 
 " set visual bell -- i hate that damned beeping
