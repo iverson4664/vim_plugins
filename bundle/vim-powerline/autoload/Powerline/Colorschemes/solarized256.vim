@@ -77,7 +77,7 @@ call Pl#Hi#Allocate({
 let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['SPLIT'], {
 		\ 'n': ['white', 'base02'],
-		\ 'N': ['white', 'base02'],
+		\ 'N': ['gray5', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['mode_indicator'], {
@@ -95,7 +95,7 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['scrollpercent'], {
 		\ 'n': ['gray7', 'base02'],
-		\ 'N': ['base2', 'base02'],
+		\ 'N': ['gray5', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo', 'filename', 'filepath'], {
@@ -128,7 +128,7 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['lineinfo'], {
 		\ 'n': ['gray7', 'base02', ['bold']],
-		\ 'N': ['gray7', 'base02', ['bold']],
+		\ 'N': ['gray5', 'base02', ['bold']],
 		\ 'i': ['gray7', 'base02', ['bold']],
 		\ }),
 	\
@@ -163,7 +163,7 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer:static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
 		\ 'n': ['gray10', 'darkestblue', ['bold']],
-		\ 'N': ['gray3', 'base02', ['bold']],
+		\ 'N': ['gray5', 'base02', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.buffer', 'tagbar:static_str.buffer'], {

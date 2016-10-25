@@ -289,7 +289,7 @@ hi LineNr guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=underline
 hi NonText guifg=#585858 guibg=none ctermfg=239 ctermbg=none gui=bold term=bold
 hi SpecialKey guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=bold
 hi StatusLine guifg=#2c2c2c guibg=#ffcc66 ctermfg=235 ctermbg=221 gui=reverse term=bold,reverse
-hi StatusLineNC guifg=#2c2c2c guibg=#c5c8c6 ctermfg=235 ctermbg=250
+hi StatusLineNC guifg=#2c2c2c guibg=#c5c8c6 ctermfg=235 ctermbg=241
 hi ErrorMsg guifg=#dd64d0 guibg=#252525 ctermfg=Red ctermbg=234 term=standout
 hi Directory guifg=#99cccc guibg=none ctermfg=110 ctermbg=none cterm=bold
 hi WarningMsg guifg=#ffffff guibg=none ctermfg=DarkRed ctermbg=none gui=bold
