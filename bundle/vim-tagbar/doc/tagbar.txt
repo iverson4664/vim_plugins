@@ -76,7 +76,7 @@ auto-generated name.
 
 Another case where pseudo-tags appear is in C++ implementation files. Since
 classes are usually defined in a header file but the member methods and
-variables in the implementation file the class itself won't generate a tag
+variables are in the implementation file the class itself won't generate a tag
 in that file.
 
 Since pseudo-tags don't really exist they cannot be jumped to from the Tagbar
@@ -108,14 +108,13 @@ The following features are supported by Tagbar:
 ------------------------------------------------------------------------------
 OTHER CTAGS-COMPATIBLE PROGRAMS                                 *tagbar-other*
 
-Tagbar theoretically also supports filetype-specific programs that can output
-tag information that is compatible with ctags. However due to potential
-incompatibilities this may not always completely work. Tagbar has been tested
-with doctorjs/jsctags and will use that if present, other programs require
-some configuration (see |tagbar-extend|). If a program does not work even with
-correct configuration please contact me.
+Tagbar also supports filetype-specific programs that can produce
+ctags-compatible output, as long as these programs can write to the standard
+output. Tagbar has been tested with doctorjs/jsctags and will use that if
+present, other programs require some configuration (see |tagbar-extend|). If a
+program does not work even with correct configuration please contact me.
 
-Note: Please check |tagbar-issues| for some possible issues with jsctags.
+Note: Please check |tagbar-issues| for some potential issues with jsctags.
 
 ==============================================================================
 2. Requirements                                          *tagbar-requirements*
@@ -133,7 +132,7 @@ The following requirements have to be met in order to be able to use tagbar:
 
     Tagbar will work on any platform that ctags runs on -- this includes
     UNIX derivatives, Mac OS X and Windows. Note that other versions like
-    GNU ctags will not work.
+    BSD ctags will not work.
     Tagbar generates the tag information by itself and doesn't need (or use)
     already existing tag files.
   - File type detection must be turned on in vim. This can be done with the
@@ -196,11 +195,11 @@ and have it close automatically on tag selection regardless of the
 |g:tagbar_autoclose| setting.
 
 Pausing the Tagbar window~
-Use |:TagbarTogglePause| to toggle freezing the Tagbar window on its currently
-displayed file. Freezing the window stops the Tagbar contents from changing
-when switching to a different source file. All Tagbar functionality continues
-to work as expected. Unfreezing the window will cause it to load the current
-source file.
+Use |:TagbarTogglePause| to toggle freezing/locking the Tagbar window on its
+currently displayed file. Freezing the window stops the Tagbar contents from
+changing when switching to a different source file. All Tagbar functionality
+continues to work as expected. Unfreezing the window will cause it to load the
+current source file.
 
 Jumping to tags~
 When you're inside the Tagbar window you can jump to the definition of a tag
@@ -347,6 +346,10 @@ o/za          Toggle the fold under the cursor or the current one if there is
                 Map option: tagbar_map_openallfolds
 =/zM          Close all folds by setting foldlevel to 0.
                 Map option: tagbar_map_closeallfolds
+zj            Go to the start of the next fold, like the standard Vim |zj|.
+                Map option: tagbar_map_nextfold
+zk            Go to the end of the previous fold, like the standard Vim |zk|.
+                Map option: tagbar_map_prevfold
 s             Toggle sort order between name and file order.
                 Map option: tagbar_map_togglesort
 c             Toggle the |g:tagbar_autoclose| option.
@@ -388,9 +391,27 @@ Default: 0
 By default the Tagbar window will be opened on the right-hand side of vim. Set
 this option to open it on the left instead.
 
+If |g:tagbar_vertical| is used then setting this variable will open the Tagbar
+window at the top, otherwise it will open at the bottom.
+
 Example:
 >
         let g:tagbar_left = 1
+<
+
+                                                           *g:tagbar_vertical*
+g:tagbar_vertical~
+Default: 0
+
+If this is set to a positive value then the Tagbar window will be opened at
+the top or bottom of the Vim window instead of at the side. This can be useful
+for monitors that have been rotated into a vertical position. The value of
+this variable will determine the number of lines to use for the Tagbar window.
+See |g:tagbar_left| for configuring the position of the window.
+
+Example:
+>
+        let g:tagbar_vertical = 30
 <
 
                                                               *g:tagbar_width*
@@ -460,6 +481,18 @@ Example:
         let g:tagbar_sort = 0
 <
 
+                                                   *g:tagbar_case_insensitive*
+g:tagbar_case_insensitive~
+Default: 0
+
+If this option is set a case-insensitive comparison is used when the tags
+are sorted according to their name. If it is unset a case-sensitive
+comparison is used.
+
+Example:
+>
+        let g:tagbar_case_insensitive = 1
+<
                                                             *g:tagbar_compact*
 g:tagbar_compact~
 Default: 0
@@ -591,7 +624,7 @@ Default: 0
 If this variable is set to 1 and the current tag is inside of a closed fold
 then the folds will be opened as much as needed for the tag to be visible so
 it can be highlighted. If it is set to 0 then the folds will only be opened
-when opening the Tagbar window and the current tag is insided a closed fold,
+when opening the Tagbar window and the current tag is inside a closed fold,
 otherwise the folds won't be opened and the parent tag will be highlighted
 instead. If it is set to 2 then the folds will never be opened automatically.
 
@@ -604,7 +637,7 @@ Example:
 
                                                      *g:tagbar_previewwin_pos*
 g:tagbar_previewwin_pos~
-Default: topleft
+Default: "topleft", or "rightbelow vertical" if |g:tagbar_vertical| is set
 
 The position of the preview window. Valid values are the window splitting
 commands that are described starting from |:vertical|. Set it to an empty
@@ -647,8 +680,8 @@ system is different from the one set in Vim, i.e. the 'encoding' option. For
 example, if you use a Simplified Chinese Windows version that has a system
 encoding of "cp936", and you have set 'encoding' to "utf-8", then you would
 have to set this variable to "cp936".
-Note that this requires Vim to be compiled with the |+multi_byte| and (unless
-your encoding is latin1) |+iconv| features to work.
+Note that this requires Vim to be compiled with the |+multi_byte| and |+iconv|
+features to work.
 
 Example:
 >
@@ -686,6 +719,18 @@ default statusline:
             return colour . '[' . sort . '] ' . flagstr . fname
         endfunction
         let g:tagbar_status_func = 'TagbarStatusFunc'
+<
+
+                                                           *g:tagbar_silent*
+g:tagbar_silent~
+Default: 0
+
+By default if the cursor is over a tag in the tagbar window, information
+about the tag is echoed out. Set this option to disable that behavior.
+
+Example:
+>
+        let g:tagbar_silent = 1
 <
 
 ------------------------------------------------------------------------------
@@ -1181,10 +1226,11 @@ imporant tips to get it to integrate well with Tagbar:
     (stdout), it doesn't generate files and reads them in after that. So make
     sure that your program has an option to output the tags on stdout.
   - Some fields are supported for providing additional information about a
-    tag. One field is required: the "kind" field as a single letter without
-    a "kind:" fieldname. This field has to be the first one in the list. All
-    other fields need to have a fieldname in order to determine what they are.
-    The following fields are supported for all filetypes:
+    tag. One field is required: the "kind" field as a single letter, either
+    with or without a "kind:" fieldname. If it is used without the fieldname
+    then it has to be the first field in the list. All other fields need to
+    have a fieldname in order to determine what they are. The following fields
+    are supported for all filetypes:
 
         * line:      The line number of the tag.
         * column:    The column number of the tag.
@@ -1215,6 +1261,10 @@ ctags manually execute the following command in a terminal:
 <
 If you set the |g:tagbar_ctags_bin| variable you probably have to use the same
 value here instead of simply "ctags".
+
+If something more fundamental isn't working right then try running the
+|:messages| command to see if Tagbar printed any error messages that might
+have been missed.
 
 If the bug does seem to be in Tagbar then you can use Tagbar's debug mode to
 try to find the source of the problem. Usually you would use it like this:

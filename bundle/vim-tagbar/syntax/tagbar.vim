@@ -14,13 +14,13 @@ endif
 let s:ics = escape(join(g:tagbar_iconchars, ''), ']^\-')
 
 " happy modified: for cscopequickfix performance issue, not match kind&scope
-if &cscopequickfix == ''
-    let s:pattern = '\(^[' . s:ics . '] \?\)\@<=[^-+: ]\+[^:]\+$'
-    execute "syntax match TagbarKind '" . s:pattern . "'"
+" if &cscopequickfix == ''
+let s:pattern = '\(^[' . s:ics . '] \?\)\@<=[^-+: ]\+[^:]\+$'
+execute "syntax match TagbarKind '" . s:pattern . "'"
 
-    let s:pattern = '\(\S\@<![' . s:ics . '][-+# ]\?\)\@<=[^*(]\+\(\*\?\(([^)]\+)\)\? :\)\@='
-    execute "syntax match TagbarScope '" . s:pattern . "'"
-en
+let s:pattern = '\(\S\@<![' . s:ics . '][-+# ]\?\)\@<=[^*(]\+\(\*\?\(([^)]\+)\)\? :\)\@='
+execute "syntax match TagbarScope '" . s:pattern . "'"
+" en
 
 let s:pattern = '\S\@<![' . s:ics . ']\([-+# ]\?\)\@='
 execute "syntax match TagbarFoldIcon '" . s:pattern . "'"
