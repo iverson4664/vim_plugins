@@ -4205,7 +4205,8 @@ function! s:HandleBufDelete(bufname) abort
                 " Ignore the buffer we're switching to for now, it will get
                 " processed due to the OpenWindow() call anyway
                 call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 1)
-                execute 'keepalt buffer' s:last_alt_bufnr
+                " happy removed: for e XX(directory) errors
+                " execute 'keepalt buffer' s:last_alt_bufnr
                 call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 0)
             endif
 
