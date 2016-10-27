@@ -1095,6 +1095,10 @@ function! s:CreateAutocommands() abort
                                      \ endif
 
         autocmd VimEnter * call s:CorrectFocusOnStartup()
+
+        " happy added
+        au BufWinLeave __Tagbar__.* cal s:TagbarWinLeave()
+
     augroup END
 
     let s:autocommands_done = 1
@@ -4570,6 +4574,12 @@ endf
 fu! s:TimeoutAutoUpdate(fname, force) abort
     call tagbar#Repair()
     call s:AutoUpdate(a:fname, a:force)
+endf
+
+fu! s:TagbarWinLeave() abort
+    if exists('b:tagbar_mapped_keys')
+        unl b:tagbar_mapped_keys
+    en
 endf
 
 "happy fix updating tags bug end
