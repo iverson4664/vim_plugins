@@ -76,6 +76,7 @@ function! s:setup_options() abort
         \ ['width', 40],
         \ ['zoomwidth', 1],
         \ ['silent', 0],
+        \ ['nerdtree_filetype', 'netrw'],
     \ ]
 
     for [opt, val] in options

@@ -1173,6 +1173,8 @@ let g:tagbar_map_preview = 'go'
 let g:tagbar_map_showproto = '<Leader><Space>'
 let g:tagbar_map_togglefold = 'za'
 let g:tagbar_map_zoomwin = 'A'
+let g:tagbar_nerdtree_filetype = 'nerdtree'
+
 
 
 " add quick log

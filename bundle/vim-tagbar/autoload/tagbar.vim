@@ -4205,8 +4205,7 @@ function! s:HandleBufDelete(bufname) abort
                 " Ignore the buffer we're switching to for now, it will get
                 " processed due to the OpenWindow() call anyway
                 call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 1)
-                " happy removed: for e XX(directory) errors
-                " execute 'keepalt buffer' s:last_alt_bufnr
+                execute 'keepalt buffer' s:last_alt_bufnr
                 call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 0)
             endif
 
@@ -4236,14 +4235,19 @@ function! s:HasOpenFileWindows() abort
         let buf = winbufnr(i)
 
         " skip unlisted buffers, except for netrw
-        if !buflisted(buf) && getbufvar(buf, '&filetype') != 'netrw'
+        " happy modified netrw to nerdtree? ...
+        if !buflisted(buf) && getbufvar(buf, '&filetype') != g:tagbar_nerdtree_filetype
             continue
         endif
 
         " skip temporary buffers with buftype set
-        if getbufvar(buf, '&buftype') != ''
+        let buftype = getbufvar(buf, '&buftype')
+        if buftype != '' && buftype != 'nofile'
+        " happy modified
+        " if getbufvar(buf, '&buftype') != ''
             continue
         endif
+
 
         " skip the preview window
         if getwinvar(i, '&previewwindow')
