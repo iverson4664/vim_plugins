@@ -362,8 +362,9 @@ function! s:Path.ignore()
         endfor
     endif
 
+    " happy modified: b:NERDTreeNeedHidden
     "dont show hidden files unless instructed to
-    if b:NERDTreeShowHidden ==# 0 && self.isUnixHiddenFile()
+    if b:NERDTreeShowHidden ==# 0 && self.isUnixHiddenFile() && b:NERDTreeNeedHidden == 0
         return 1
     endif
 

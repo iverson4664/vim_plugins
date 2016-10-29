@@ -64,6 +64,8 @@ function! s:Creator.createPrimary(name)
     let b:NERDTreeIgnoreEnabled = 1
     let b:NERDTreeShowFiles = g:NERDTreeShowFiles
     let b:NERDTreeShowHidden = g:NERDTreeShowHidden
+    " happy modified
+    let b:NERDTreeNeedHidden = 0
     let b:NERDTreeShowBookmarks = g:NERDTreeShowBookmarks
     let b:NERDTreeRoot = newRoot
     let b:NERDTreeType = "primary"
@@ -278,6 +280,8 @@ function! s:Creator._setCommonBufOptions()
     let b:NERDTreeIgnoreEnabled = 1
     let b:NERDTreeShowFiles = g:NERDTreeShowFiles
     let b:NERDTreeShowHidden = g:NERDTreeShowHidden
+    " happy modified
+    let b:NERDTreeNeedHidden = 0
     let b:NERDTreeShowBookmarks = g:NERDTreeShowBookmarks
     setfiletype nerdtree
     call self._bindMappings()

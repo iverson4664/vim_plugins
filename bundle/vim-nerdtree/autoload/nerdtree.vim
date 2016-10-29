@@ -175,6 +175,9 @@ function! nerdtree#findAndRevealPath()
         return
     endtry
 
+    " happy modified
+    let a:needHidden = 0
+
     if p.isUnixHiddenPath()
         let showhidden=g:NERDTreeShowHidden
         let g:NERDTreeShowHidden = 1
@@ -205,15 +208,29 @@ function! nerdtree#findAndRevealPath()
         else
             if !nerdtree#isTreeOpen()
                 call g:NERDTreeCreator.TogglePrimary("")
+            else
+                " happy modified
+                let a:needHidden = g:NERDTreeShowHidden
             endif
         endif
     endif
     call nerdtree#putCursorInTreeWin()
+
+    " happy modified
+    let b:NERDTreeNeedHidden = a:needHidden
+
     call b:NERDTreeRoot.reveal(p)
 
-    if p.isUnixHiddenFile()
+    " happy modified
+    " if p.isUnixHiddenFile()
+    if p.isUnixHiddenPath()
         let g:NERDTreeShowHidden = showhidden
     endif
+
+    " happy modified
+    if b:NERDTreeNeedHidden
+        let b:NERDTreeNeedHidden = 0
+    en
 endfunction
 
 " FUNCTION: nerdtree#has_opt(options, name) {{{2
