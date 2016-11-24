@@ -1175,6 +1175,8 @@ let g:tagbar_map_togglefold = 'za'
 let g:tagbar_map_zoomwin = 'A'
 let g:tagbar_nerdtree_filetype = 'nerdtree'
 
+" disable solarized toggle bg
+let g:no_plugin_maps = 0
 
 
 " add quick log
