@@ -30,7 +30,7 @@ setlocal cinoptions+=g0
 setlocal cinoptions+=:0
 setlocal cinoptions+=(0
 " happy added for lambda
-setlocal cinoptions+=t0
+setlocal cinoptions+=t0,N-s
 setlocal cindent cino+=j1,(0,ws,Ws
 
 " Highlight strings inside C comments
