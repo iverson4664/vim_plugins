@@ -29,6 +29,9 @@ setlocal cinoptions+=^
 setlocal cinoptions+=g0
 setlocal cinoptions+=:0
 setlocal cinoptions+=(0
+" happy added for lambda
+setlocal cinoptions+=t0
+setlocal cindent cino+=j1,(0,ws,Ws
 
 " Highlight strings inside C comments
 let c_comment_strings=1
