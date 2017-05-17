@@ -201,8 +201,8 @@ let Tlist_WinWidth = 48
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_close_preview=1
-let g:clang_library_path="/usr/lib/clang/clang-3.2"
-" let g:clang_library_path="/home/y00210927/vim/lib/clang-3.2"
+" let g:clang_library_path="/usr/lib/clang/clang-3.2"
+let g:clang_library_path = $HOME . "/.vim-env/lib/clang-3.2"
 " Incrementally match the search
 set incsearch
 
