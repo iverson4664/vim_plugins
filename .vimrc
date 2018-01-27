@@ -962,13 +962,14 @@ vnoremap <M-b> 5b
 let g:custom_specified_dirs = [
     \ 'kernel/include/uapi/linux',
     \ 'kernel/drivers/media/v4l2-core',
+    \ 'system/core/include',
+    \ 'hardware/libhardware/include',
+    \ 'system/core/libutils',
     \ 'frameworks/av/camera',
     \ 'frameworks/av/services/camera',
     \ 'frameworks/av/include/camera',
-    \ 'system/core/include',
-    \ 'hardware/libhardware/include',
+    \ 'frameworks/base/core/java/android/hardware/camera2',
     \ 'system/media/camera',
-    \ 'system/core/libutils',
     \ ]
 
 " find project root, use autotags F4 feature
