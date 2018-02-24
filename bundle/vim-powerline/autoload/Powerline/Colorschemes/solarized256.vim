@@ -116,14 +116,14 @@ let g:Powerline#Colorschemes#solarized256#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo.flags'], {
-		\ 'n': ['base03', ['bold']],
+		\ 'n': ['brightestred', ['bold']],
 		\ 'N': ['gray5'],
-		\ 'i': ['base03', ['bold']],
+		\ 'i': ['white', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
 		\ 'n': ['gray5', 'base02'],
-		\ 'i': ['mediumcyan', 'base02'],
+		\ 'i': ['gray5', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lineinfo'], {
