@@ -330,9 +330,9 @@ nmap <silent> ,sw :execute ":resize " . line('$')<cr>
 nnoremap <C-E> ,
 
 " Alright... let's try this out
-inoremap jj <esc>
-inoremap JJ <esc>
-cnoremap jj <esc>
+" inoremap jj <esc>
+" inoremap JJ <esc>
+" cnoremap jj <esc>
 
 " I like jj - Let's try something else fun
 imap ,fn <c-r>=expand('%:t:r')<cr>
