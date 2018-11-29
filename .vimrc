@@ -1189,6 +1189,10 @@ let g:no_plugin_maps = 0
 " com! Lg call QuickLog()
 nnoremap <silent> <Leader>lg OALOGD("%s: ", __func__);<C-[>==2f"i
 
+" Fugitive configuration
+
+" Change the default Gblame window ops from vsplit to edit, and donot set winfixwidth
+let g:fugitive_blame_win_overlay = 1
 
 
 

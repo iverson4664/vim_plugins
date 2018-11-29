@@ -10,6 +10,10 @@ if !exists('g:fugitive_git_executable')
   let g:fugitive_git_executable = 'git'
 endif
 
+if !exists('g:fugitive_blame_win_overlay')
+  let g:fugitive_blame_win_overlay = 0
+en
+
 " Section: Utility
 
 function! s:function(name) abort
@@ -3055,7 +3059,14 @@ function! s:Blame(bang, line1, line2, count, mods, args) abort
         let current = line('.')
         let temp = s:Resolve(temp)
         let s:temp_files[s:cpath(temp)] = { 'dir': b:git_dir, 'filetype': 'fugitiveblame', 'args': cmd, 'bufnr': bufnr }
-        exe 'keepalt leftabove vsplit '.temp
+
+        let bwo = g:fugitive_blame_win_overlay
+        if bwo
+            exe 'keepalt view '.temp
+        el
+            exe 'keepalt leftabove vsplit '.temp
+        en
+
         let b:fugitive_blamed_bufnr = bufnr
         let b:fugitive_type = 'blame'
         let w:fugitive_leave = restore
@@ -3066,14 +3077,23 @@ function! s:Blame(bang, line1, line2, count, mods, args) abort
         if exists('+cursorbind')
           setlocal cursorbind
         endif
-        setlocal nomodified nomodifiable nonumber scrollbind nowrap foldcolumn=0 nofoldenable winfixwidth filetype=fugitiveblame buftype=nowrite
+        " setlocal nomodified nomodifiable nonumber scrollbind nowrap foldcolumn=0 nofoldenable winfixwidth filetype=fugitiveblame buftype=nowrite
+        setlocal nomodified nomodifiable nonumber scrollbind nowrap foldcolumn=0 nofoldenable filetype=fugitiveblame buftype=nowrite
+        if !bwo
+            setlocal winfixwidth
+        en
+
         if exists('+concealcursor')
           setlocal concealcursor=nc conceallevel=2
         endif
         if exists('+relativenumber')
           setlocal norelativenumber
         endif
-        execute "vertical resize ".(s:linechars('.\{-\}\ze\s\+\d\+)')+1)
+
+        if !bwo
+            execute "vertical resize ".(s:linechars('.\{-\}\ze\s\+\d\+)')+1)
+        en
+
         nnoremap <buffer> <silent> <F1> :help fugitive-:Gblame<CR>
         nnoremap <buffer> <silent> g?   :help fugitive-:Gblame<CR>
         nnoremap <buffer> <silent> q    :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete','^-1','','')<CR>
