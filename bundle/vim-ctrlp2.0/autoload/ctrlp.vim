@@ -1845,7 +1845,7 @@ fu! ctrlp#normcmd(cmd, ...)
 		retu a:cmd
 	en
 	"happy marked retu a:0 ? a:1 : 'bo vne'
-	retu a:0 ? a:1 : 'view'
+	retu a:0 ? a:1 : 'edit'
 endf
 
 fu! ctrlp#modfilecond(w)
