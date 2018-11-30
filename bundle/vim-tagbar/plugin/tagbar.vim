@@ -77,6 +77,7 @@ function! s:setup_options() abort
         \ ['zoomwidth', 1],
         \ ['silent', 0],
         \ ['nerdtree_filetype', 'netrw'],
+        \ ['bufname_prefix', '__Tagbar__.'],
     \ ]
 
     for [opt, val] in options

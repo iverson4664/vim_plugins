@@ -1015,6 +1015,18 @@ fu! g:getProjectRoot(...)
     retu resolve(a:hashRoot . "/origin")
 endf
 
+fu! s:exe_cmd_without_autocmd(cmd)
+    let bak = &eventignore
+    set eventignore=all
+    exe a:cmd
+    let &eventignore = bak
+endf
+
+" nerdtree configuration
+" nerdtree win width setting
+let g:NERDTreeWinSize = 31
+let g:NERDTreeBufNamePrefix = "NERD_tree_"
+
 "-----------------------------------------------------------------------------
 " Autotags Settings
 "-----------------------------------------------------------------------------
@@ -1168,6 +1180,8 @@ let g:vim_addon_signs = { 'provide_qf_command' : 0,
 " tagbar configuration
 " e.g. non-sort, leader-space key, none syntax match of
 " kind&scope
+let g:tagbar_bufname_prefix = "__Tagbar__."
+let g:tagbar_width = 40
 let g:tagbar_sort = 0
 let g:tagbar_map_jump = ['o', '<CR>']
 let g:tagbar_map_preview = 'go'
@@ -1194,7 +1208,67 @@ nnoremap <silent> <Leader>lg OALOGD("%s: ", __func__);<C-[>==2f"i
 " Change the default Gblame window ops from vsplit to edit, and donot set winfixwidth
 let g:fugitive_blame_win_overlay = 1
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" restore the appropriate window setting, e.g. vertical resize xx, echo winwidth(x)...
 
+fu! SetWinWidth(winnr, width)
+    if a:winnr < 0 || a:width < 1
+        echoerr "Invalid input ! winnr = " . a:winnr . " width = " . a:width
+        retu
+    en
+
+    let w = winwidth(a:winnr)
+    if w != a:width
+        let bak = winnr()
+        if bak != a:winnr
+            call s:exe_cmd_without_autocmd(a:winnr . 'wincmd w')
+        en
+        echo "Resize win" . a:winnr . " width to " . a:width . ". 'set winfixwidth<' if necessary"
+        exe 'vert resize ' . a:width
+        if bak != a:winnr
+            call s:exe_cmd_without_autocmd('wincmd p')
+        en
+    en
+endf
+
+fu! RestoreWinLayout()
+    let wincnt = winnr('$')
+    " only fix the typical usecase of bad winwidth, reset to win1=nerdtree(31),win2=file(136),win3=tagbar(40)
+    if wincnt != 3
+        retu
+    en
+
+    let fixnerdtreewin = 1
+    let fixfilewin = 2
+    let fixtagbarwin = 3
+
+    " go to the center win firstly
+    call s:exe_cmd_without_autocmd(fixfilewin . 'wincmd w')
+    if &winfixwidth == 1
+        set winfixwidth<
+    en
+
+    for winnr in range(1, wincnt)
+        let bufnr = winbufnr(winnr)
+        if bufnr != -1
+            let bufname = bufname(bufnr)
+            if bufname =~ g:NERDTreeBufNamePrefix
+                if winnr == fixnerdtreewin
+                    call SetWinWidth(winnr, g:NERDTreeWinSize)
+                en
+            elsei bufname =~ g:tagbar_bufname_prefix
+                if winnr == fixtagbarwin
+                    call SetWinWidth(winnr, g:tagbar_width)
+                en
+            el
+                " do nothing
+            en
+        en
+    endfo
+endf
+
+com! RestoreWinLayout call RestoreWinLayout()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 "happy added end

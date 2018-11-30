@@ -4264,7 +4264,10 @@ endfunction
 function! s:TagbarBufName() abort
     if !exists('t:tagbar_buf_name')
         let s:buffer_seqno += 1
-        let t:tagbar_buf_name = '__Tagbar__.' . s:buffer_seqno
+
+        let t:tagbar_buf_name = g:tagbar_bufname_prefix . s:buffer_seqno
+        " happy modified
+        " let t:tagbar_buf_name = '__Tagbar__.' . s:buffer_seqno
     endif
 
     return t:tagbar_buf_name

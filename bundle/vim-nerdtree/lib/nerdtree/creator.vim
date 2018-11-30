@@ -29,7 +29,9 @@ endfunction
 
 " FUNCTION: s:Creator.BufNamePrefix() {{{2
 function! s:Creator.BufNamePrefix()
-    return 'NERD_tree_'
+    " happy modified
+    return g:NERDTreeBufNamePrefix
+    " return 'NERD_tree_'
 endfunction
 
 "FUNCTION: s:Creator.CreatePrimary(a:name) {{{1

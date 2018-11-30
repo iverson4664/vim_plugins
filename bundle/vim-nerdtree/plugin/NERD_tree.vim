@@ -88,6 +88,9 @@ endif
 call s:initVariable("g:NERDTreeWinPos", "left")
 call s:initVariable("g:NERDTreeWinSize", 31)
 
+" happy added
+call s:initVariable("g:NERDTreeBufNamePrefix", "NERD_tree_")
+
 "init the shell commands that will be used to copy nodes, and remove dir trees
 "
 "Note: the space after the command is important
