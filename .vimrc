@@ -173,7 +173,7 @@ set showfulltag
 set textwidth=80
 
 " get rid of the silly characters in separators
-set fillchars = ""
+" set fillchars = ""
 
 " Add ignorance of whitespace to diff
 set diffopt+=iwhite
@@ -859,7 +859,7 @@ set cursorcolumn
 " set encoding=utf-8
 set t_Co=256   
 let g:Powerline_symbols= "fancy"
-set fillchars+=stl:\ ,stlnc:\
+set fillchars+=stl:\ ,stlnc:\ ,
 
 if has('gui')
     set guioptions-=e
@@ -906,8 +906,6 @@ if exists("+showtabline")
     map    <C-S-Tab>  :tabprev<CR>
     imap   <C-S-Tab>  <C-O>:tabprev<CR>
 endif
-
-" set makeprg=cd\ ~/proj/aosp/src;\ source\ build/envsetup.sh;\ setpaths;\ m\ showcommands\ libCamObjMdl\ testCamObjMdl
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
