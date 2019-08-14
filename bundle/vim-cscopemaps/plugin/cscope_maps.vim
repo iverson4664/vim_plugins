@@ -98,9 +98,10 @@ if has("cscope")
     nmap <C-\>i :cs f i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nmap <C-\>d :cs f d <C-R>=expand("<cword>")<CR><CR>
 
-    " happy added: alternate of cscope, sometimes search by grep.
+    " happy added: alternate of cscope, sometimes search by grep,find.
     nmap <Space>\\s :grep <C-R>=expand("<cword>")<CR> -wrns ./
     nmap <Space>\\e :grep <C-R>=expand("<cword>")<CR> -nrs ./
+    nmap <Space>\\f : -name <C-R>=expand("<cword>")<CR>.* <C-b>!find ./
 
 
     " Using 'CTRL-spacebar' (intepreted as CTRL-@ by vim) then a search type
