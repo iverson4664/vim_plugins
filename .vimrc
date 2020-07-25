@@ -1271,6 +1271,11 @@ com! RestoreWinLayout call RestoreWinLayout()
 " disable \\ commentary
 let g:commentary_map_backslash = 0
 
+" .h files can be C, Ch C++, ObjC or ObjC++.
+" Set c_syntax_for_h if you want C, ch_syntax_for_h if you want Ch. ObjC is detected automatically.
+" e.g. 1 means .h is c-type, otherwise is cpp-type
+" let g:c_syntax_for_h = 1
+
 
 
 "happy added end
