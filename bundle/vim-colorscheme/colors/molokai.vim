@@ -285,7 +285,7 @@ hi TabLine guifg=#8a8a8a guibg=#000000 ctermfg=244 ctermbg=16 cterm=italic gui=i
 hi TabLineFill guifg=#252525 ctermfg=234
 hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=253 ctermbg=16 cterm=bold,italic gui=bold,italic term=bold
 hi VertSplit guifg=#e4e4e4 guibg=none ctermfg=234 ctermbg=none cterm=none
-hi LineNr guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=underline
+hi LineNr guifg=#585858 guibg=none ctermfg=242 ctermbg=none term=underline
 hi NonText guifg=#585858 guibg=none ctermfg=239 ctermbg=none gui=bold term=bold
 hi SpecialKey guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=bold
 hi StatusLine guifg=#2c2c2c guibg=#ffcc66 ctermfg=235 ctermbg=221 gui=reverse term=bold,reverse
