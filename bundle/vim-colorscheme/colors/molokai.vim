@@ -272,18 +272,18 @@ if &t_Co > 255
    endif
 end
 
-" Must be at the end, because of ctermbg=234 bug.
-" https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
-set background=dark
-
 " happy modified
 hi CursorLine guibg=#2c2c2c ctermbg=235 cterm=none
 hi CursorColumn guibg=#2c2c2c ctermbg=235 cterm=none
 " hi Search ctermfg=217 red
 hi Search guifg=#f0a0c0 guibg=#2c2c2c ctermfg=Magenta ctermbg=235 cterm=underline gui=underline
-hi TabLine guifg=#8a8a8a guibg=#000000 ctermfg=244 ctermbg=16 cterm=italic gui=italic term=underline
+"
+" change ctermbg 16 -> 234 for ux
+hi TabLine guifg=#8a8a8a guibg=#000000 ctermfg=244 ctermbg=234 cterm=italic gui=italic term=underline
 hi TabLineFill guifg=#252525 ctermfg=234
-hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=253 ctermbg=16 cterm=bold,italic gui=bold,italic term=bold
+" change ctermfg 253->16, ctermbg 16->253 for ux
+hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=16 ctermbg=253 cterm=bold,italic gui=bold,italic term=bold
+
 hi VertSplit guifg=#e4e4e4 guibg=none ctermfg=234 ctermbg=none cterm=none
 hi LineNr guifg=#585858 guibg=none ctermfg=242 ctermbg=none term=underline
 hi NonText guifg=#585858 guibg=none ctermfg=239 ctermbg=none gui=bold term=bold
@@ -304,4 +304,8 @@ hi Structure ctermfg=79
 
 hi! link Error ErrorMsg
 hi SignColumn ctermbg=NONE
+
+" Must be at the end, because of ctermbg=234 bug.
+" https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
+set background=dark
 
