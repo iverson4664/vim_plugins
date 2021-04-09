@@ -42,6 +42,8 @@ fu! s:AlternativeGrep(type, opt, word)
     if a:type == 1
         let l:str = a:word
     elsei a:type == 2
+        " easy for use, so map space key jump to path input, and input char-space by another way(<C-v> then space)
+        " grep! string -wnrs path
         cno <space> <cr>
         call inputsave()
         let l:str = input(l:ex . l:prefix)
