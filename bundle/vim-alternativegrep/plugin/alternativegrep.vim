@@ -12,7 +12,7 @@ fun! s:AlternativeGrepValidatePath(path)
         return ""
     endif
 
-    let l:fullpath = fnamemodify(a:path, ":p")
+    let l:fullpath = fnamemodify(a:path, ":p:.")
 
     if !isdirectory(l:fullpath)
         echomsg "directory " . l:fullpath . " doesn't exist"
@@ -24,7 +24,10 @@ fun! s:AlternativeGrepValidatePath(path)
 endfun
 
 fu! s:AlternativeGrep(type, opt, word)
-    let l:op = "grep!"
+    let l:op = "grep"
+    " don't jump to the first match automatically
+    let l:opflag = "!"
+
     let l:prefix = "Search "
 
     let l:ex = ""
@@ -65,12 +68,16 @@ fu! s:AlternativeGrep(type, opt, word)
         return
     endif
 
+    let l:execmd =   "silent " . l:op . l:opflag . " -" . l:opt . " " . l:str . " " . l:path | copen
+    let l:histcmd = "copen | " . l:op . l:opflag . " -" . l:opt . " " . l:str . " " . l:path
     let l:savedsp = &shellpipe
     " silentoutput: donot show shell results during searching
     " ->: the string > after '-' will be used by shellpipe
     let &shellpipe = "silentoutput->"
-    execute "silent " . l:op . " " . l:str . " -" . l:opt . " " . l:path | copen
+    " execute "silent " . l:op . " " . l:str . " -" . l:opt . " " . l:path | copen
+    execute l:execmd
     let &shellpipe = l:savedsp
+    call histadd("cmd", l:histcmd)
 endf
 
 " grep under-cursor string
