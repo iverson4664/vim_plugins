@@ -12,14 +12,15 @@ fun! s:AlternativeGrepValidatePath(path)
         return ""
     endif
 
-    let l:fullpath = fnamemodify(a:path, ":p:.")
+    let l:fullpath = fnamemodify(a:path, ":.")
 
-    if !isdirectory(l:fullpath)
-        echomsg "directory " . l:fullpath . " doesn't exist"
+    if !isdirectory(l:fullpath) && !filereadable(l:fullpath)
+        echomsg " Directory \"" . l:fullpath . "\" doesn't exist! "
         return ""
     endif
 
-    let l:fullpath = substitute(l:fullpath, "\/$", "", "")
+    " keep dir ./ --> ./ , not .
+    " let l:fullpath = substitute(l:fullpath, "\/$", "", "")
     return l:fullpath
 endfun
 
