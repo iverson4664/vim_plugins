@@ -955,6 +955,12 @@ vnoremap <M-k> 5k
 vnoremap <M-l> 5l
 vnoremap <M-w> 5w
 vnoremap <M-b> 5b
+
+" see command-line built-in hotkey for movement and editing by :h cmdline-editing or ex-edit-index
+" cursor one WORD left/right
+cnoremap <M-f> <S-Right>
+cnoremap <M-b> <S-Left>
+
 " map meta key end
 
 let g:custom_specified_dirs = [
