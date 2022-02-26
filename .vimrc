@@ -914,54 +914,40 @@ endif
 " disable F1&L/R window built-in help key
 map <F1> <Nop>
 
-" map meta key start
-" for i in range(65,90) + range(97,122)
-" ignore key(65,90)-A,Z, e.g.77-'M'...
-for i in range(97,122)
-    let c = nr2char(i)
-    " exec "map \e".c." <S-M-".c.">"
-    " exec "map! \e".c." <S-M-".c.">"
-    " or set it like this
-    exec "set <M-".c.">=\<Esc>".c
-endfor
 set ttimeoutlen=50
 set encoding=utf-8
 
-" let s:keys = map(range(97, 122), "nr2char(v:val)") " a-z
-" let s:keys += map(range(48, 57), "nr2char(v:val)")  " 0-9
-" let s:key_codes = map(range(1,37), '"<S-F".v:val.">"')
-" set timeout timeoutlen=1000 ttimeoutlen=32
-" for idx in range(len(s:keys))
-"     let pc = s:keys[idx]
-"     let kc  = s:key_codes[idx]
-"     exec "set ".kc."=\e".pc
-"     exec "map ".kc." <M-".pc.">"
-"     exec "map! ".kc." <M-".pc.">"
-" endfor
+" map alt key start
+let g:altDedicatedKeyMap = {
+            \'n': {
+                \ '<M-h>':  ['5h'],
+                \ '<M-j>':  ['5j'],
+                \ '<M-k>':  ['5k'],
+                \ '<M-l>':  ['5l'],
+                \ '<M-w>':  ['5w'],
+                \ '<M-e>':  ['5e'],
+                \ '<M-b>':  ['5b'],
+                \ '<M-g>e': ['5ge'],
+            \ },
+            \'v': {
+                \ '<M-h>':  ['5h'],
+                \ '<M-j>':  ['5j'],
+                \ '<M-k>':  ['5k'],
+                \ '<M-l>':  ['5l'],
+                \ '<M-w>':  ['5w'],
+                \ '<M-e>':  ['5e'],
+                \ '<M-b>':  ['5b'],
+                \ '<M-g>e': ['5ge'],
+            \ },
+            \'c': {
+                \ '<M-f>':  ['<S-Right>'],
+                \ '<M-b>':  ['<S-Left>'],
+                \ 'ÿ':      ['<c-w>'],
+                \ '':   ['<c-w>'],
+            \ },
+            \ }
 
-" make esc do nothing
-" inoremap <Esc> <Nop>
-
-nnoremap <M-h> 5h
-nnoremap <M-j> 5j
-nnoremap <M-k> 5k
-nnoremap <M-l> 5l
-nnoremap <M-w> 5w
-nnoremap <M-b> 5b
-
-vnoremap <M-h> 5h
-vnoremap <M-j> 5j
-vnoremap <M-k> 5k
-vnoremap <M-l> 5l
-vnoremap <M-w> 5w
-vnoremap <M-b> 5b
-
-" see command-line built-in hotkey for movement and editing by :h cmdline-editing or ex-edit-index
-" cursor one WORD left/right
-cnoremap <M-f> <S-Right>
-cnoremap <M-b> <S-Left>
-
-" map meta key end
+" map alt key end
 
 let g:custom_specified_dirs = [
     \ 'kernel/include/uapi/linux',
@@ -1140,7 +1126,7 @@ let g:ctrlp_custom_ignore = {
 " set wildignore+=*/frameworks/rs*,*/external/*,*/bionic/*,*/art/*        " Linux/MacOSX
 
 " another way: only add specified folders
-let g:ctrlp_inlcude_dirs = g:custom_specified_dirs
+let g:ctrlp_include_dirs = g:custom_specified_dirs
 
 " key mapping
 let g:ctrlp_prompt_mappings = {
