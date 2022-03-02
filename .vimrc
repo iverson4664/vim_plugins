@@ -9,7 +9,7 @@
 "-----------------------------------------------------------------------------
 
 " Get pathogen up and running
-filetype off 
+filetype off
 
  " To disable a plugin, add it's bundle name to the following list
  let g:pathogen_disabled = [
@@ -230,36 +230,36 @@ let java_allow_cpp_keywords = 1
 let mapleader = ","
 
 " Wipe out all buffers
-nmap <silent> ,wa :1,9000bwipeout<cr>
+" nmap <silent> ,wa :1,9000bwipeout<cr>
 
 " Toggle paste mode
 nmap <silent> ,p :set invpaste<CR>:set paste?<CR>
 
 " cd to the directory containing the file in the buffer
-nmap <silent> ,cd :lcd %:h<CR>
-nmap <silent> ,md :!mkdir -p %:p:h<CR>
+" nmap <silent> ,cd :lcd %:h<CR>
+" nmap <silent> ,md :!mkdir -p %:p:h<CR>
 
 " Turn off that stupid highlight search
 nmap <silent> ,n :nohls<CR>
 
 " put the vim directives for my file editing settings in
-nmap <silent> ,vi ovim:set ts=2 sts=2 sw=2:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
+" nmap <silent> ,vi ovim:set ts=2 sts=2 sw=2:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
 
 " Show all available VIM servers
-nmap <silent> ,ss :echo serverlist()<CR>
+" nmap <silent> ,ss :echo serverlist()<CR>
 
 " The following beast is something i didn't write... it will return the 
 " syntax highlighting group that the current "thing" under the cursor
 " belongs to -- very useful for figuring out what to change as far as 
 " syntax highlighting goes.
-nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Make shift-insert work like in Xterm
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 
 " set text wrapping toggles
-nmap <silent> ,ww :set invwrap<CR>:set wrap?<CR>
+" nmap <silent> ,ww :set invwrap<CR>:set wrap?<CR>
 
 " allow command line editing like emacs
 " cnoremap <C-A>      <Home>
@@ -289,8 +289,8 @@ nmap <silent> ,ww :set invwrap<CR>:set wrap?<CR>
 " noremap <silent> ,ck :wincmd k<CR>:close<CR>
 " noremap <silent> ,ch :wincmd h<CR>:close<CR>
 " noremap <silent> ,cl :wincmd l<CR>:close<CR>
-noremap <silent> ,cc :close<CR>
-noremap <silent> ,cw :cclose<CR>
+" noremap <silent> ,cc :close<CR>
+" noremap <silent> ,cw :cclose<CR>
 " noremap <silent> ,ml <C-W>L
 " noremap <silent> ,mk <C-W>K
 " noremap <silent> ,mh <C-W>H
@@ -309,25 +309,25 @@ nmap <silent> ,sv :so $MYVIMRC<CR>
 " nmap <silent> <C-i> 10zh
 
 " Add a GUID to the current line
-imap <C-J>d <C-r>=substitute(system("uuidgen"), '.$', '', 'g')<CR>
+" imap <C-J>d <C-r>=substitute(system("uuidgen"), '.$', '', 'g')<CR>
 
 " Toggle fullscreen mode
-nmap <silent> <F3> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+" nmap <silent> <F3> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 
 " Underline the current line with '='
-nmap <silent> ,u= :t.\|s/./=/g\|:nohls<cr>
-nmap <silent> ,u- :t.\|s/./-/g\|:nohls<cr>
-nmap <silent> ,u~ :t.\|s/./\\~/g\|:nohls<cr>
+" nmap <silent> ,u= :t.\|s/./=/g\|:nohls<cr>
+" nmap <silent> ,u- :t.\|s/./-/g\|:nohls<cr>
+" nmap <silent> ,u~ :t.\|s/./\\~/g\|:nohls<cr>
 
 " Shrink the current window to fit the number of lines in the buffer.  Useful
 " for those buffers that are only a few lines
-nmap <silent> ,sw :execute ":resize " . line('$')<cr>
+" nmap <silent> ,sw :execute ":resize " . line('$')<cr>
 
 " Use the bufkill plugin to eliminate a buffer but keep the window layout
 " nmap ,bd :BD<cr>
 
 " Use CTRL-E to replace the original ',' mapping
-nnoremap <C-E> ,
+" nnoremap <C-E> ,
 
 " Alright... let's try this out
 " inoremap jj <esc>
@@ -335,7 +335,7 @@ nnoremap <C-E> ,
 " cnoremap jj <esc>
 
 " I like jj - Let's try something else fun
-imap ,fn <c-r>=expand('%:t:r')<cr>
+" imap ,fn <c-r>=expand('%:t:r')<cr>
 
 " Clear the text using a motion / text object and then move the character to the
 " next word
@@ -343,7 +343,7 @@ imap ,fn <c-r>=expand('%:t:r')<cr>
 " vmap <silent> ,C :<C-U>call ClearText(visual(), 1)<CR>
 
 " Make the current file executable
-nmap ,x :w<cr>:!chmod 755 %<cr>:e<cr>
+" nmap ,x :w<cr>:!chmod 755 %<cr>:e<cr>
 
 " Digraphs
 " Alpha
@@ -432,7 +432,7 @@ nmap <silent> ,nf :NERDTreeFind<CR>
 nmap <silent> <F7> :NERDTreeToggle<CR>
 
 " Close the NERD Tree with Shift-F7
-nmap <S-F7> :NERDTreeClose<CR>
+" nmap <S-F7> :NERDTreeClose<CR>
 
 " Show the bookmarks table on startup
 let NERDTreeShowBookmarks=1
@@ -569,7 +569,7 @@ let g:xptemplate_brace_complete = ''
 "-----------------------------------------------------------------------------
 " Gundo Settings
 "-----------------------------------------------------------------------------
-nmap <c-F5> :GundoToggle<cr>
+" nmap <c-F5> :GundoToggle<cr>
 
 "-----------------------------------------------------------------------------
 " Conque Settings
@@ -639,11 +639,11 @@ nmap <c-F5> :GundoToggle<cr>
 
 " command! -nargs=+ DiffCurrent call DiffCurrentFileAgainstAnother(<f-args>)
 
-function! RunSystemCall(systemcall)
-  let output = system(a:systemcall)
-  let output = substitute(output, "\n", '', 'g')
-  return output
-endfunction
+" function! RunSystemCall(systemcall)
+"   let output = system(a:systemcall)
+"   let output = substitute(output, "\n", '', 'g')
+"   return output
+" endfunction
 
 " function! HighlightAllOfWord(onoff)
 "   if a:onoff == 1
@@ -693,15 +693,15 @@ endfunction
 
 " :nmap ,sd :call ShortenCWD()<cr>
 
-function! RedirToYankRegisterF(cmd, ...)
-  let cmd = a:cmd . " " . join(a:000, " ")
-  redir @*>
-  exe cmd
-  redir END
-endfunction
+" function! RedirToYankRegisterF(cmd, ...)
+"   let cmd = a:cmd . " " . join(a:000, " ")
+"   redir @*>
+"   exe cmd
+"   redir END
+" endfunction
 
-command! -complete=command -nargs=+ RedirToYankRegister 
-      \ silent! call RedirToYankRegisterF(<f-args>)
+" command! -complete=command -nargs=+ RedirToYankRegister
+"       \ silent! call RedirToYankRegisterF(<f-args>)
 
 " function! ToggleMinimap()
 "   if exists("s:isMini") && s:isMini == 0
@@ -791,42 +791,42 @@ augroup END
 " Fix constant spelling mistakes
 "-----------------------------------------------------------------------------
 
-iab Acheive    Achieve
-iab acheive    achieve
-iab Alos       Also
-iab alos       also
-iab Aslo       Also
-iab aslo       also
-iab Becuase    Because
-iab becuase    because
-iab Bianries   Binaries
-iab bianries   binaries
-iab Bianry     Binary
-iab bianry     binary
-iab Charcter   Character
-iab charcter   character
-iab Charcters  Characters
-iab charcters  characters
-iab Exmaple    Example
-iab exmaple    example
-iab Exmaples   Examples
-iab exmaples   examples
-iab Fone       Phone
-iab fone       phone
-iab Lifecycle  Life-cycle
-iab lifecycle  life-cycle
-iab Lifecycles Life-cycles
-iab lifecycles life-cycles
-iab Seperate   Separate
-iab seperate   separate
-iab Seureth    Suereth
-iab seureth    suereth
-iab Shoudl     Should
-iab shoudl     should
-iab Taht       That
-iab taht       that
-iab Teh        The
-iab teh        the
+" iab Acheive    Achieve
+" iab acheive    achieve
+" iab Alos       Also
+" iab alos       also
+" iab Aslo       Also
+" iab aslo       also
+" iab Becuase    Because
+" iab becuase    because
+" iab Bianries   Binaries
+" iab bianries   binaries
+" iab Bianry     Binary
+" iab bianry     binary
+" iab Charcter   Character
+" iab charcter   character
+" iab Charcters  Characters
+" iab charcters  characters
+" iab Exmaple    Example
+" iab exmaple    example
+" iab Exmaples   Examples
+" iab exmaples   examples
+" iab Fone       Phone
+" iab fone       phone
+" iab Lifecycle  Life-cycle
+" iab lifecycle  life-cycle
+" iab Lifecycles Life-cycles
+" iab lifecycles life-cycles
+" iab Seperate   Separate
+" iab seperate   separate
+" iab Seureth    Suereth
+" iab seureth    suereth
+" iab Shoudl     Should
+" iab shoudl     should
+" iab Taht       That
+" iab taht       that
+" iab Teh        The
+" iab teh        the
 
 "-----------------------------------------------------------------------------
 " Set up the window colors and size
@@ -850,14 +850,14 @@ if has("gui_running")
   endif
 endif
 :nohls
- 
+
 set cursorline
-" hi  CursorLine  guibg=Grey40 guifg=red term=BOLD 
+" hi  CursorLine  guibg=Grey40 guifg=red term=BOLD
 set cursorcolumn
-" hi  CursorColumn  guibg=Grey40 guifg=red term=BOLD 
+" hi  CursorColumn  guibg=Grey40 guifg=red term=BOLD
 
 " set encoding=utf-8
-set t_Co=256   
+set t_Co=256
 let g:Powerline_symbols= "fancy"
 set fillchars+=stl:\ ,stlnc:\ ,
 
@@ -1267,6 +1267,11 @@ let g:commentary_map_backslash = 0
 " Set c_syntax_for_h if you want C, ch_syntax_for_h if you want Ch. ObjC is detected automatically.
 " e.g. 1 means .h is c-type, otherwise is cpp-type
 " let g:c_syntax_for_h = 1
+
+" gundo settings
+let g:gundo_right = 1
+let g:gundo_preview_height = g:MyWinHeight
+let g:gundo_preview_bottom = 1
 
 
 
