@@ -36,7 +36,7 @@ fu! s:AlternativeGrep(type, opt, word)
         let l:opt = "wnrs"
     elsei a:opt == 2
         let l:ex = "e"
-        let l:opt = "nrs"
+        let l:opt = "inrs"
     el
         let l:opt = "wnrs"
     en

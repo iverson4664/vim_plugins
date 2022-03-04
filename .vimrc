@@ -54,6 +54,7 @@ if has("unix")
 endif
 
 " Set filetype stuff to on
+set nocp
 filetype on
 filetype plugin on
 filetype indent on
@@ -74,9 +75,7 @@ set printoptions=header:0,duplex:long,paper:letter
 " set the search scan to wrap lines
 set nowrapscan
 
-" I'm happy to type the case of things.  I tried the ignorecase, smartcase
-" thing but it just wasn't working out for me
-set noignorecase
+set ignorecase
 
 " set the forward slash to be the slash of note.  Backslashes suck
 set shellslash
@@ -1022,19 +1021,23 @@ let g:NERDTreeBufNamePrefix = "NERD_tree_"
 "-----------------------------------------------------------------------------
 let g:autotagsdir = $HOME . "/.autotags/byhash"
 let g:autotags_no_global = 1
-let g:autotags_ctags_opts = "--exclude=target --exclude=vendor"
-let g:autotags_ctags_languages = "+Scala,+Java,+Vim"
-let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
+
+" --c++-kinds=+p  : Adds prototypes in the database for C/C++ files.
+" --fields=+iaS   : Adds inheritance (i), access (a) and function signatures (S) information.
+" --extra=+q      : Adds context to the tag name. Note: Without this option, the script cannot get class members.
+let g:autotags_ctags_opts = "--exclude="
+
+let g:autotags_ctags_languages = "+Asm,+C,+C#,+C++,+Java,+Vim"
+let g:autotags_ctags_langmap = "default"
+" let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
 let g:autotags_ctags_global_include = ""
 let g:autotags_specified_dirs = g:custom_specified_dirs
-let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .idl .java .js .py"
+let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .asm .s .java .js .py .idl .dts .dtsi"
 
 " define custom win height
 let g:MyWinHeight=20
 let &cmdwinheight=g:MyWinHeight
 " execute "set cmdwinheight=".g:MyWinHeight
-
-set ic
 
 " qf win
 if has("cscope")
