@@ -1,12 +1,5 @@
 "
 " happy's Vim Configuration
-"
-" It's got stuff in it.
-"
-
-"-----------------------------------------------------------------------------
-" Global Stuff
-"-----------------------------------------------------------------------------
 
 " Get pathogen up and running
 filetype off
@@ -65,9 +58,11 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
-if has("autocmd")
-    au! FileType c setl noexpandtab
-endif
+
+" move to after/ftplugin/c.vim
+" if has("autocmd")
+"     au! FileType c setl noexpandtab
+" endif
 
 " Printing options
 set printoptions=header:0,duplex:long,paper:letter
@@ -87,9 +82,6 @@ endif
 
 " Make command line a line high
 set ch=1 " cmdheight
-
-" set visual bell -- i hate that damned beeping
-" set vb
 
 " Allow backspacing over indent, eol, and the start of an insert
 set backspace=2
@@ -214,13 +206,7 @@ set autoread
 
 set grepprg=grep\ -nH\ $*
 
-" Trying out the line numbering thing... never liked it, but that doesn't mean
-" I shouldn't give it another go :)
 set relativenumber
-
-" dictionary for english words
-" I don't actually use this much at all and it makes my life difficult in general
-"set dictionary=$VIM/words.txt
 
 " Let the syntax highlighting for Java files allow cpp keywords
 let java_allow_cpp_keywords = 1
@@ -392,21 +378,18 @@ nmap <silent> ,sv :so $MYVIMRC<CR>
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=2048
 
-" I don't like it when the matching parens are automatically highlighted
-" let loaded_matchparen = 1
-
 " Highlight the current line and column
 " Don't do this - It makes window redraws painfully slow
 set nocursorline
 set nocursorcolumn
 
-if has("mac")
-  let g:main_font = "Anonymous\\ Pro:h12"
-  let g:small_font = "Anonymous\\ Pro:h2"
-else
-  let g:main_font = "DejaVu\\ Sans\\ Mono\\ 9"
-  let g:small_font = "DejaVu\\ Sans\\ Mono\\ 2"
-endif
+" if has("mac")
+"   let g:main_font = "Anonymous\\ Pro:h12"
+"   let g:small_font = "Anonymous\\ Pro:h2"
+" else
+"   let g:main_font = "DejaVu\\ Sans\\ Mono\\ 9"
+"   let g:small_font = "DejaVu\\ Sans\\ Mono\\ 2"
+" endif
 
 "-----------------------------------------------------------------------------
 " Fugitive
@@ -785,70 +768,25 @@ augroup Binary
   au BufWritePost *.bin set nomod | endif
 augroup END
 
-
-"-----------------------------------------------------------------------------
-" Fix constant spelling mistakes
-"-----------------------------------------------------------------------------
-
-" iab Acheive    Achieve
-" iab acheive    achieve
-" iab Alos       Also
-" iab alos       also
-" iab Aslo       Also
-" iab aslo       also
-" iab Becuase    Because
-" iab becuase    because
-" iab Bianries   Binaries
-" iab bianries   binaries
-" iab Bianry     Binary
-" iab bianry     binary
-" iab Charcter   Character
-" iab charcter   character
-" iab Charcters  Characters
-" iab charcters  characters
-" iab Exmaple    Example
-" iab exmaple    example
-" iab Exmaples   Examples
-" iab exmaples   examples
-" iab Fone       Phone
-" iab fone       phone
-" iab Lifecycle  Life-cycle
-" iab lifecycle  life-cycle
-" iab Lifecycles Life-cycles
-" iab lifecycles life-cycles
-" iab Seperate   Separate
-" iab seperate   separate
-" iab Seureth    Suereth
-" iab seureth    suereth
-" iab Shoudl     Should
-" iab shoudl     should
-" iab Taht       That
-" iab taht       that
-" iab Teh        The
-" iab teh        the
-
-"-----------------------------------------------------------------------------
-" Set up the window colors and size
-"-----------------------------------------------------------------------------
-if has("gui_running")
-  exe "set guifont=" . g:main_font
-  "if hostname() == "dqw-linux"
-  "  set background=light
-  "else
-  "  set background=dark
-  "endif
-  colorscheme xoria256
-  if !exists("g:vimrcloaded")
-    winpos 0 0
-    if !&diff
-      winsize 130 120
-    else
-      winsize 227 120
-    endif
-    let g:vimrcloaded = 1
-  endif
-endif
-:nohls
+" if has("gui_running")
+"   exe "set guifont=" . g:main_font
+"   "if hostname() == "dqw-linux"
+"   "  set background=light
+"   "else
+"   "  set background=dark
+"   "endif
+"   colorscheme xoria256
+"   if !exists("g:vimrcloaded")
+"     winpos 0 0
+"     if !&diff
+"       winsize 130 120
+"     else
+"       winsize 227 120
+"     endif
+"     let g:vimrcloaded = 1
+"   endif
+" endif
+" :nohls
 
 set cursorline
 " hi  CursorLine  guibg=Grey40 guifg=red term=BOLD
