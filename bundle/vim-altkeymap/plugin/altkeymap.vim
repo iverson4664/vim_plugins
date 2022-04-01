@@ -7,7 +7,7 @@ endif
 let loaded_altkeymap = 1
 
 " only support xterm currently
-if &term != "xterm"
+if &term !~ "xterm"
     finish
 endif
 
