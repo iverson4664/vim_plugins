@@ -9,17 +9,17 @@ setlocal shiftwidth=4
 setlocal tabstop=4
 setlocal softtabstop=4
 
+" tab is a real tab
 setlocal noexpandtab
 
 " Setup for indending
 setlocal nosmartindent
 setlocal autoindent
-setlocal cinkeys-=0#
+" setlocal cinkeys-=0#
 setlocal cinoptions+=^
 setlocal cinoptions+=g0
 setlocal cinoptions+=:0
 setlocal cinoptions+=(0
-" happy added for lambda
 setlocal cinoptions+=t0,N-s,l1
 setlocal cindent cino+=j1,(0,ws,Ws
 

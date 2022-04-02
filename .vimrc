@@ -981,7 +981,7 @@ let &cmdwinheight=g:MyWinHeight
 if has("cscope")
     "for myself vim
     if v:version >= 704
-        set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
+        set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t-!
     el
         set cscopequickfix=c-,d-,e-,g-,s-
     en
@@ -1213,6 +1213,23 @@ let g:commentary_map_backslash = 0
 let g:gundo_right = 1
 let g:gundo_preview_height = g:MyWinHeight
 let g:gundo_preview_bottom = 1
+
+" enhance cscope caseless -C option
+" update -C option to caseinsensitive -C [a or cdefgist], a: all searches are caseinsensitive
+let g:cs_casesensitive_opt = "\\ -Cef"
+exec "set csprg+=" . g:cs_casesensitive_opt
+" set csprg+=\ -Cef
+" or
+" let &csprg = "cscope -Cef"
+
+fu! CscopeCaseSensitiveReset()
+    exec "set csprg-=" . g:cs_casesensitive_opt
+    " set csprg-=\ -Cef
+    silent cs reset
+    echomsg "cscope casesensitive has been reset"
+endf
+com! CscopeCaseSensitiveReset call CscopeCaseSensitiveReset()
+
 
 
 
