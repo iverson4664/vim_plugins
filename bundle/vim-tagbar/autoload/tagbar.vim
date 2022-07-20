@@ -1101,6 +1101,12 @@ function! s:CreateAutocommands() abort
 
     augroup END
 
+    " speed up update time for tagbar, e.g.cursor hold
+    if exists('g:tagbar_update_time')
+        let s:update_time_save = &updatetime
+        let &updatetime = g:tagbar_update_time
+    endif
+
     let s:autocommands_done = 1
 endfunction
 
@@ -2078,6 +2084,11 @@ function! s:CloseWindow() abort
     if s:autocommands_done && !s:statusline_in_use && s:tagbar_count == 0
         autocmd! TagbarAutoCmds
         let s:autocommands_done = 0
+
+        " reset udpate time
+        if exists('s:update_time_save')
+            let &updatetime = s:update_time_save
+        endif
     endif
 
     call s:debug('CloseWindow finished')

@@ -1120,6 +1120,8 @@ let g:tagbar_map_showproto = '<Leader><Space>'
 let g:tagbar_map_togglefold = 'za'
 let g:tagbar_map_zoomwin = 'A'
 let g:tagbar_nerdtree_filetype = 'nerdtree'
+" DONOT set it to a very low value,  e.g. 500
+let g:tagbar_update_time = 1000
 
 " disable solarized toggle bg
 let g:no_plugin_maps = 0
