@@ -1057,7 +1057,9 @@ let g:ctrlp_working_path_mode = 0 " 'ra'
 let g:ctrlp_max_height = g:MyWinHeight
 
 " one way: only add the folders except ignored dir
-let igdirs = [ ]
+" e.g. \ 'xxx\/xxx\/xxx',
+let igdirs = [
+            \ ]
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
     \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
