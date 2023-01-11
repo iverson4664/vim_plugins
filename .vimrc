@@ -886,18 +886,7 @@ let g:altDedicatedKeyMap = {
 
 " map alt key end
 
-let g:custom_specified_dirs = [
-    \ 'kernel/include/uapi/linux',
-    \ 'kernel/drivers/media/v4l2-core',
-    \ 'system/core/include',
-    \ 'hardware/libhardware/include',
-    \ 'system/core/libutils',
-    \ 'frameworks/av/camera',
-    \ 'frameworks/av/services/camera',
-    \ 'frameworks/av/include/camera',
-    \ 'frameworks/base/core/java/android/hardware/camera2',
-    \ 'system/media/camera',
-    \ ]
+
 
 " find project root, use autotags F4 feature
 fu! s:PathHash(val)
@@ -953,6 +942,40 @@ endf
 " nerdtree win width setting
 let g:NERDTreeWinSize = 31
 let g:NERDTreeBufNamePrefix = "NERD_tree_"
+
+" specify custom dirs for autotags,ctrlp...
+let g:custom_specified_dirs = [
+    \ 'kernel/include/uapi/linux',
+    \ 'kernel/drivers/media/v4l2-core',
+    \ 'system/core/include',
+    \ 'hardware/libhardware/include',
+    \ 'system/core/libutils',
+    \ 'frameworks/av/camera',
+    \ 'frameworks/av/services/camera',
+    \ 'frameworks/av/include/camera',
+    \ 'frameworks/base/core/java/android/hardware/camera2',
+    \ 'system/media/camera',
+    \ ]
+
+fu! UpdataCustomSpecifiedDirs()
+    let a:root = g:getProjectRoot()
+    if !isdirectory(a:root)
+        retu
+    en
+
+    let a:dirsFile = a:root . "/auto_dirs"
+    if !filereadable(a:dirsFile)
+        retu
+    en
+
+    let a:dirs = readfile(a:dirsFile)
+    let g:custom_specified_dirs = a:dirs
+    " for i in g:custom_specified_dirs
+    "     " let i = substitute(i, '^\+\s', '', 'g')
+    "     echomsg i
+    " endfor
+endf
+call UpdataCustomSpecifiedDirs()
 
 "-----------------------------------------------------------------------------
 " Autotags Settings
