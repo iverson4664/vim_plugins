@@ -498,16 +498,20 @@ endf
 
 fu! AutotagsGenSpecified()
     if s:AutotagsIsLoaded() == 1
+        call g:UpdateCustomSpecifiedDirs()
         if !exists('g:autotags_specified_dirs')
             echomsg "no specified dirs !"
             retu
         en
 
+        " remove the old subdirs, then gen the new subdirs
+        call AutotagsRemoveAll("subdir")
+
         let a:tagsdir = s:autotags_subdir
         for dir in g:autotags_specified_dirs
             let a:rootdir = resolve(a:tagsdir . "/origin")
             let a:subdir = a:rootdir . '/' . dir
-            echomsg "subdir:" a:subdir
+            " echomsg "subdir:" a:subdir
 
             if AutotagsSubdirExist(a:subdir) == 0
                 call AutotagsAddPath(a:subdir)
@@ -554,6 +558,7 @@ fun! AutotagsRemoveSubdir()
         if l:subsrcdir == ""
             return
         endif
+
         let a:tagsdir = s:autotags_subdir
         for l:entry in split(system("ls " . a:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
@@ -565,7 +570,8 @@ fun! AutotagsRemoveSubdir()
                         echomsg "deleting subdir tags(& include_*): " . l:subdir . " for " . l:srcdir
                         call system("rm '" . l:path . "'")
                         call system("rm -r '" . l:subdir . "'")
-                        return 
+                        exe "cs reset"
+                        return
                     endif
                 endif
             endif
@@ -576,17 +582,23 @@ fun! AutotagsRemoveSubdir()
     endif
 endfun
 
-fun! AutotagsRemoveAll()
+fun! AutotagsRemoveAll(type)
     if s:AutotagsIsLoaded() == 1
-        let a:dir = s:AutotagsAskPath(getcwd(), "Select project root: ")
-        if a:dir == ""
-            return
-        endif
         let a:tagsdir = s:autotags_subdir
         let a:rootdir = resolve(a:tagsdir . "/origin")
-        if a:dir != a:rootdir
-            echomsg "Please select the correct root!"
-            return
+
+        if a:type == "subdir"
+            " subdir case uses explicit root dir(current used)
+        else
+            let a:dir = s:AutotagsAskPath(getcwd(), "Select project root: ")
+            if a:dir == ""
+                return
+            endif
+
+            if a:dir != a:rootdir
+                echomsg "Please select the correct root!"
+                return
+            endif
         endif
 
         for l:entry in split(system("ls " . a:tagsdir), "\n")
@@ -595,19 +607,24 @@ fun! AutotagsRemoveAll()
                 if getftype(l:path) == 'link' && isdirectory(l:path)
                     let l:subdir = resolve(l:path)
                     let l:subsrcdir = resolve(l:path . "/origin")
-                    echomsg "deleting subdir tags: " . l:subdir . " for " . l:subsrcdir
+                    echomsg "deleting subdir tags(& include_*): " . l:subdir . " for " . l:subsrcdir
+                    call system("rm '" . l:path . "'")
                     call system("rm -r '" . l:subdir . "'")
                 endif
             endif
         endfor
-        echomsg "deleting root " . a:tagsdir . " for " .
-                    \ fnamemodify(a:rootdir, ":p")
-        call system("rm -r '" . a:tagsdir . "'")
+
+        if a:type == "root"
+            echomsg "deleting root " . a:tagsdir . " for " . fnamemodify(a:rootdir, ":p")
+            call system("rm -r '" . a:tagsdir . "'")
+        endif
+
         if g:autotags_no_global == 0 && filereadable(g:autotags_global)
             exe "set tags=" . g:autotags_global
         else
             exe "set tags="
         endif
+        set nocsverb
         exe "cs kill -1"
         exe "cs reset"
     else
@@ -615,9 +632,10 @@ fun! AutotagsRemoveAll()
     endif
 endfun
 
+
 command! AutotagsGenSpecified call AutotagsGenSpecified()
 command! AutotagsGenFull call AutotagsGenFull()
-command! AutotagsRemoveAll call AutotagsRemoveAll()
+command! AutotagsRemoveAll call AutotagsRemoveAll("root")
 command! AutotagsRemoveSubdir call AutotagsRemoveSubdir()
 command! AutotagsShowAll call AutotagsShowAll()
 

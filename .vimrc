@@ -957,25 +957,33 @@ let g:custom_specified_dirs = [
     \ 'system/media/camera',
     \ ]
 
-fu! UpdataCustomSpecifiedDirs()
+fu! g:UpdateCustomSpecifiedDirs()
     let a:root = g:getProjectRoot()
     if !isdirectory(a:root)
+        echomsg "no root"
         retu
     en
 
     let a:dirsFile = a:root . "/auto_dirs"
     if !filereadable(a:dirsFile)
+        echomsg "no auto dirs"
         retu
     en
 
     let a:dirs = readfile(a:dirsFile)
+    " skip check here, sometimes specified dirs removed by Autotags command
+    " if a:dirs == g:custom_specified_dirs
+    "     retu
+    " en
+
     let g:custom_specified_dirs = a:dirs
     " for i in g:custom_specified_dirs
     "     " let i = substitute(i, '^\+\s', '', 'g')
     "     echomsg i
     " endfor
+    let g:autotags_specified_dirs = g:custom_specified_dirs
+    let g:ctrlp_include_dirs = g:custom_specified_dirs
 endf
-call UpdataCustomSpecifiedDirs()
 
 "-----------------------------------------------------------------------------
 " Autotags Settings
