@@ -943,6 +943,14 @@ endf
 let g:NERDTreeWinSize = 31
 let g:NERDTreeBufNamePrefix = "NERD_tree_"
 
+" specify custom ignored dirs for autotags,ctrlp...
+let g:custom_ignored_dirs = [
+    \ ]
+
+let g:autotags_cscope_ignored_dirs = ""
+let g:autotags_ctags_exclude_opts = ""
+let g:ctrlp_custom_ignored_dirs = []
+
 " specify custom dirs for autotags,ctrlp...
 let g:custom_specified_dirs = [
     \ 'kernel/include/uapi/linux',
@@ -957,32 +965,76 @@ let g:custom_specified_dirs = [
     \ 'system/media/camera',
     \ ]
 
-fu! g:UpdateCustomSpecifiedDirs()
+fu! g:InitCustomAutoDirs()
     let a:root = g:getProjectRoot()
     if !isdirectory(a:root)
-        echomsg "no root"
+        " echomsg "no root"
         retu
     en
 
     let a:dirsFile = a:root . "/auto_dirs"
     if !filereadable(a:dirsFile)
-        echomsg "no auto dirs"
+        " echomsg "no auto dirs"
         retu
     en
 
     let a:dirs = readfile(a:dirsFile)
-    " skip check here, sometimes specified dirs removed by Autotags command
-    " if a:dirs == g:custom_specified_dirs
-    "     retu
-    " en
+    if empty(a:dirs)
+        " echomsg "empty auto dirs"
+        retu
+    en
 
-    let g:custom_specified_dirs = a:dirs
-    " for i in g:custom_specified_dirs
-    "     " let i = substitute(i, '^\+\s', '', 'g')
-    "     echomsg i
-    " endfor
+    let g:custom_specified_dirs = []
+    let g:custom_ignored_dirs = []
+
+    let a:type = 0
+    for i in a:dirs
+        if i == "SPECIFIED:"
+            let a:type = 1
+        elsei i == "IGNORED:"
+            let a:type = 2
+        el
+            " remove the first '/'
+            let i = substitute(i, '^\/', '', '')
+            " remove the last '/'
+            let i = substitute(i, '\/$', '', '')
+            if a:type == 1
+                call add(g:custom_specified_dirs, i)
+            elsei a:type == 2
+                call add(g:custom_ignored_dirs, i)
+            en
+        en
+    endfor
+endf
+
+fu! g:UpdateCustomSpecifiedDirs()
+    if !exists('g:custom_specified_dirs')
+        echomsg "no specified dirs"
+        retu
+    en
+
     let g:autotags_specified_dirs = g:custom_specified_dirs
     let g:ctrlp_include_dirs = g:custom_specified_dirs
+endf
+
+fu! g:UpdateCustomIgnoredDirs()
+    if !exists('g:custom_ignored_dirs')
+        echomsg "no ignored dirs"
+        retu
+    en
+
+    let g:autotags_cscope_ignored_dirs = ""
+    let g:autotags_ctags_exclude_opts = ""
+    let g:ctrlp_custom_ignored_dirs = []
+
+    for i in g:custom_ignored_dirs
+        let g:autotags_ctags_exclude_opts = g:autotags_ctags_exclude_opts . ",*/" . i . "/*"
+        let g:autotags_cscope_ignored_dirs = g:autotags_cscope_ignored_dirs . " " . i
+        call add(g:ctrlp_custom_ignored_dirs, i)
+    endfo
+
+    let g:autotags_ctags_opts = "--exclude={" . g:autotags_ctags_exclude_opts . "}"
+    let g:ctrlp_custom_ignore['dir'] = '\v[\/]('.join(g:ctrlp_custom_ignored_dirs, '|').')$'
 endf
 
 "-----------------------------------------------------------------------------
@@ -994,7 +1046,7 @@ let g:autotags_no_global = 1
 " --c++-kinds=+p  : Adds prototypes in the database for C/C++ files.
 " --fields=+iaS   : Adds inheritance (i), access (a) and function signatures (S) information.
 " --extra=+q      : Adds context to the tag name. Note: Without this option, the script cannot get class members.
-let g:autotags_ctags_opts = "--exclude="
+let g:autotags_ctags_opts = "--exclude={" . g:autotags_ctags_exclude_opts . "}"
 
 let g:autotags_ctags_languages = "+Asm,+C,+C#,+C++,+Java,+Vim"
 let g:autotags_ctags_langmap = "default"
@@ -1089,10 +1141,11 @@ let g:ctrlp_max_height = g:MyWinHeight
 
 " one way: only add the folders except ignored dir
 " e.g. \ 'xxx\/xxx\/xxx',
-let igdirs = [
-            \ ]
+" let g:ctrlp_custom_ignored_dirs = [
+"     \ 'xxx\/xxx\/xxx',
+"     \ ]
 let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/]('.join(igdirs, '|').')$',
+    \ 'dir': '\v[\/]('.join(g:ctrlp_custom_ignored_dirs, '|').')$',
     \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
     \ }
 
@@ -1266,6 +1319,9 @@ endf
 com! CscopeCaseSensitiveReset call CscopeCaseSensitiveReset()
 
 
+" initial calls
+call g:InitCustomAutoDirs()
+call g:UpdateCustomIgnoredDirs()
 
 
 "happy added end

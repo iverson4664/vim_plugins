@@ -164,6 +164,8 @@ fun! s:AutotagsInit()
     if !exists("g:autotags_specified_dirs")
         let g:autotags_specified_dirs = []
     endif
+
+    call s:AutotagsUpdateIgnoredDirsPattern()
     "happy modified end
 
     let s:cscope_file_pattern = '.*\' . join(split(g:autotags_cscope_file_extensions, " "), '\|.*\')
@@ -290,6 +292,7 @@ fun! s:AutotagsGenerate(sourcedir, tagsdir)
     let l:cscopedir = a:tagsdir
     " echomsg "updating cscopedb in " . l:cscopedir ." for " . a:sourcedir
     call system("cd '" . l:cscopedir . "' && nice -15 find '" . a:sourcedir . "' " .
+        \ s:cscope_ignored_dirs_pattern . " " .
         \ "-not -regex '.*\\.git.*' -regex '" . s:cscope_file_pattern . "' -fprint cscope.files")
     if getfsize(l:cscopedir . "/cscope.files") > 0
         call system("cd '" . l:cscopedir . "' && nice -15 " . g:autotags_cscope_exe . " -b -k -q")
@@ -498,7 +501,12 @@ endf
 
 fu! AutotagsGenSpecified()
     if s:AutotagsIsLoaded() == 1
+        call g:InitCustomAutoDirs()
+        call g:UpdateCustomIgnoredDirs()
+        call s:AutotagsUpdateIgnoredDirsPattern()
+
         call g:UpdateCustomSpecifiedDirs()
+
         if !exists('g:autotags_specified_dirs')
             echomsg "no specified dirs !"
             retu
@@ -632,6 +640,16 @@ fun! AutotagsRemoveAll(type)
     endif
 endfun
 
+fun! s:AutotagsUpdateIgnoredDirsPattern()
+    let s:cscope_ignored_dirs_pattern = ""
+    if exists("g:autotags_cscope_ignored_dirs") && !empty(g:autotags_cscope_ignored_dirs)
+        let a:prefix = "-not -regex '.*\/"
+        let a:postfix = "\/.*'"
+        let s:cscope_ignored_dirs_pattern = a:prefix .
+                    \ join(split(g:autotags_cscope_ignored_dirs, " "), a:postfix . " " . a:prefix) .
+                    \ a:postfix
+    en
+endf
 
 command! AutotagsGenSpecified call AutotagsGenSpecified()
 command! AutotagsGenFull call AutotagsGenFull()
