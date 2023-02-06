@@ -501,11 +501,12 @@ endf
 
 fu! AutotagsGenSpecified()
     if s:AutotagsIsLoaded() == 1
-        call g:InitCustomAutoDirs()
-        call g:UpdateCustomIgnoredDirs()
-        call s:AutotagsUpdateIgnoredDirsPattern()
+        if g:InitCustomAutoDirs() == "OK"
+            call g:UpdateCustomIgnoredDirs()
+            call s:AutotagsUpdateIgnoredDirsPattern()
 
-        call g:UpdateCustomSpecifiedDirs()
+            call g:UpdateCustomSpecifiedDirs()
+        en
 
         if !exists('g:autotags_specified_dirs')
             echomsg "no specified dirs !"

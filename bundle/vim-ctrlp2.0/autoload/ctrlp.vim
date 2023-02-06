@@ -59,6 +59,7 @@ let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ 'buffer_func':           ['s:buffunc', {}],
 	\ 'by_filename':           ['s:byfname', 0],
 	\ 'custom_ignore':         ['s:usrign', s:ignore()],
+	\ 'ignore_case_type':      ['s:ignorecase', 0],
 	\ 'include_dirs':          ['s:includedirs', []],
 	\ 'default_input':         ['s:deftxt', 0],
 	\ 'dont_split':            ['s:nosplit', 'netrw'],
@@ -337,6 +338,8 @@ fu! s:Reset(args)
 	cal s:autocmds()
 	cal ctrlp#utils#opts()
 	cal s:execextvar('opts')
+
+  cal s:setCtrlpIgnoredCase() "happy added
 endf
 " * Files {{{1
 fu! ctrlp#files()
@@ -346,14 +349,14 @@ fu! ctrlp#files()
 		" Get the list of files
 		if empty(lscmd)
       if exists('s:ctrlpIncludeDirs') && !empty(s:ctrlpIncludeDirs)
-        echomsg "INCLUDE MODE"
+        echomsg "INCLUDED MODE"
         for dir in s:ctrlpIncludeDirs
           if !ctrlp#igncwd(dir)
             cal s:GlobPath(s:fnesc(dir, 'g', ','), 0)
           en
         endfo
       el
-        echomsg "IGNORE MODE"
+        echomsg "IGNORED MODE"
         if !ctrlp#igncwd(s:dyncwd)
           cal s:GlobPath(s:fnesc(s:dyncwd, 'g', ','), 0)
         en
@@ -1554,7 +1557,10 @@ fu! s:usrign(item, type)
 		end
 	elsei s:igntype == 4
 		if has_key(s:usrign, a:type) && s:usrign[a:type] != ''
-					\ && a:item =~ s:usrign[a:type]
+					\ && ((a:type == "dir" && matchstr(a:item, s:dirIgnoreCase . s:usrign[a:type]) != '')
+					\ || (a:type == "file" && a:item =~ s:usrign[a:type]))
+					" happy modified:
+					" \ && a:item =~ s:usrign[a:type]
 			retu 1
 		elsei has_key(s:usrign, 'func') && s:usrign['func'] != ''
 					\ && call(s:usrign['func'], [a:item, a:type])
@@ -2364,6 +2370,15 @@ endf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " happy added:
+
+fu! s:setCtrlpIgnoredCase()
+  " set ignore case for dir, TODO for file(ignore case currently)
+  if s:ignorecase == 1
+    let s:dirIgnoreCase = '\C'
+  el
+    let s:dirIgnoreCase = '\c'
+  en
+endf
 
 fu! s:setCtrlpRootDir()
   if exists('s:ctrlpRootGot') && s:ctrlpRootGot == 1

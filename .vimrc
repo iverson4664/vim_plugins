@@ -969,30 +969,40 @@ fu! g:InitCustomAutoDirs()
     let a:root = g:getProjectRoot()
     if !isdirectory(a:root)
         " echomsg "no root"
-        retu
+        retu "NA"
     en
 
     let a:dirsFile = a:root . "/auto_dirs"
     if !filereadable(a:dirsFile)
         " echomsg "no auto dirs"
-        retu
+        retu "NA"
     en
 
     let a:dirs = readfile(a:dirsFile)
     if empty(a:dirs)
         " echomsg "empty auto dirs"
-        retu
+        retu "NA"
     en
 
-    let g:custom_specified_dirs = []
-    let g:custom_ignored_dirs = []
+    let a:firstCsd = 1
+    let a:firstCid = 1
+    " let g:custom_specified_dirs = []
+    " let g:custom_ignored_dirs = []
 
     let a:type = 0
     for i in a:dirs
         if i == "SPECIFIED:"
             let a:type = 1
+            if a:firstCsd == 1
+                let g:custom_specified_dirs = []
+                let a:firstCsd = 0
+            en
         elsei i == "IGNORED:"
             let a:type = 2
+            if a:firstCid == 1
+                let g:custom_ignored_dirs = []
+                let a:firstCid = 0
+            en
         el
             " remove the first '/'
             let i = substitute(i, '^\/', '', '')
@@ -1005,6 +1015,7 @@ fu! g:InitCustomAutoDirs()
             en
         en
     endfor
+    return "OK"
 endf
 
 fu! g:UpdateCustomSpecifiedDirs()
@@ -1148,6 +1159,9 @@ let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/]('.join(g:ctrlp_custom_ignored_dirs, '|').')$',
     \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
     \ }
+
+" 0: ignore case, 1: match case
+let g:ctrlp_ignore_case_type = 1
 
 " \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@<!$',
 " set wildignore+=*/frameworks/rs*,*/external/*,*/bionic/*,*/art/*        " Linux/MacOSX
@@ -1320,8 +1334,9 @@ com! CscopeCaseSensitiveReset call CscopeCaseSensitiveReset()
 
 
 " initial calls
-call g:InitCustomAutoDirs()
-call g:UpdateCustomIgnoredDirs()
+if g:InitCustomAutoDirs() == "OK"
+    call g:UpdateCustomIgnoredDirs()
+en
 
 
 "happy added end
