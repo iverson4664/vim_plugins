@@ -309,7 +309,7 @@ fun! s:AutotagsReload(tagsdir)
     endif
 
     "happy modified start
-    if g:autotags_gen_full == 0 
+    if g:autotags_gen_full == 0
         let l:subExist = 0
         for l:entry in split(system("ls " . a:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
@@ -378,7 +378,7 @@ fun! AutotagsUpdatePath(sourcedir)
             return
         endif
         "happy modified start
-        if g:autotags_gen_full == 0 
+        if g:autotags_gen_full == 0
 
         else
             if g:autotags_no_global == 0 && !filereadable(g:autotags_global)
@@ -390,7 +390,7 @@ fun! AutotagsUpdatePath(sourcedir)
         "happy modified end
     else
         "happy modified start
-        if g:autotags_gen_full == 0 
+        if g:autotags_gen_full == 0
             call s:AutotagsGenerateSubdir(s:autotags_subdir)
         else
             let l:sourcedir = resolve(s:autotags_subdir . "/origin")
@@ -478,25 +478,25 @@ endfun
 
 "happy added start
 fu! AutotagsSubdirExist(subdir)
-    let a:exist = 0
+    let l:exist = 0
 
-    let a:tagsdir = s:autotags_subdir
-    for l:entry in split(system("ls " . a:tagsdir), "\n")
+    let l:tagsdir = s:autotags_subdir
+    for l:entry in split(system("ls " . l:tagsdir), "\n")
         if stridx(l:entry, "include_") == 0
-            let l:path = a:tagsdir . "/" . l:entry
+            let l:path = l:tagsdir . "/" . l:entry
             if getftype(l:path) == 'link' && isdirectory(l:path)
                 let l:subtagdir = resolve(l:path)
                 let l:srcdir = resolve(l:path . "/origin")
                 if a:subdir == l:srcdir
                     echomsg "subdir tags exist !"
-                    let a:exist = 1
+                    let l:exist = 1
                     brea
                 en
             en
         en
     endfo
 
-    retu a:exist
+    retu l:exist
 endf
 
 fu! AutotagsGenSpecified()
@@ -516,14 +516,14 @@ fu! AutotagsGenSpecified()
         " remove the old subdirs, then gen the new subdirs
         call AutotagsRemoveAll("subdir")
 
-        let a:tagsdir = s:autotags_subdir
+        let l:tagsdir = s:autotags_subdir
         for dir in g:autotags_specified_dirs
-            let a:rootdir = resolve(a:tagsdir . "/origin")
-            let a:subdir = a:rootdir . '/' . dir
-            " echomsg "subdir:" a:subdir
+            let l:rootdir = resolve(l:tagsdir . "/origin")
+            let l:subdir = l:rootdir . '/' . dir
+            " echomsg "subdir:" l:subdir
 
-            if AutotagsSubdirExist(a:subdir) == 0
-                call AutotagsAddPath(a:subdir)
+            if AutotagsSubdirExist(l:subdir) == 0
+                call AutotagsAddPath(l:subdir)
             en
         endfo
     else
@@ -541,13 +541,13 @@ endfun
 
 fun! AutotagsShowAll()
     if s:AutotagsIsLoaded() == 1
-        let a:tagsdir = s:autotags_subdir
-        let a:rootdir = resolve(a:tagsdir . "/origin")
-        echomsg "Autotags root: " . a:tagsdir . " for " . a:rootdir
+        let l:tagsdir = s:autotags_subdir
+        let l:rootdir = resolve(l:tagsdir . "/origin")
+        echomsg "Autotags root: " . l:tagsdir . " for " . l:rootdir
         let num = 1
-        for l:entry in split(system("ls " . a:tagsdir), "\n")
+        for l:entry in split(system("ls " . l:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
-                let l:path = a:tagsdir . "/" . l:entry
+                let l:path = l:tagsdir . "/" . l:entry
                 if getftype(l:path) == 'link' && isdirectory(l:path)
                     let l:subdir = resolve(l:path)
                     let l:srcdir = resolve(l:path . "/origin")
@@ -568,10 +568,10 @@ fun! AutotagsRemoveSubdir()
             return
         endif
 
-        let a:tagsdir = s:autotags_subdir
-        for l:entry in split(system("ls " . a:tagsdir), "\n")
+        let l:tagsdir = s:autotags_subdir
+        for l:entry in split(system("ls " . l:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
-                let l:path = a:tagsdir . "/" . l:entry
+                let l:path = l:tagsdir . "/" . l:entry
                 if getftype(l:path) == 'link' && isdirectory(l:path)
                     let l:subdir = resolve(l:path)
                     let l:srcdir = resolve(l:path . "/origin")
@@ -593,26 +593,26 @@ endfun
 
 fun! AutotagsRemoveAll(type)
     if s:AutotagsIsLoaded() == 1
-        let a:tagsdir = s:autotags_subdir
-        let a:rootdir = resolve(a:tagsdir . "/origin")
+        let l:tagsdir = s:autotags_subdir
+        let l:rootdir = resolve(l:tagsdir . "/origin")
 
         if a:type == "subdir"
             " subdir case uses explicit root dir(current used)
         else
-            let a:dir = s:AutotagsAskPath(getcwd(), "Select project root: ")
-            if a:dir == ""
+            let l:dir = s:AutotagsAskPath(getcwd(), "Select project root: ")
+            if l:dir == ""
                 return
             endif
 
-            if a:dir != a:rootdir
+            if l:dir != l:rootdir
                 echomsg "Please select the correct root!"
                 return
             endif
         endif
 
-        for l:entry in split(system("ls " . a:tagsdir), "\n")
+        for l:entry in split(system("ls " . l:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
-                let l:path = a:tagsdir . "/" . l:entry
+                let l:path = l:tagsdir . "/" . l:entry
                 if getftype(l:path) == 'link' && isdirectory(l:path)
                     let l:subdir = resolve(l:path)
                     let l:subsrcdir = resolve(l:path . "/origin")
@@ -624,8 +624,8 @@ fun! AutotagsRemoveAll(type)
         endfor
 
         if a:type == "root"
-            echomsg "deleting root " . a:tagsdir . " for " . fnamemodify(a:rootdir, ":p")
-            call system("rm -r '" . a:tagsdir . "'")
+            echomsg "deleting root " . l:tagsdir . " for " . fnamemodify(l:rootdir, ":p")
+            call system("rm -r '" . l:tagsdir . "'")
         endif
 
         if g:autotags_no_global == 0 && filereadable(g:autotags_global)
@@ -644,11 +644,11 @@ endfun
 fun! s:AutotagsUpdateIgnoredDirsPattern()
     let s:cscope_ignored_dirs_pattern = ""
     if exists("g:autotags_cscope_ignored_dirs") && !empty(g:autotags_cscope_ignored_dirs)
-        let a:prefix = "-not -regex '.*\/"
-        let a:postfix = "\/.*'"
-        let s:cscope_ignored_dirs_pattern = a:prefix .
-                    \ join(split(g:autotags_cscope_ignored_dirs, " "), a:postfix . " " . a:prefix) .
-                    \ a:postfix
+        let l:prefix = "-not -regex '.*\/"
+        let l:postfix = "\/.*'"
+        let s:cscope_ignored_dirs_pattern = l:prefix .
+                    \ join(split(g:autotags_cscope_ignored_dirs, " "), l:postfix . " " . l:prefix) .
+                    \ l:postfix
     en
 endf
 
@@ -658,7 +658,7 @@ command! AutotagsRemoveAll call AutotagsRemoveAll("root")
 command! AutotagsRemoveSubdir call AutotagsRemoveSubdir()
 command! AutotagsShowAll call AutotagsShowAll()
 
-"happy added end 
+"happy added end
 
 set nocsverb
 call <SID>AutotagsInit()

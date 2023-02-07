@@ -1002,20 +1002,20 @@ fu! s:MruCacheMkdir(dir)
 endf
 
 fu! s:MruSetCacheFilename()
-    let a:root = g:getProjectRoot()
-    if !isdirectory(a:root)
+    let l:root = g:GetProjectRoot()
+    if !isdirectory(l:root)
         retu
     en
 
-    let a:cacheDir = $HOME . '/.cache/mru'
-    if !isdirectory(s:MruCacheMkdir(a:cacheDir))
+    let l:cacheDir = $HOME . '/.cache/mru'
+    if !isdirectory(s:MruCacheMkdir(l:cacheDir))
         echomsg "Mru make cache dir failed !"
         retu
     en
-    let [tail, dir] = ['', a:root]
-    let a:name = substitute(dir, '\([\/]\|^\a\zs:\)', '%', 'g').tail.'.txt'
+    let [tail, dir] = ['', l:root]
+    let l:name = substitute(dir, '\([\/]\|^\a\zs:\)', '%', 'g').tail.'.txt'
 
-    let g:MRU_File = a:cacheDir . '/' . a:name
+    let g:MRU_File = l:cacheDir . '/' . l:name
     " echomsg "mru cache path :" g:MRU_File
 endf
 

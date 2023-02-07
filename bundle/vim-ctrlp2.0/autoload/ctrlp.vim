@@ -2393,23 +2393,23 @@ fu! s:setCtrlpRootDir()
 
   let s:ctrlpIncludeDirs = []
 
-  let a:hashRoot = g:getProjectRootHash()
-  let a:root = g:getProjectRoot(a:hashRoot)
-  if !isdirectory(a:root)
+  let l:hashRoot = g:GetProjectRootHash()
+  let l:root = g:GetProjectRoot(l:hashRoot)
+  if !isdirectory(l:root)
     retu
   en
 
   if exists('s:ctrlp2autotags') && s:ctrlp2autotags == 0
     " echomsg "use SPECIFIED type"
     for dir in s:includedirs
-      let a:subdir = a:root . '/' . dir
-      call add(s:ctrlpIncludeDirs, a:subdir)
+      let l:subdir = l:root . '/' . dir
+      call add(s:ctrlpIncludeDirs, l:subdir)
     endfo
   el
     " echomsg "use AUTOTAGS type"
-    for l:entry in split(system("ls " . a:hashRoot), "\n")
+    for l:entry in split(system("ls " . l:hashRoot), "\n")
       if stridx(l:entry, "include_") == 0
-        let l:path = a:hashRoot . "/" . l:entry
+        let l:path = l:hashRoot . "/" . l:entry
         if getftype(l:path) == 'link' && isdirectory(l:path)
           let l:subdir = resolve(l:path)
           let l:subsrcdir = resolve(l:path . "/origin")

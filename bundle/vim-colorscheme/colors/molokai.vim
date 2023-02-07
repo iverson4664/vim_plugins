@@ -284,15 +284,15 @@ hi TabLineFill guifg=#252525 ctermfg=234
 " change ctermfg 253->16, ctermbg 16->253 for ux
 hi TabLineSel guifg=#e4e4e4 guibg=#000000 ctermfg=16 ctermbg=253 cterm=bold,italic gui=bold,italic term=bold
 
-hi VertSplit guifg=#e4e4e4 guibg=none ctermfg=234 ctermbg=none cterm=none
-hi LineNr guifg=#585858 guibg=none ctermfg=242 ctermbg=none term=underline
-hi NonText guifg=#585858 guibg=none ctermfg=239 ctermbg=none gui=bold term=bold
-hi SpecialKey guifg=#585858 guibg=none ctermfg=239 ctermbg=none term=bold
+hi VertSplit guifg=#e4e4e4 guibg=NONE ctermfg=234 ctermbg=none cterm=none
+hi LineNr guifg=#585858 guibg=NONE ctermfg=242 ctermbg=none term=underline
+hi NonText guifg=#585858 guibg=NONE ctermfg=239 ctermbg=none gui=bold term=bold
+hi SpecialKey guifg=#585858 guibg=NONE ctermfg=239 ctermbg=none term=bold
 hi StatusLine guifg=#2c2c2c guibg=#ffcc66 ctermfg=235 ctermbg=221 gui=reverse term=bold,reverse
 hi StatusLineNC guifg=#2c2c2c guibg=#c5c8c6 ctermfg=235 ctermbg=241
 hi ErrorMsg guifg=#dd64d0 guibg=#252525 ctermfg=Red ctermbg=234 term=standout
-hi Directory guifg=#99cccc guibg=none ctermfg=110 ctermbg=none cterm=bold
-hi WarningMsg guifg=#ffffff guibg=none ctermfg=DarkRed ctermbg=none gui=bold
+hi Directory guifg=#99cccc guibg=NONE ctermfg=110 ctermbg=none cterm=bold
+hi WarningMsg guifg=#ffffff guibg=NONE ctermfg=DarkRed ctermbg=none gui=bold
 hi Identifier ctermfg=Yellow
 hi cfunctions ctermfg=81
 hi Typedef ctermfg=120

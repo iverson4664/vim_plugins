@@ -848,6 +848,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "happy added start
 
+let g:cscope_enhanced_edition = matchstr(system("cscope"), 'enhanced edition') != ''
+
 " disable F1&L/R window built-in help key
 map <F1> <Nop>
 
@@ -893,8 +895,7 @@ fu! s:PathHash(val)
     retu substitute(system("sha1sum", a:val), " .*", "", "")
 endf
 
-fu! g:getProjectRootHash()
-    let a:rootDir = ""
+fu! g:GetProjectRootHash()
     " find autotags subdir
     if !exists("g:autotagsdir")
         let g:autotagsdir = $HOME . "/.autotags/byhash"
@@ -903,39 +904,39 @@ fu! g:getProjectRootHash()
     let l:dir = getcwd()
     wh l:dir != "/"
         if getftype(g:autotagsdir . '/' . s:PathHash(l:dir)) == "dir"
-            let a:autotagsroot = g:autotagsdir . '/' . s:PathHash(l:dir)
-            " echomsg "autotags root exist: " . a:autotagsroot
+            let l:autotagsroot = g:autotagsdir . '/' . s:PathHash(l:dir)
+            " echomsg "autotags root exist: " . l:autotagsroot
             break
         endif
         " get parent directory
         let l:dir = fnamemodify(l:dir, ":p:h:h")
     endw
 
-    if !exists("a:autotagsroot") ||
-                \ !isdirectory(a:autotagsroot) ||
-                \ !isdirectory(a:autotagsroot . '/origin') ||
-                \ !isdirectory(resolve(a:autotagsroot . '/origin'))
+    if !exists("l:autotagsroot") ||
+                \ !isdirectory(l:autotagsroot) ||
+                \ !isdirectory(l:autotagsroot . '/origin') ||
+                \ !isdirectory(resolve(l:autotagsroot . '/origin'))
         " echomsg "Invalid Autotags' root directory!"
         retu
     en
 
-    retu a:autotagsroot
+    retu l:autotagsroot
 endf
 
-fu! g:getProjectRoot(...)
-    let a:hashRoot = a:0 ? a:1 : g:getProjectRootHash()
-    if empty(a:hashRoot)
+fu! g:GetProjectRoot(...)
+    let l:hashRoot = a:0 ? a:1 : g:GetProjectRootHash()
+    if empty(l:hashRoot)
         retu
     en
 
-    retu resolve(a:hashRoot . "/origin")
+    retu resolve(l:hashRoot . "/origin")
 endf
 
 fu! s:exe_cmd_without_autocmd(cmd)
-    let bak = &eventignore
+    let l:bak = &eventignore
     set eventignore=all
     exe a:cmd
-    let &eventignore = bak
+    let &eventignore = l:bak
 endf
 
 " nerdtree configuration
@@ -966,51 +967,51 @@ let g:custom_specified_dirs = [
     \ ]
 
 fu! g:InitCustomAutoDirs()
-    let a:root = g:getProjectRoot()
-    if !isdirectory(a:root)
+    let l:root = g:GetProjectRoot()
+    if !isdirectory(l:root)
         " echomsg "no root"
         retu "NA"
     en
 
-    let a:dirsFile = a:root . "/auto_dirs"
-    if !filereadable(a:dirsFile)
+    let l:dirsFile = l:root . "/auto_dirs"
+    if !filereadable(l:dirsFile)
         " echomsg "no auto dirs"
         retu "NA"
     en
 
-    let a:dirs = readfile(a:dirsFile)
-    if empty(a:dirs)
+    let l:dirs = readfile(l:dirsFile)
+    if empty(l:dirs)
         " echomsg "empty auto dirs"
         retu "NA"
     en
 
-    let a:firstCsd = 1
-    let a:firstCid = 1
+    let l:firstCsd = 1
+    let l:firstCid = 1
     " let g:custom_specified_dirs = []
     " let g:custom_ignored_dirs = []
 
-    let a:type = 0
-    for i in a:dirs
+    let l:type = 0
+    for i in l:dirs
         if i == "SPECIFIED:"
-            let a:type = 1
-            if a:firstCsd == 1
+            let l:type = 1
+            if l:firstCsd == 1
                 let g:custom_specified_dirs = []
-                let a:firstCsd = 0
+                let l:firstCsd = 0
             en
         elsei i == "IGNORED:"
-            let a:type = 2
-            if a:firstCid == 1
+            let l:type = 2
+            if l:firstCid == 1
                 let g:custom_ignored_dirs = []
-                let a:firstCid = 0
+                let l:firstCid = 0
             en
         el
             " remove the first '/'
             let i = substitute(i, '^\/', '', '')
             " remove the last '/'
             let i = substitute(i, '\/$', '', '')
-            if a:type == 1
+            if l:type == 1
                 call add(g:custom_specified_dirs, i)
-            elsei a:type == 2
+            elsei l:type == 2
                 call add(g:custom_ignored_dirs, i)
             en
         en
@@ -1072,9 +1073,9 @@ let &cmdwinheight=g:MyWinHeight
 " execute "set cmdwinheight=".g:MyWinHeight
 
 " qf win
-if has("cscope")
-    "for myself vim
-    if v:version >= 704
+if has("cscope") && has("quickfix")
+    " if v:version >= 704
+    if has("enhanced_edition")
         set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t-!
     el
         set cscopequickfix=c-,d-,e-,g-,s-
@@ -1265,18 +1266,18 @@ fu! SetWinWidth(winnr, width)
 endf
 
 fu! RestoreWinLayout()
-    let wincnt = winnr('$')
+    let l:wincnt = winnr('$')
     " only fix the typical usecase of bad winwidth, reset to win1=nerdtree(31),win2=file(136),win3=tagbar(40)
-    if wincnt != 3
+    if l:wincnt != 3
         retu
     en
 
-    let fixnerdtreewin = 1
-    let fixfilewin = 2
-    let fixtagbarwin = 3
+    let l:fixnerdtreewin = 1
+    let l:fixfilewin = 2
+    let l:fixtagbarwin = 3
 
     " go to the center win firstly
-    call s:exe_cmd_without_autocmd(fixfilewin . 'wincmd w')
+    call s:exe_cmd_without_autocmd(l:fixfilewin . 'wincmd w')
     if &winfixwidth == 1
         set winfixwidth<
     en
@@ -1284,13 +1285,13 @@ fu! RestoreWinLayout()
     for winnr in range(1, wincnt)
         let bufnr = winbufnr(winnr)
         if bufnr != -1
-            let bufname = bufname(bufnr)
-            if bufname =~ g:NERDTreeBufNamePrefix
-                if winnr == fixnerdtreewin
+            let l:bufname = bufname(bufnr)
+            if l:bufname =~ g:NERDTreeBufNamePrefix
+                if winnr == l:fixnerdtreewin
                     call SetWinWidth(winnr, g:NERDTreeWinSize)
                 en
-            elsei bufname =~ g:tagbar_bufname_prefix
-                if winnr == fixtagbarwin
+            elsei l:bufname =~ g:tagbar_bufname_prefix
+                if winnr == l:fixtagbarwin
                     call SetWinWidth(winnr, g:tagbar_width)
                 en
             el
@@ -1318,13 +1319,19 @@ let g:gundo_preview_bottom = 1
 
 " enhance cscope caseless -C option
 " update -C option to caseinsensitive -C [a or cdefgist], a: all searches are caseinsensitive
-let g:cs_casesensitive_opt = "\\ -Cef"
-exec "set csprg+=" . g:cs_casesensitive_opt
-" set csprg+=\ -Cef
-" or
-" let &csprg = "cscope -Cef"
+if g:cscope_enhanced_edition == 1
+    let g:cs_casesensitive_opt = "\\ -Cef"
+    exec "set csprg+=" . g:cs_casesensitive_opt
+    " set csprg+=\ -Cef
+    " or
+    " let &csprg = "cscope -Cef"
+en
 
 fu! CscopeCaseSensitiveReset()
+    if !exists('g:cs_casesensitive_opt')
+        retu
+    en
+
     exec "set csprg-=" . g:cs_casesensitive_opt
     " set csprg-=\ -Cef
     silent cs reset
@@ -1337,7 +1344,6 @@ com! CscopeCaseSensitiveReset call CscopeCaseSensitiveReset()
 if g:InitCustomAutoDirs() == "OK"
     call g:UpdateCustomIgnoredDirs()
 en
-
 
 "happy added end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
