@@ -1061,11 +1061,12 @@ let g:autotags_no_global = 1
 let g:autotags_ctags_opts = "--exclude={" . g:autotags_ctags_exclude_opts . "}"
 
 let g:autotags_ctags_languages = "+Asm,+C,+C#,+C++,+Java,+Vim"
+" let g:autotags_ctags_languages = "all"
 let g:autotags_ctags_langmap = "default"
 " let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
 let g:autotags_ctags_global_include = ""
 let g:autotags_specified_dirs = g:custom_specified_dirs
-let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .m .hpp .hh .h .hxx .c .asm .s .java .js .py .idl .dts .dtsi"
+let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .hpp .hh .h .hxx .c .m .asm .s .java .js .py .idl .dts .dtsi .swift"
 
 " define custom win height
 let g:MyWinHeight=20
@@ -1158,7 +1159,7 @@ let g:ctrlp_max_height = g:MyWinHeight
 "     \ ]
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/]('.join(g:ctrlp_custom_ignored_dirs, '|').')$',
-    \ 'file': '\v(\.cpp|\.cc|\.c|\.cxx|\.h|\.hpp|\.hxx|\.java|\.js|\.py)@<!$',
+    \ 'file': '\v(\.cpp|\.cc|\.cxx|\.hpp|\.hh|\.h|\.hxx|\.c|\.m|\.asm|\.s|\.java|\.js|\.py|\.idl|\.dts|\.dtsi|\.swift)@<!$',
     \ }
 
 " 0: ignore case, 1: match case
