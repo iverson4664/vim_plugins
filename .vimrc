@@ -1060,10 +1060,14 @@ let g:autotags_no_global = 1
 " --extra=+q      : Adds context to the tag name. Note: Without this option, the script cannot get class members.
 let g:autotags_ctags_opts = "--exclude={" . g:autotags_ctags_exclude_opts . "}"
 
-let g:autotags_ctags_languages = "+Asm,+C,+C#,+C++,+Java,+Vim"
+" Restrict files scanned for tags to those mapped to languages
+" specified in the list. The list can contain any built-in or user-defined language [all]
+let g:autotags_ctags_languages = "+Asm,+C,+C#,+C++,+Java,+JavaScript,+Vim,+Swift"
 " let g:autotags_ctags_languages = "all"
-let g:autotags_ctags_langmap = "default"
-" let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js"
+
+" Donot override default mapping of language to input file extension
+let g:autotags_ctags_langmap = ""
+" let g:autotags_ctags_langmap = "Scala:.scala,Java:.java,Vim:.vim,JavaScript:.js,Swift:.swift"
 let g:autotags_ctags_global_include = ""
 let g:autotags_specified_dirs = g:custom_specified_dirs
 let g:autotags_cscope_file_extensions = ".cpp .cc .cxx .hpp .hh .h .hxx .c .m .asm .s .java .js .py .idl .dts .dtsi .swift"
