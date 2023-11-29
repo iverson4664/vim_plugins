@@ -19,3 +19,19 @@ setlocal expandtab
 setlocal tabstop=2
 setlocal shiftwidth=2
 setlocal smartindent
+
+" kinds: short:long:fold(default 0):statusline(default 1)
+let g:tagbar_type_swift = {
+  \ 'ctagstype': 'swift',
+  \ 'kinds': [
+    \ 'p:protocol:1:0',
+    \ 'c:class',
+    \ 's:struct',
+    \ 'e:enum',
+    \ 'E:extension',
+    \ 'f:function',
+    \ 't:typealias:0:0'
+  \ ],
+  \ 'sort': 0,
+  \ }
+  " \ 'deffile': expand('<sfile>:p:h:h') . '/ctags/swift.cnf'
