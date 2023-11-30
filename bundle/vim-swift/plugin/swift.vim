@@ -24,13 +24,14 @@ setlocal smartindent
 let g:tagbar_type_swift = {
   \ 'ctagstype': 'swift',
   \ 'kinds': [
-    \ 'p:protocol:1:0',
-    \ 'c:class',
-    \ 's:struct',
-    \ 'e:enum',
-    \ 'E:extension',
-    \ 'f:function',
-    \ 't:typealias:0:0'
+    \ 'p:protocols:1:0',
+    \ 'c:classes',
+    \ 's:structs',
+    \ 'e:enums',
+    \ 'x:extensions',
+    \ 'f:functions',
+    \ 't:typealiases:0:0',
+    \ 'v:variables:1:0'
   \ ],
   \ 'sort': 0,
   \ }
