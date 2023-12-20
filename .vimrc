@@ -855,6 +855,8 @@ map <F1> <Nop>
 
 set ttimeoutlen=50
 set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gbk,cp936,gb2312,gb18030
 
 " map alt key start
 let g:altDedicatedKeyMap = {
