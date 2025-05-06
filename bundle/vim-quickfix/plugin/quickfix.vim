@@ -69,7 +69,7 @@ endf
 " 	\ 'gcr': 'a:blinkon0', 'ic': 1, 'lmap': '', 'mousef': 0, 'imd': 1 }
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
-    \ 'CloseAllQuickfixWin()':            ['<c-c>', 'q'],
+    \ 'CloseAllQuickfixWin()':            ['<c-c>'],
     \ 'OpenCurrentFile()':                ['o'],
     \ }]
 
