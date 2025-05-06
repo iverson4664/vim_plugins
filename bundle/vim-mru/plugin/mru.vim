@@ -1045,7 +1045,7 @@ fu! s:MruClose()
 endf
 
 let [s:lcmap, s:prtmaps] = ['nn <script> <buffer> <silent>', {
-    \ 'MruClose()':            ['<c-c>', 'q'],
+    \ 'MruClose()':            ['<c-c>'],
     \ }]
 
 fu! s:MapKeys()
