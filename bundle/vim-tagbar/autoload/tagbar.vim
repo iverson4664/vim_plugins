@@ -897,6 +897,7 @@ function! s:InitTypes() abort
         \ 'struct' : 's',
     \ }
     let s:known_types.objc = type_objc
+    let s:known_types.objcpp = type_objc
     " xxx {{{3
     " }}}3
 
