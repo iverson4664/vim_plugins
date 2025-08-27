@@ -868,6 +868,36 @@ function! s:InitTypes() abort
         \ {'short' : 'l', 'long' : 'labels', 'fold' : 0, 'stl' : 1}
     \ ]
     let s:known_types.yacc = type_yacc
+    " Objective-C {{{3
+    let type_objc = s:TypeInfo.New()
+    let type_objc.ctagstype = 'objectivec'
+    let type_objc.kinds = [
+        \ {'short' : 'M', 'long' : 'preprocessor macros',   'fold' : 1, 'stl' : 0},
+        \ {'short' : 'v', 'long' : 'global variables',      'fold' : 0, 'stl' : 0},
+        \ {'short' : 'i', 'long' : 'class interfaces',      'fold' : 0, 'stl' : 1},
+        \ {'short' : 'I', 'long' : 'class implementations', 'fold' : 0, 'stl' : 1},
+        \ {'short' : 'c', 'long' : 'class methods',         'fold' : 0, 'stl' : 1},
+        \ {'short' : 'F', 'long' : 'object fields',         'fold' : 0, 'stl' : 0},
+        \ {'short' : 'm', 'long' : 'object methods',        'fold' : 0, 'stl' : 1},
+        \ {'short' : 's', 'long' : 'type structures',       'fold' : 0, 'stl' : 1},
+        \ {'short' : 't', 'long' : 'type aliases',          'fold' : 0, 'stl' : 1},
+        \ {'short' : 'e', 'long' : 'enumerations',          'fold' : 0, 'stl' : 1},
+        \ {'short' : 'f', 'long' : 'functions',             'fold' : 0, 'stl' : 1},
+        \ {'short' : 'p', 'long' : 'properties',            'fold' : 0, 'stl' : 0},
+    \ ]
+    let type_objc.sro        = ':'
+    let type_objc.kind2scope = {
+        \ 'i' : 'interface',
+        \ 'I' : 'implementation',
+        \ 's' : 'struct',
+    \ }
+    let type_objc.scope2kind = {
+        \ 'interface' : 'i',
+        \ 'implementation' : 'I',
+        \ 'struct' : 's',
+    \ }
+    let s:known_types.objc = type_objc
+    " xxx {{{3
     " }}}3
 
     for [type, typeinfo] in items(s:known_types)
