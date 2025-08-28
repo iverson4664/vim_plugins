@@ -881,21 +881,32 @@ function! s:InitTypes() abort
         \ {'short' : 'm', 'long' : 'object methods',        'fold' : 0, 'stl' : 1},
         \ {'short' : 's', 'long' : 'type structures',       'fold' : 0, 'stl' : 1},
         \ {'short' : 't', 'long' : 'type aliases',          'fold' : 0, 'stl' : 1},
-        \ {'short' : 'e', 'long' : 'enumerations',          'fold' : 0, 'stl' : 1},
+        \ {'short' : 'E', 'long' : 'enumerations',          'fold' : 0, 'stl' : 1},
+        \ {'short' : 'e', 'long' : 'enum',                  'fold' : 0, 'stl' : 1},
         \ {'short' : 'f', 'long' : 'functions',             'fold' : 0, 'stl' : 1},
-        \ {'short' : 'p', 'long' : 'properties',            'fold' : 0, 'stl' : 0},
+        \ {'short' : 'p', 'long' : 'protocol',              'fold' : 0, 'stl' : 0},
+        \ {'short' : 's', 'long' : 'struct',                'fold' : 0, 'stl' : 0},
+        \ {'short' : 'P', 'long' : 'property',              'fold' : 0, 'stl' : 0},
+        \ {'short' : 'u', 'long' : 'union',                 'fold' : 0, 'stl' : 0},
+        \ {'short' : 'd', 'long' : 'macro',                 'fold' : 0, 'stl' : 0},
     \ ]
     let type_objc.sro        = ':'
     let type_objc.kind2scope = {
         \ 'i' : 'interface',
         \ 'I' : 'implementation',
         \ 's' : 'struct',
+        \ 'e' : 'enum',
+        \ 'p' : 'protocol',
     \ }
     let type_objc.scope2kind = {
         \ 'interface' : 'i',
         \ 'implementation' : 'I',
         \ 'struct' : 's',
+        \ 'enum' : 'e',
+        \ 'protocol' : 'p',
     \ }
+
+    let type_objc.sort = 0
     let s:known_types.objc = type_objc
     let s:known_types.objcpp = type_objc
     " xxx {{{3
